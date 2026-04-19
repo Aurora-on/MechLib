@@ -1,0 +1,9 @@
+.lake/
+.pipeline1_tmp/
+.tmp_solver.lean
+tools/__pycache__/
+*.pyc
+
+alias_map.jsonl
+export_report.json
+theorem_corpus.jsonl

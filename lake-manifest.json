@@ -1,0 +1,90 @@
+{
+  "version": "1.1.0",
+  "lakeDir": ".lake",
+  "name": "MechLib",
+  "packagesDir": ".lake/packages",
+  "packages": [
+    {
+      "scope": "",
+      "configFile": "lakefile.lean",
+      "dir": "../../PhysLean-master/.lake/packages/mathlib",
+      "type": "path",
+      "name": "mathlib",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
+    },
+    {
+      "scope": "",
+      "configFile": "lakefile.toml",
+      "dir": "../../PhysLean-master/.lake/packages/plausible",
+      "type": "path",
+      "name": "plausible",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
+    },
+    {
+      "scope": "",
+      "configFile": "lakefile.toml",
+      "dir": "../../PhysLean-master/.lake/packages/LeanSearchClient",
+      "type": "path",
+      "name": "LeanSearchClient",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
+    },
+    {
+      "scope": "",
+      "configFile": "lakefile.toml",
+      "dir": "../../PhysLean-master/.lake/packages/importGraph",
+      "type": "path",
+      "name": "importGraph",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
+    },
+    {
+      "scope": "",
+      "configFile": "lakefile.lean",
+      "dir": "../../PhysLean-master/.lake/packages/proofwidgets",
+      "type": "path",
+      "name": "proofwidgets",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
+    },
+    {
+      "scope": "",
+      "configFile": "lakefile.toml",
+      "dir": "../../PhysLean-master/.lake/packages/aesop",
+      "type": "path",
+      "name": "aesop",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
+    },
+    {
+      "scope": "",
+      "configFile": "lakefile.toml",
+      "dir": "../../PhysLean-master/.lake/packages/Qq",
+      "type": "path",
+      "name": "Qq",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
+    },
+    {
+      "scope": "",
+      "configFile": "lakefile.toml",
+      "dir": "../../PhysLean-master/.lake/packages/batteries",
+      "type": "path",
+      "name": "batteries",
+      "manifestFile": "lake-manifest.json",
+      "inherited": false
+    },
+    {
+      "scope": "",
+      "configFile": "lakefile.toml",
+      "dir": "../../PhysLean-master/.lake/packages/Cli",
+      "type": "path",
+      "name": "Cli",
+      "manifestFile": "lake-manifest.json",
+      "inherited": true
+    }
+  ]
+}
+
