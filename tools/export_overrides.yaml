@@ -1,0 +1,3518 @@
+# Manual Spec alignment overrides for declarations whose role is too important
+# to leave entirely to module/keyword heuristics.
+
+MechLib.Dynamics.Verified.Dynamics.newton_second_law:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  concept_ids:
+    - concept.force_system
+  premise_role:
+    - law
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - simpa
+    - rw
+    - exact
+
+MechLib.Dynamics.Verified.Dynamics.secondLawVec_eq:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  concept_ids:
+    - concept.force_system
+  premise_role:
+    - law
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.Dynamics.secondLawVec_eq]
+    - simpa
+
+MechLib.Dynamics.Verified.WorkEnergy.work_energy_theorem_core:
+  primary_spec_id: dynamics.work_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  concept_ids:
+    - concept.kinetic_energy
+  premise_role:
+    - law
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.WorkEnergy.work_energy_theorem_core]
+    - simpa
+
+MechLib.Analytical.LagrangeEquation.eulerLagrange_iff_newton:
+  primary_spec_id: analytical.lagrange_equation
+  secondary_spec_ids:
+    - dynamics.newton_law
+    - analytical.generalized_coordinates
+  law_schema_ids:
+    - law.analytical.euler_lagrange_equation
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.systems.pendulum_lagrangian
+    - problem.dynamics.particle_dynamics
+  concept_ids:
+    - concept.lagrangian
+    - concept.generalized_coordinates
+  premise_role:
+    - bridge
+    - equivalence
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Analytical.LagrangeEquation.eulerLagrange_iff_newton]
+    - simpa
+    - exact
+
+MechLib.Analytical.Hamiltonian.canonicalEquations1D_eq:
+  primary_spec_id: analytical.hamiltonian
+  secondary_spec_ids:
+    - analytical.lagrange_equation
+  law_schema_ids:
+    - law.analytical.hamilton_canonical_equations
+  concept_ids:
+    - concept.generalized_coordinates
+    - concept.lagrangian
+  premise_role:
+    - law
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Analytical.Hamiltonian.canonicalEquations1D_eq]
+    - simpa
+
+MechLib.Analytical.PoissonBracket.poissonBracket1D_antisymm:
+  primary_spec_id: analytical.poisson_bracket
+  secondary_spec_ids:
+    - analytical.hamiltonian
+  law_schema_ids:
+    - law.analytical.hamilton_canonical_equations
+  premise_role:
+    - identity
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Analytical.PoissonBracket.poissonBracket1D_antisymm]
+    - ring_nf
+
+MechLib.RigidBody.Verified.Rotation.torque_def:
+  primary_spec_id: statics.moment
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+    - rigidbody.fixed_axis_dynamics
+  concept_ids:
+    - concept.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.Verified.Rotation.torque_def]
+    - simp
+
+MechLib.Systems.Verified.CentralForce.hookeCentralForce_torque_zero:
+  primary_spec_id: systems.central_force
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+    - statics.moment
+  concept_ids:
+    - concept.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - bridge
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.CentralForce.hookeCentralForce_torque_zero]
+    - simp
+
+MechLib.Dynamics.Verified.MomentumImpulse.impulse_momentum_theorem:
+  primary_spec_id: dynamics.impulse
+  secondary_spec_ids:
+    - dynamics.momentum
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - law
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.MomentumImpulse.impulse_momentum_theorem]
+    - simpa
+
+MechLib.Systems.Verified.SHM.period_frequency_relation:
+  primary_spec_id: systems.harmonic_oscillator
+  secondary_spec_ids:
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+    - example
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.SHM.period_frequency_relation]
+    - positivity
+
+# Course-layer wrapper and bridge declarations.
+
+MechLib.Kinematics.PointMotion.displacement_forms_equiv_course_form:
+  primary_spec_id: kinematics.point_motion
+  secondary_spec_ids:
+    - kinematics.coordinate_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration
+  premise_role:
+    - law
+    - wrapper
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.RelativeMotion.relative_velocity_trans_course_form:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.relative_motion
+  premise_role:
+    - law
+    - wrapper
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.FixedAxisRotation.angularDisplacement_eq:
+  primary_spec_id: kinematics.fixed_axis_rotation
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  problem_schema_ids:
+    - problem.kinematics.relative_motion
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.FixedAxisRotation.angularDisplacement_eq]
+    - rfl
+
+MechLib.Statics.ForceSystem.resultantForceSchema_length:
+  primary_spec_id: statics.force_system
+  secondary_spec_ids:
+    - statics.equilibrium
+  concept_ids:
+    - concept.force_system
+  law_schema_ids:
+    - law.statics.planar_force_system_equilibrium
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - interface
+    - sanity_check
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Statics.Equilibrium.isInEquilibrium_iff:
+  primary_spec_id: statics.equilibrium
+  secondary_spec_ids:
+    - statics.force_system
+    - statics.moment
+  concept_ids:
+    - concept.force_system
+    - concept.moment
+  law_schema_ids:
+    - law.statics.planar_force_system_equilibrium
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.Equilibrium.isInEquilibrium_iff]
+    - rfl
+
+MechLib.Statics.Equilibrium.planeEquilibrium_iff:
+  primary_spec_id: statics.equilibrium
+  secondary_spec_ids:
+    - statics.force_system
+    - statics.moment
+  concept_ids:
+    - concept.force_system
+    - concept.moment
+  law_schema_ids:
+    - law.statics.planar_force_system_equilibrium
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.Equilibrium.planeEquilibrium_iff]
+    - rfl
+
+MechLib.Statics.Equilibrium.spatialEquilibrium_iff:
+  primary_spec_id: statics.equilibrium
+  secondary_spec_ids:
+    - statics.force_system
+    - statics.moment
+  concept_ids:
+    - concept.force_system
+    - concept.moment
+  law_schema_ids:
+    - law.statics.planar_force_system_equilibrium
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.Equilibrium.spatialEquilibrium_iff]
+    - rfl
+
+MechLib.Statics.ForceSystem.sumForces_nil:
+  primary_spec_id: statics.force_system
+  secondary_spec_ids:
+    - statics.equilibrium
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - simp
+    - definition
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Statics.ForceSystem.sumForces_nil]
+
+MechLib.Statics.ForceSystem.resultantForce_empty:
+  primary_spec_id: statics.force_system
+  secondary_spec_ids:
+    - statics.equilibrium
+  concept_ids:
+    - concept.force_system
+  law_schema_ids:
+    - law.statics.planar_force_system_equilibrium
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - simp
+    - definition
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.ForceSystem.resultantForce_empty]
+    - rfl
+
+MechLib.Statics.ForceSystem.equivalentForceSystem_iff:
+  primary_spec_id: statics.force_system
+  secondary_spec_ids:
+    - statics.equilibrium
+    - statics.moment
+  concept_ids:
+    - concept.force_system
+    - concept.moment
+  law_schema_ids:
+    - law.statics.planar_force_system_equilibrium
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.ForceSystem.equivalentForceSystem_iff]
+    - rfl
+
+MechLib.Statics.Friction.frictionConeSchema_iff:
+  primary_spec_id: statics.friction
+  secondary_spec_ids:
+    - statics.constraint_force
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.Friction.frictionConeSchema_iff]
+    - rfl
+
+MechLib.Statics.Truss.trussJointEquilibrium_iff:
+  primary_spec_id: statics.truss
+  secondary_spec_ids:
+    - statics.force_system
+    - statics.equilibrium
+  concept_ids:
+    - concept.force_system
+  law_schema_ids:
+    - law.statics.planar_force_system_equilibrium
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.Truss.trussJointEquilibrium_iff]
+    - rfl
+
+MechLib.Statics.Moment.momentLaw_eq:
+  primary_spec_id: statics.moment
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+  concept_ids:
+    - concept.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.Moment.momentLaw_eq]
+    - rfl
+
+MechLib.Statics.Couple.coupleMomentSchema_eq:
+  primary_spec_id: statics.couple
+  secondary_spec_ids:
+    - statics.moment
+  concept_ids:
+    - concept.moment
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.Couple.coupleMomentSchema_eq]
+    - rfl
+
+MechLib.Dynamics.NewtonLaw.newtonSecondLaw_course_form:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+  concept_ids:
+    - concept.force_system
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.NewtonLaw.newtonSecondLaw_course_form]
+    - rfl
+
+MechLib.Dynamics.NewtonLaw.newton_second_law_verified:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+  concept_ids:
+    - concept.force_system
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - law
+    - wrapper
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.Verified.Dynamics.newton_second_law _ _
+
+MechLib.Dynamics.Momentum.momentumLaw_course_form:
+  primary_spec_id: dynamics.momentum
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Momentum.momentumLaw_course_form]
+    - rfl
+
+MechLib.Dynamics.AngularMomentum.angularMomentumLaw_course_form:
+  primary_spec_id: dynamics.angular_momentum
+  secondary_spec_ids:
+    - statics.moment
+  concept_ids:
+    - concept.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.AngularMomentum.angularMomentumLaw_course_form]
+    - rfl
+
+MechLib.Dynamics.WorkEnergy.workEnergyBalance_course_form:
+  primary_spec_id: dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.WorkEnergy.workEnergyBalance_course_form]
+    - rfl
+
+MechLib.Dynamics.WorkEnergy.work_energy_theorem_core_verified:
+  primary_spec_id: dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - law
+    - wrapper
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.WorkEnergy.kineticEnergy_change_formula_verified:
+  primary_spec_id: dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - law
+    - wrapper
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Impulse.impulseMomentumLaw_course_form:
+  primary_spec_id: dynamics.impulse
+  secondary_spec_ids:
+    - dynamics.momentum
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Impulse.impulseMomentumLaw_course_form]
+    - rfl
+
+MechLib.Dynamics.Collision.collisionMomentumResidual_course_form:
+  primary_spec_id: dynamics.collision
+  secondary_spec_ids:
+    - dynamics.momentum
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Collision.collisionMomentumResidual_course_form]
+    - rfl
+
+MechLib.RigidBody.Inertia.parallel_axis_theorem_verified:
+  primary_spec_id: rigidbody.inertia
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - law
+    - wrapper
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.RigidBody.Inertia.parallelAxisTheorem_iff:
+  primary_spec_id: rigidbody.inertia
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.Inertia.parallelAxisTheorem_iff]
+    - rfl
+
+MechLib.RigidBody.FixedAxisDynamics.fixedAxisDynamicsResidual_iff:
+  primary_spec_id: rigidbody.fixed_axis_dynamics
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+  concept_ids:
+    - concept.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.FixedAxisDynamics.fixedAxisDynamicsResidual_iff]
+    - rfl
+
+MechLib.RigidBody.PlaneMotionDynamics.planeMotionEnergyResidual_course_form:
+  primary_spec_id: rigidbody.plane_motion_dynamics
+  secondary_spec_ids:
+    - dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.PlaneMotionDynamics.planeMotionEnergyResidual_course_form]
+    - rfl
+
+MechLib.RigidBody.PlaneMotionDynamics.planeMotionKineticEnergy_eq:
+  primary_spec_id: rigidbody.plane_motion_dynamics
+  secondary_spec_ids:
+    - dynamics.work_energy
+    - rigidbody.fixed_axis_dynamics
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.PlaneMotionDynamics.planeMotionKineticEnergy_eq]
+    - rfl
+
+MechLib.RigidBody.Gyroscope.gyroscopicApproximation_iff:
+  primary_spec_id: rigidbody.gyroscope
+  secondary_spec_ids:
+    - rigidbody.euler_equations
+    - dynamics.angular_momentum
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - schema
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.Gyroscope.gyroscopicApproximation_iff]
+    - rfl
+
+MechLib.Analytical.Hamiltonian.hamiltonianSchema_eq:
+  primary_spec_id: analytical.hamiltonian
+  secondary_spec_ids:
+    - analytical.lagrange_equation
+  law_schema_ids:
+    - law.analytical.hamilton_canonical_equations
+  problem_schema_ids:
+    - problem.systems.pendulum_lagrangian
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Analytical.Hamiltonian.hamiltonianSchema_eq]
+    - rfl
+
+MechLib.Analytical.LagrangeEquation.eulerLagrange_iff_newton_course_form:
+  primary_spec_id: analytical.lagrange_equation
+  secondary_spec_ids:
+    - dynamics.newton_law
+  law_schema_ids:
+    - law.analytical.euler_lagrange_equation
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.systems.pendulum_lagrangian
+    - problem.dynamics.particle_dynamics
+  concept_ids:
+    - concept.lagrangian
+    - concept.generalized_coordinates
+  premise_role:
+    - bridge
+    - wrapper
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Analytical.GeneralizedCoordinates.generalizedCoordinateSystemWellFormed_iff:
+  primary_spec_id: analytical.generalized_coordinates
+  secondary_spec_ids:
+    - foundation.coordinate_system
+  concept_ids:
+    - concept.generalized_coordinates
+  problem_schema_ids:
+    - problem.systems.pendulum_lagrangian
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Analytical.GeneralizedCoordinates.generalizedCoordinateSystemWellFormed_iff]
+    - rfl
+
+MechLib.Analytical.VirtualWork.virtualWorkResidual_eq:
+  primary_spec_id: analytical.virtual_work
+  secondary_spec_ids:
+    - analytical.constraints
+  concept_ids:
+    - concept.virtual_displacement
+  law_schema_ids:
+    - law.analytical.virtual_work_principle
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Analytical.VirtualWork.virtualWorkResidual_eq]
+    - rfl
+
+MechLib.Analytical.ConservationLaw.cyclic_coordinate_implies_momentum_conserved_1d:
+  primary_spec_id: analytical.conservation_law
+  secondary_spec_ids:
+    - analytical.lagrange_equation
+  concept_ids:
+    - concept.cyclic_coordinate
+  law_schema_ids:
+    - law.analytical.cyclic_coordinate_conservation
+    - law.analytical.euler_lagrange_equation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - law
+    - wrapper
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Analytical.PoissonBracket.poissonBracket1D_antisymm_course_form:
+  primary_spec_id: analytical.poisson_bracket
+  secondary_spec_ids:
+    - analytical.hamiltonian
+  law_schema_ids:
+    - law.analytical.hamilton_canonical_equations
+  premise_role:
+    - identity
+    - wrapper
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - ring_nf
+
+MechLib.Systems.DampedOscillator.dampedRegimes_course_form:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - wrapper
+    - classification
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Systems.HarmonicOscillator.periodFrequency_course_form:
+  primary_spec_id: systems.harmonic_oscillator
+  secondary_spec_ids:
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - wrapper
+    - example
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Systems.Pendulum.smallAngle_to_SHM:
+  primary_spec_id: systems.pendulum
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.lagrange_equation
+  concept_ids:
+    - concept.lagrangian
+    - concept.generalized_coordinates
+  law_schema_ids:
+    - law.analytical.euler_lagrange_equation
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.pendulum_lagrangian
+  premise_role:
+    - schema_bridge
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - intro t
+    - simpa [MechLib.Systems.Pendulum.equationResidual, MechLib.Systems.Pendulum.PendulumEquationResidual]
+
+MechLib.Systems.CentralForce.hookeCentralForce_torque_zero_course_form:
+  primary_spec_id: systems.central_force
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+    - statics.moment
+  concept_ids:
+    - concept.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - wrapper
+    - bridge
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simp
+
+MechLib.Compat.PHYSlib.SI.newton_second_law:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - foundation.si_units
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - compatibility
+    - law
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Units.Quantity.val_ofReal:
+  primary_spec_id: foundation.quantity
+  secondary_spec_ids:
+    - foundation.dimensions
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rfl
+
+MechLib.Dynamics.Verified.Dynamics.momentum_change_const_mass:
+  primary_spec_id: dynamics.momentum
+  secondary_spec_ids:
+    - dynamics.newton_law
+    - dynamics.particle_dynamics
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - bridge
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.SystemDynamics.centerOfMassBalance_eq:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - dynamics.newton_law
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.SystemDynamics.centerOfMassBalance_eq]
+    - rfl
+
+MechLib.Dynamics.SystemDynamics.twoBody_kineticEnergy_decomposition_verified:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - decomposition
+    - wrapper
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Verified.SystemDynamics.totalMass_nil:
+  primary_spec_id: dynamics.system_dynamics
+  premise_role:
+    - definition
+    - simp
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - simp
+
+MechLib.Dynamics.Verified.SystemDynamics.totalMass_cons:
+  primary_spec_id: dynamics.system_dynamics
+  premise_role:
+    - definition
+    - simp
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - simp
+
+MechLib.Dynamics.Verified.SystemDynamics.reducedMass_symm:
+  primary_spec_id: dynamics.system_dynamics
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - identity
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Verified.SystemDynamics.twoBody_kineticEnergy_decomposition:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - decomposition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Verified.SystemDynamics.systemMomentBalanceAboutOrigin_eq:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+  concept_ids:
+    - concept.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - balance
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+# Alignment review phase 1: manually reviewed low-score mappings.
+
+MechLib.Kinematics.Verified.Kinematics.displacement_eq_sub:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.Verified.Kinematics.displacement_eq_sub]
+    - simp
+
+MechLib.Kinematics.Verified.Kinematics.position_from_displacement:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.hasVelocity_linear_combination:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - lemma
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.hasAcceleration_linear_combination:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - lemma
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.trajectory_reconstruction:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.Verified.Kinematics.trajectory_reconstruction]
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.relative_trajectory_trans:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.Verified.Kinematics.relative_trajectory_trans]
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.relative_velocity_trans:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.Verified.Kinematics.relative_velocity_trans]
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.relative_acceleration_trans:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.Verified.Kinematics.relative_acceleration_trans]
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.hasVelocity_relative:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - lemma
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.hasAcceleration_relative:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - lemma
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.vec_relative_trajectory_trans:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.Verified.Kinematics.vec_relative_trajectory_trans]
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.vec_relative_velocity_trans:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.Verified.Kinematics.vec_relative_velocity_trans]
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.hasVecVelocity_relative:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - lemma
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.hasVecAcceleration_relative:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - lemma
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.linear_constraint_velocity:
+  primary_spec_id: analytical.constraints
+  secondary_spec_ids:
+    - kinematics.point_motion
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.linear_constraint_acceleration:
+  primary_spec_id: analytical.constraints
+  secondary_spec_ids:
+    - kinematics.point_motion
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.rope_constraint_velocity:
+  primary_spec_id: analytical.constraints
+  secondary_spec_ids:
+    - kinematics.point_motion
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.pfaffConstraint1D_linear_combination:
+  primary_spec_id: analytical.constraints
+  secondary_spec_ids:
+    - kinematics.point_motion
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.rigid_pair_velocity_equal:
+  primary_spec_id: kinematics.rigid_body_motion
+  secondary_spec_ids:
+    - kinematics.relative_motion
+  premise_role:
+    - constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Kinematics.Verified.Kinematics.rigid_pair_vec_velocity_equal:
+  primary_spec_id: kinematics.rigid_body_motion
+  secondary_spec_ids:
+    - kinematics.relative_motion
+  premise_role:
+    - constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Verified.WorkEnergy.work_def:
+  primary_spec_id: dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.WorkEnergy.work_def]
+    - rfl
+
+MechLib.Dynamics.Verified.MomentumImpulse.momentum_conservation_inelastic:
+  primary_spec_id: dynamics.collision
+  secondary_spec_ids:
+    - dynamics.momentum
+    - dynamics.impulse
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - law
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Verified.SystemDynamics.totalMomentum_nil:
+  primary_spec_id: dynamics.momentum
+  secondary_spec_ids:
+    - dynamics.system_dynamics
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp
+
+MechLib.Dynamics.Verified.SystemDynamics.totalMomentum_cons:
+  primary_spec_id: dynamics.momentum
+  secondary_spec_ids:
+    - dynamics.system_dynamics
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp
+
+MechLib.Dynamics.Verified.SystemDynamics.centerOfMassPosition_singleton:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - dynamics.momentum
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Verified.SystemDynamics.centerOfMassVelocity_singleton:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - dynamics.momentum
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Verified.SystemDynamics.totalMomentum_two_eq_totalMass_mul_centerVelocity:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - dynamics.momentum
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Dynamics.Verified.SystemDynamics.centerOfMassTheorem_eq:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - dynamics.momentum
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.SystemDynamics.centerOfMassTheorem_eq]
+    - rfl
+
+MechLib.Dynamics.Verified.SystemDynamics.variableMassMomentumBalance_eq:
+  primary_spec_id: dynamics.variable_mass
+  secondary_spec_ids:
+    - dynamics.system_dynamics
+    - dynamics.momentum
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.SystemDynamics.variableMassMomentumBalance_eq]
+    - rfl
+
+MechLib.RigidBody.Verified.Rotation.parallel_axis_theorem:
+  primary_spec_id: rigidbody.inertia
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  premise_role:
+    - law
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.RigidBody.Verified.Rotation.rigidBodyKineticDecomposition_eq:
+  primary_spec_id: rigidbody.plane_motion_dynamics
+  secondary_spec_ids:
+    - dynamics.work_energy
+    - rigidbody.inertia
+    - rigidbody.fixed_axis_dynamics
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.Verified.Rotation.rigidBodyKineticDecomposition_eq]
+    - rfl
+
+MechLib.RigidBody.Verified.Rotation.momentOfMomentumTheoremSystem_eq:
+  primary_spec_id: dynamics.angular_momentum
+  secondary_spec_ids:
+    - statics.moment
+    - rigidbody.fixed_axis_dynamics
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.Verified.Rotation.momentOfMomentumTheoremSystem_eq]
+    - rfl
+
+MechLib.Systems.Verified.SHM.initialPosition_eq:
+  primary_spec_id: systems.harmonic_oscillator
+  secondary_spec_ids:
+    - kinematics.point_motion
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.SHM.initialPosition_eq]
+    - simpa
+
+MechLib.Systems.Verified.SHM.amplitudeFromInitial_nonneg:
+  primary_spec_id: systems.harmonic_oscillator
+  secondary_spec_ids:
+    - kinematics.point_motion
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - helper
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - positivity
+
+MechLib.Systems.Verified.SHM.turningPoint_def:
+  primary_spec_id: systems.harmonic_oscillator
+  secondary_spec_ids:
+    - kinematics.point_motion
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.SHM.turningPoint_def]
+    - rfl
+
+MechLib.Systems.Verified.DampedSHM.m_ne_zero:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+  premise_role:
+    - helper
+    - side_condition
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - positivity
+
+MechLib.Systems.Verified.DampedSHM.k_ne_zero:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+  premise_role:
+    - helper
+    - side_condition
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - positivity
+
+MechLib.Systems.Verified.DampedSHM.omega0_pos:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+  premise_role:
+    - helper
+    - side_condition
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - positivity
+
+MechLib.Systems.Verified.DampedSHM.omega0_sq_val:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.omega0_sq_val]
+    - simpa
+
+MechLib.Systems.Verified.DampedSHM.regimes_trichotomy:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - classification
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - rcases
+
+MechLib.Systems.Verified.DampedSHM.underdamped_not_overdamped:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - classification
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - intro
+
+MechLib.Systems.Verified.DampedSHM.undamped_is_underdamped:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - classification
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Systems.Verified.DampedSHM.equationResidual_gamma_zero:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.equationResidual_gamma_zero]
+    - simpa
+
+MechLib.Systems.Verified.DampedSHM.equationOfMotion_gamma_zero_iff:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - equivalence
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.equationOfMotion_gamma_zero_iff]
+    - constructor
+
+MechLib.Systems.Verified.DampedSHM.energyDissipationLaw_eq:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.energyDissipationLaw_eq]
+    - rfl
+
+MechLib.Systems.Verified.DampedSHM.underdampedClosedForm_eq:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.underdampedClosedForm_eq]
+    - rfl
+
+MechLib.Systems.Verified.DampedSHM.criticalClosedForm_eq:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.criticalClosedForm_eq]
+    - rfl
+
+MechLib.Systems.Verified.DampedSHM.overdampedClosedForm_eq:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.overdampedClosedForm_eq]
+    - rfl
+
+MechLib.Systems.Verified.CentralForce.hookeCentralForce_isCentral:
+  primary_spec_id: systems.central_force
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+    - statics.moment
+  concept_ids:
+    - concept.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - law
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - simpa
+
+MechLib.Systems.Verified.CentralForce.radialEquation_eq:
+  primary_spec_id: systems.central_force
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+    - statics.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - definition
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.CentralForce.radialEquation_eq]
+    - rfl
+
+MechLib.Systems.Verified.CentralForce.keplerSecondLaw_eq:
+  primary_spec_id: systems.central_force
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+    - statics.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - law
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.CentralForce.keplerSecondLaw_eq]
+    - rfl
+
+MechLib.Systems.Verified.CentralForce.classifyInverseSquareOrbit_trichotomy:
+  primary_spec_id: systems.central_force
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+    - statics.moment
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - classification
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact
+    - rcases
+
+MechLib.Systems.Verified.CentralForce.fin_induction_three_one:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - systems.central_force
+  premise_role:
+    - helper
+  trust_level: derived
+  callable_by_llm: false
+  needs_review: true
+  proof_hints:
+    - simp [MechLib.Systems.Verified.CentralForce.fin_induction_three_one]
+
+MechLib.Systems.Verified.CentralForce.fin_induction_three_two:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - systems.central_force
+  premise_role:
+    - helper
+  trust_level: derived
+  callable_by_llm: false
+  needs_review: true
+  proof_hints:
+    - simp [MechLib.Systems.Verified.CentralForce.fin_induction_three_two]
+
+MechLib.Systems.Verified.CentralForce.fin_induction_two_one:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - systems.central_force
+  premise_role:
+    - helper
+  trust_level: derived
+  callable_by_llm: false
+  needs_review: true
+  proof_hints:
+    - simp [MechLib.Systems.Verified.CentralForce.fin_induction_two_one]
+
+MechLib.Examples.FinalTheoremDemos.uniformAccelerationDisplacement_byCalculation:
+  primary_spec_id: kinematics.point_motion
+  secondary_spec_ids:
+    - foundation.dimensions
+    - foundation.quantity
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - worked_example
+    - rewrite
+    - typed_arithmetic
+  trust_level: example
+  callable_by_llm: false
+  proof_hints:
+    - exact MechLib.Examples.FinalTheoremDemos.uniformAccelerationDisplacement_byCalculation
+    - simpa
+
+MechLib.Examples.FinalTheoremDemos.speedTimeCastValue_bySimp:
+  primary_spec_id: foundation.quantity
+  secondary_spec_ids:
+    - foundation.dimensions
+    - foundation.si_units
+  premise_role:
+    - dimension_bridge
+    - cast_simplification
+    - typed_arithmetic
+  trust_level: example
+  callable_by_llm: false
+  proof_hints:
+    - simp
+    - simp [MechLib.Units.Quantity.cast_val]
+
+MechLib.Examples.FinalTheoremDemos.newtonSecondLaw_byDefinition:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - definition
+    - rewrite
+    - typed_arithmetic
+  trust_level: example
+  callable_by_llm: false
+  proof_hints:
+    - rfl
+
+MechLib.Examples.FinalTheoremDemos.workEnergyBalance_byValueAlgebra:
+  primary_spec_id: dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - worked_example
+    - value_algebra
+    - rewrite
+  trust_level: example
+  callable_by_llm: false
+  proof_hints:
+    - congrArg MechLib.Units.Quantity.val
+    - linarith
+    - ext
+
+MechLib.Examples.FinalTheoremDemos.impulseMomentum_byValueAlgebra:
+  primary_spec_id: dynamics.impulse
+  secondary_spec_ids:
+    - dynamics.momentum
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - worked_example
+    - value_algebra
+    - rewrite
+  trust_level: example
+  callable_by_llm: false
+  proof_hints:
+    - congrArg MechLib.Units.Quantity.val
+    - linarith
+    - ext
+
+MechLib.Examples.FinalTheoremDemos.eulerLagrangeNewtonBridge_byResidualAlgebra:
+  primary_spec_id: analytical.lagrange_equation
+  secondary_spec_ids:
+    - dynamics.newton_law
+    - dynamics.particle_dynamics
+  concept_ids:
+    - concept.lagrangian
+    - concept.generalized_coordinates
+  law_schema_ids:
+    - law.analytical.euler_lagrange_equation
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.systems.pendulum_lagrangian
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - bridge
+    - equivalence
+    - residual_expansion
+  trust_level: example
+  callable_by_llm: false
+  proof_hints:
+    - constructor
+    - simp [MechLib.Analytical.LagrangeEquation.LagrangeEquationSchema]
+    - linarith
+
+MechLib.Kinematics.PointMotion.velocityDerivativeRelation_iff_hasVelocity:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - equivalence
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.PointMotion.velocityDerivativeRelation_iff_hasVelocity]
+    - constructor
+
+MechLib.Kinematics.PointMotion.velocityDerivativeRelation_apply:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - elimination
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.velocityDerivativeRelation_apply
+
+# Missing-declaration P0 extractor additions from v2 run review.
+
+MechLib.Dynamics.NewtonLaw.NewtonSecondLaw.to_value_equation:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+  concept_ids:
+    - concept.force_system
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - law_to_equation
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.NewtonSecondLaw.to_value_equation
+    - simpa [MechLib.Dynamics.NewtonLaw.NewtonSecondLaw]
+
+MechLib.Dynamics.NewtonLaw.forceBalance1D_to_value_equation:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+  concept_ids:
+    - concept.force_system
+  law_schema_ids:
+    - law.dynamics.newton_second_law
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - force_balance
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.forceBalance1D_to_value_equation
+
+MechLib.Dynamics.NewtonLaw.staticForceBalance1D_to_value_equation:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - statics.equilibrium
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - force_balance
+    - static_equilibrium
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.staticForceBalance1D_to_value_equation
+
+MechLib.Dynamics.NewtonLaw.constantVelocityForceBalance_to_value_equation:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - kinematics.point_motion
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - force_balance
+    - zero_acceleration
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.constantVelocityForceBalance_to_value_equation
+
+MechLib.Dynamics.NewtonLaw.weightForceRelation_to_value_equation:
+  primary_spec_id: dynamics.particle_dynamics
+  secondary_spec_ids:
+    - dynamics.newton_law
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - force_model
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.weightForceRelation_to_value_equation
+
+MechLib.Dynamics.NewtonLaw.forceEqualityRelation_to_value_equation:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - statics.force_system
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - force_balance
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.forceEqualityRelation_to_value_equation
+
+MechLib.Dynamics.NewtonLaw.forceDifferenceRelation_to_value_equation:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - statics.force_system
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - force_balance
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.forceDifferenceRelation_to_value_equation
+
+MechLib.Dynamics.NewtonLaw.forceSum2Relation_to_value_equation:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - statics.force_system
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - force_balance
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.forceSum2Relation_to_value_equation
+
+MechLib.Dynamics.NewtonLaw.forceSum3Relation_to_value_equation:
+  primary_spec_id: dynamics.newton_law
+  secondary_spec_ids:
+    - statics.force_system
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - force_balance
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.NewtonLaw.forceSum3Relation_to_value_equation
+
+MechLib.Kinematics.PointMotion.accelerationDerivativeRelation_apply:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - extractor
+    - derivative_elimination
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.accelerationDerivativeRelation_apply
+
+MechLib.Kinematics.PointMotion.accelerationDerivativeRelation_iff_hasAcceleration:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - equivalence
+    - derivative_elimination
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.PointMotion.accelerationDerivativeRelation_iff_hasAcceleration]
+    - constructor
+
+MechLib.Kinematics.PointMotion.componentVelocityDerivativeRelation_of_hasVecVelocity:
+  primary_spec_id: kinematics.coordinate_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - component_derivative
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.componentVelocityDerivativeRelation_of_hasVecVelocity
+
+MechLib.Kinematics.PointMotion.componentAccelerationDerivativeRelation_of_hasVecAcceleration:
+  primary_spec_id: kinematics.coordinate_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - component_derivative
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.componentAccelerationDerivativeRelation_of_hasVecAcceleration
+
+MechLib.Kinematics.PointMotion.averageVelocityRelation_to_value_equation:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - extractor
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.averageVelocityRelation_to_value_equation
+
+MechLib.Kinematics.PointMotion.averageAccelerationRelation_to_value_equation:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - extractor
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.averageAccelerationRelation_to_value_equation
+
+MechLib.Kinematics.PointMotion.constantAccelerationVelocityRelation_to_value_equation:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - extractor
+    - constant_acceleration
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.constantAccelerationVelocityRelation_to_value_equation
+
+MechLib.Kinematics.PointMotion.constantAccelerationSpeedSquaredRelation_to_value_equation:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - extractor
+    - constant_acceleration
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.constantAccelerationSpeedSquaredRelation_to_value_equation
+
+MechLib.Kinematics.PointMotion.centripetalAccelerationRelation_to_value_equation:
+  primary_spec_id: kinematics.fixed_axis_rotation
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - extractor
+    - circular_motion
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.centripetalAccelerationRelation_to_value_equation
+
+MechLib.Kinematics.PointMotion.relativeVelocityValueRelation_to_value_equation:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - relative_motion
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.relativeVelocityValueRelation_to_value_equation
+
+MechLib.Statics.Equilibrium.planeEquilibriumScalarComponents_iff:
+  primary_spec_id: statics.equilibrium
+  secondary_spec_ids:
+    - statics.force_system
+    - statics.moment
+  concept_ids:
+    - concept.force_system
+    - concept.moment
+  law_schema_ids:
+    - law.statics.planar_force_system_equilibrium
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - component_balance
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Statics.Equilibrium.planeEquilibriumScalarComponents_iff]
+    - rfl
+
+MechLib.Statics.Friction.kineticFrictionLaw_to_value_equation:
+  primary_spec_id: statics.friction
+  secondary_spec_ids:
+    - statics.constraint_force
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - friction_model
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.Friction.kineticFrictionLaw_to_value_equation
+
+MechLib.Statics.Friction.staticFrictionBound_to_value_inequality:
+  primary_spec_id: statics.friction
+  secondary_spec_ids:
+    - statics.constraint_force
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - friction_model
+    - inequality
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.Friction.staticFrictionBound_to_value_inequality
+
+MechLib.Statics.Friction.staticFrictionLimitingLaw_to_value_equation:
+  primary_spec_id: statics.friction
+  secondary_spec_ids:
+    - statics.constraint_force
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - friction_model
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.Friction.staticFrictionLimitingLaw_to_value_equation
+
+MechLib.RigidBody.FixedAxisDynamics.fixedAxisTorque_to_value_equation:
+  primary_spec_id: rigidbody.fixed_axis_dynamics
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+  concept_ids:
+    - concept.moment
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - extractor
+    - rotational_dynamics
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.RigidBody.FixedAxisDynamics.fixedAxisTorque_to_value_equation
+    - simp [MechLib.RigidBody.FixedAxisDynamics.FixedAxisTorque]
+
+MechLib.RigidBody.FixedAxisDynamics.fixedAxisDynamicsResidual_to_value_equation:
+  primary_spec_id: rigidbody.fixed_axis_dynamics
+  secondary_spec_ids:
+    - dynamics.angular_momentum
+  concept_ids:
+    - concept.moment
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - extractor
+    - rotational_dynamics
+    - rewrite
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.RigidBody.FixedAxisDynamics.fixedAxisDynamicsResidual_to_value_equation
+    - simpa [MechLib.RigidBody.FixedAxisDynamics.FixedAxisDynamicsResidual]
+
+MechLib.Dynamics.WorkEnergy.rotationalKineticEnergy_to_value_equation:
+  primary_spec_id: dynamics.work_energy
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - extractor
+    - kinetic_energy
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.WorkEnergy.rotationalKineticEnergy_to_value_equation
+    - ring_nf
+
+MechLib.Dynamics.WorkEnergy.constantTorqueWork_to_value_equation:
+  primary_spec_id: dynamics.work_energy
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  concept_ids:
+    - concept.moment
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - extractor
+    - torque_work
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.WorkEnergy.constantTorqueWork_to_value_equation
+
+# P1 typed interface extractors: rope/pulley/friction, inertia, COM, relative motion, components.
+
+MechLib.Statics.ConstraintForce.idealRopeUniformTension_to_value_equation:
+  primary_spec_id: statics.constraint_force
+  secondary_spec_ids:
+    - analytical.constraints
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - extractor
+    - rope_constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.ConstraintForce.idealRopeUniformTension_to_value_equation
+
+MechLib.Statics.ConstraintForce.idealPulleySharedAcceleration_to_value_equation:
+  primary_spec_id: statics.constraint_force
+  secondary_spec_ids:
+    - analytical.constraints
+    - kinematics.fixed_axis_rotation
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.atwood_constraint_modeling
+    - problem.systems.rolling_disk_no_slip
+  premise_role:
+    - extractor
+    - pulley_constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.ConstraintForce.idealPulleySharedAcceleration_to_value_equation
+
+MechLib.Statics.ConstraintForce.noSlipPulleyVelocityRelation_to_value_equation:
+  primary_spec_id: kinematics.fixed_axis_rotation
+  secondary_spec_ids:
+    - statics.constraint_force
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.rolling_disk_no_slip
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - extractor
+    - no_slip_constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.ConstraintForce.noSlipPulleyVelocityRelation_to_value_equation
+
+MechLib.Statics.ConstraintForce.noSlipPulleyAccelerationRelation_to_value_equation:
+  primary_spec_id: kinematics.fixed_axis_rotation
+  secondary_spec_ids:
+    - statics.constraint_force
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.rolling_disk_no_slip
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - extractor
+    - no_slip_constraint
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.ConstraintForce.noSlipPulleyAccelerationRelation_to_value_equation
+
+MechLib.Statics.Friction.capstanTensionRatio_to_value_equation:
+  primary_spec_id: statics.friction
+  secondary_spec_ids:
+    - statics.constraint_force
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - capstan_friction
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.Friction.capstanTensionRatio_to_value_equation
+
+MechLib.Statics.Friction.capstanTensionBound_to_value_inequality:
+  primary_spec_id: statics.friction
+  secondary_spec_ids:
+    - statics.constraint_force
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - capstan_friction
+    - inequality
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Statics.Friction.capstanTensionBound_to_value_inequality
+
+MechLib.RigidBody.Inertia.pointMassMomentOfInertia_to_value_equation:
+  primary_spec_id: rigidbody.inertia
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  problem_schema_ids:
+    - problem.systems.rolling_disk_no_slip
+  premise_role:
+    - extractor
+    - inertia_formula
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.RigidBody.Inertia.pointMassMomentOfInertia_to_value_equation
+    - simp [MechLib.RigidBody.Inertia.PointMassMomentOfInertia]
+
+MechLib.RigidBody.Inertia.slenderRodMomentOfInertiaCenter_to_value_equation:
+  primary_spec_id: rigidbody.inertia
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  premise_role:
+    - extractor
+    - inertia_formula
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.RigidBody.Inertia.slenderRodMomentOfInertiaCenter_to_value_equation
+    - ring_nf
+
+MechLib.RigidBody.Inertia.radiusOfGyrationRelation_to_value_equation:
+  primary_spec_id: rigidbody.inertia
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  premise_role:
+    - extractor
+    - inertia_formula
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.RigidBody.Inertia.radiusOfGyrationRelation_to_value_equation
+
+MechLib.RigidBody.PlaneMotionDynamics.planeMotionKineticEnergy_to_value_equation:
+  primary_spec_id: rigidbody.plane_motion_dynamics
+  secondary_spec_ids:
+    - dynamics.work_energy
+    - rigidbody.inertia
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+    - problem.systems.rolling_disk_no_slip
+  premise_role:
+    - extractor
+    - kinetic_energy
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.RigidBody.PlaneMotionDynamics.planeMotionKineticEnergy_to_value_equation
+    - ring_nf
+
+MechLib.RigidBody.PlaneMotionDynamics.planeMotionEnergyResidual_to_value_equation:
+  primary_spec_id: rigidbody.plane_motion_dynamics
+  secondary_spec_ids:
+    - dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - extractor
+    - kinetic_energy
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.RigidBody.PlaneMotionDynamics.planeMotionEnergyResidual_to_value_equation
+
+MechLib.Dynamics.SystemDynamics.centerOfMassDisplacement2_to_value_equation:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - kinematics.relative_motion
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - center_of_mass
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.SystemDynamics.centerOfMassDisplacement2_to_value_equation
+
+MechLib.Dynamics.SystemDynamics.centerOfMassDisplacementConservation2_to_value_equation:
+  primary_spec_id: dynamics.system_dynamics
+  secondary_spec_ids:
+    - kinematics.relative_motion
+  problem_schema_ids:
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - center_of_mass
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Dynamics.SystemDynamics.centerOfMassDisplacementConservation2_to_value_equation
+
+MechLib.Kinematics.RelativeMotion.relativeDisplacementValueRelation_to_value_equation:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - relative_motion
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.RelativeMotion.relativeDisplacementValueRelation_to_value_equation
+
+MechLib.Kinematics.RelativeMotion.relativeAccelerationValueRelation_to_value_equation:
+  primary_spec_id: kinematics.relative_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - relative_motion
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.RelativeMotion.relativeAccelerationValueRelation_to_value_equation
+
+MechLib.Kinematics.CoordinateMotion.forceComponents2D_to_value_equations:
+  primary_spec_id: kinematics.coordinate_motion
+  secondary_spec_ids:
+    - statics.force_system
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - component_projection
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.CoordinateMotion.forceComponents2D_to_value_equations
+
+MechLib.Kinematics.CoordinateMotion.forceComponentsFromAngle_to_value_equations:
+  primary_spec_id: kinematics.coordinate_motion
+  secondary_spec_ids:
+    - statics.force_system
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - component_projection
+    - trigonometric_model
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.CoordinateMotion.forceComponentsFromAngle_to_value_equations
+
+MechLib.Kinematics.CoordinateMotion.vectorMagnitudeSquared2DValue_to_value_equation:
+  primary_spec_id: foundation.geometry
+  secondary_spec_ids:
+    - kinematics.coordinate_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - coordinate_geometry
+    - rewrite
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.CoordinateMotion.vectorMagnitudeSquared2DValue_to_value_equation
+
+# Closed-form derivative bridge extractors for A2/E proof obligations.
+
+MechLib.Kinematics.PointMotion.velocity_value_eq_deriv_of_position_value:
+  primary_spec_id: kinematics.point_motion
+  secondary_spec_ids:
+    - kinematics.coordinate_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - closed_form_derivative
+    - velocity_bridge
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.velocity_value_eq_deriv_of_position_value
+    - apply HasDerivAt.unique
+
+MechLib.Kinematics.PointMotion.acceleration_value_eq_deriv_of_velocity_value:
+  primary_spec_id: kinematics.point_motion
+  secondary_spec_ids:
+    - kinematics.coordinate_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - closed_form_derivative
+    - acceleration_bridge
+  trust_level: core
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.acceleration_value_eq_deriv_of_velocity_value
+    - apply HasDerivAt.unique
+
+MechLib.Kinematics.PointMotion.component_velocity_value_eq_deriv_of_position_component_value:
+  primary_spec_id: kinematics.coordinate_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - closed_form_derivative
+    - component_derivative
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.component_velocity_value_eq_deriv_of_position_component_value
+
+MechLib.Kinematics.PointMotion.component_acceleration_value_eq_deriv_of_velocity_component_value:
+  primary_spec_id: kinematics.coordinate_motion
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - closed_form_derivative
+    - component_derivative
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.component_acceleration_value_eq_deriv_of_velocity_component_value
+
+MechLib.Kinematics.PointMotion.secondDerivativeRelation_of_velocity_acceleration:
+  primary_spec_id: kinematics.point_motion
+  secondary_spec_ids:
+    - kinematics.coordinate_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - bridge
+    - second_derivative
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.secondDerivativeRelation_of_velocity_acceleration
+
+MechLib.Kinematics.PointMotion.acceleration_value_eq_second_deriv_of_position_value:
+  primary_spec_id: kinematics.point_motion
+  secondary_spec_ids:
+    - kinematics.coordinate_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+    - problem.dynamics.particle_dynamics
+  premise_role:
+    - extractor
+    - closed_form_second_derivative
+    - acceleration_bridge
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.PointMotion.acceleration_value_eq_second_deriv_of_position_value
+
+MechLib.Kinematics.FixedAxisRotation.angular_velocity_value_eq_deriv_of_angle_value:
+  primary_spec_id: kinematics.fixed_axis_rotation
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  problem_schema_ids:
+    - problem.systems.rolling_disk_no_slip
+  premise_role:
+    - extractor
+    - closed_form_derivative
+    - angular_motion
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.FixedAxisRotation.angular_velocity_value_eq_deriv_of_angle_value
+
+MechLib.Kinematics.FixedAxisRotation.angular_acceleration_value_eq_deriv_of_omega_value:
+  primary_spec_id: kinematics.fixed_axis_rotation
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  problem_schema_ids:
+    - problem.systems.rolling_disk_no_slip
+  premise_role:
+    - extractor
+    - closed_form_derivative
+    - angular_motion
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.FixedAxisRotation.angular_acceleration_value_eq_deriv_of_omega_value
+
+MechLib.Kinematics.CoordinateMotion.forceMagnitude2D_to_value_equation:
+  primary_spec_id: statics.force_system
+  secondary_spec_ids:
+    - kinematics.coordinate_motion
+    - foundation.geometry
+  concept_ids:
+    - concept.force_system
+  problem_schema_ids:
+    - problem.statics.planar_equilibrium
+  premise_role:
+    - extractor
+    - magnitude_relation
+    - coordinate_geometry
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.CoordinateMotion.forceMagnitude2D_to_value_equation
+
+MechLib.Kinematics.CoordinateMotion.parametric_curve_speed_squared:
+  primary_spec_id: kinematics.coordinate_motion
+  secondary_spec_ids:
+    - kinematics.planar_motion
+    - foundation.geometry
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - parametric_curve
+    - speed_magnitude
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.CoordinateMotion.parametric_curve_speed_squared
+
+MechLib.Kinematics.CoordinateMotion.arc_length_speed_relation:
+  primary_spec_id: kinematics.coordinate_motion
+  secondary_spec_ids:
+    - kinematics.planar_motion
+    - foundation.geometry
+  problem_schema_ids:
+    - problem.kinematics.composite_point_motion
+  premise_role:
+    - extractor
+    - arc_length
+    - derivative_elimination
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.CoordinateMotion.arc_length_speed_relation
+
+# 2026-05-16 audit: safe verified bridge/rewrite declarations promoted to callable whitelist.
+
+MechLib.Analytical.Constraints.fixedCoordinateConstraint_satisfied_iff:
+  primary_spec_id: analytical.constraints
+  secondary_spec_ids:
+    - analytical.generalized_coordinates
+  concept_ids:
+    - concept.constraints
+  problem_schema_ids:
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - equivalence
+    - rewrite
+    - constraint
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Analytical.Constraints.fixedCoordinateConstraint_satisfied_iff]
+    - constructor
+
+MechLib.Analytical.Constraints.lagrangeMultiplierEquation1D_eq:
+  primary_spec_id: analytical.constraints
+  secondary_spec_ids:
+    - analytical.lagrange_equation
+    - dynamics.particle_dynamics
+  concept_ids:
+    - concept.constraints
+    - concept.generalized_coordinates
+  law_schema_ids:
+    - law.analytical.euler_lagrange_equation
+  problem_schema_ids:
+    - problem.systems.atwood_constraint_modeling
+  premise_role:
+    - rewrite
+    - constraint
+    - lagrange_multiplier
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Analytical.Constraints.lagrangeMultiplierEquation1D_eq]
+
+MechLib.Compat.PHYSlib.SI.Scalar_val_inj:
+  primary_spec_id: foundation.quantity
+  secondary_spec_ids:
+    - foundation.dimensions
+    - foundation.si_units
+  premise_role:
+    - rewrite
+    - typed_arithmetic
+    - compatibility_bridge
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Compat.PHYSlib.SI.Scalar_val_inj]
+
+MechLib.Dynamics.Verified.WorkEnergy.hooke_force_eq:
+  primary_spec_id: dynamics.work_energy
+  secondary_spec_ids:
+    - dynamics.particle_dynamics
+    - systems.harmonic_oscillator
+  concept_ids:
+    - concept.potential_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - rewrite
+    - force_law
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.WorkEnergy.hooke_force_eq]
+
+MechLib.Dynamics.Verified.WorkEnergy.kineticEnergy_change_formula:
+  primary_spec_id: dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - rewrite
+    - energy_balance
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.WorkEnergy.kineticEnergy_change_formula]
+
+MechLib.Dynamics.Verified.WorkEnergy.force_length_eq_energy:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - dynamics.work_energy
+    - foundation.si_units
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.WorkEnergy.force_length_eq_energy]
+
+MechLib.Dynamics.Verified.WorkEnergy.work1D_def:
+  primary_spec_id: dynamics.work_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - definition
+    - rewrite
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Dynamics.Verified.WorkEnergy.work1D_def]
+
+MechLib.Dynamics.Verified.SystemDynamics.mass_length_sub_mass_eq_length:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - dynamics.system_dynamics
+    - foundation.si_units
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.SystemDynamics.mass_length_sub_mass_eq_length]
+
+MechLib.Dynamics.Verified.SystemDynamics.mass_two_sub_mass_eq_mass:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - dynamics.system_dynamics
+    - foundation.si_units
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.Verified.SystemDynamics.mass_two_sub_mass_eq_mass]
+
+MechLib.Dynamics.WorkEnergy.torque_angle_eq_energy:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - dynamics.work_energy
+    - rigidbody.fixed_axis_dynamics
+    - foundation.si_units
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Dynamics.WorkEnergy.torque_angle_eq_energy]
+
+MechLib.Foundation.Dim.dimensionBridge_eq:
+  primary_spec_id: foundation.dimensions
+  premise_role:
+    - equivalence
+    - rewrite
+    - dimension_bridge
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Foundation.Dim.dimensionBridge_eq]
+
+MechLib.Kinematics.Verified.Kinematics.constant_speed_relation:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - rewrite
+    - constant_speed
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.Verified.Kinematics.constant_speed_relation
+
+MechLib.Kinematics.Verified.Kinematics.velocity_increment:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - rewrite
+    - constant_acceleration
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.Verified.Kinematics.velocity_increment
+
+MechLib.Kinematics.Verified.Kinematics.displacement_forms_equiv:
+  primary_spec_id: kinematics.point_motion
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - equivalence
+    - rewrite
+    - constant_acceleration
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Kinematics.Verified.Kinematics.displacement_forms_equiv
+
+MechLib.Kinematics.Verified.Kinematics.vec_velocity_const_accel_eq:
+  primary_spec_id: kinematics.point_motion
+  secondary_spec_ids:
+    - foundation.vector_quantity
+  problem_schema_ids:
+    - problem.kinematics.uniform_acceleration_point_motion
+  premise_role:
+    - rewrite
+    - vector_motion
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Kinematics.Verified.Kinematics.vec_velocity_const_accel_eq]
+
+MechLib.RigidBody.Verified.Rotation.rotationalKineticEnergy_eq:
+  primary_spec_id: rigidbody.fixed_axis_dynamics
+  secondary_spec_ids:
+    - dynamics.work_energy
+  concept_ids:
+    - concept.kinetic_energy
+  law_schema_ids:
+    - law.dynamics.work_energy_theorem
+  problem_schema_ids:
+    - problem.dynamics.work_energy_find_speed
+  premise_role:
+    - rewrite
+    - rotational_energy
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.Verified.Rotation.rotationalKineticEnergy_eq]
+
+MechLib.RigidBody.Verified.Rotation.zero_add_zero_dim_eq_zero:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - rigidbody.fixed_axis_dynamics
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.RigidBody.Verified.Rotation.zero_add_zero_dim_eq_zero]
+
+MechLib.Systems.Verified.SHM.acceleration_eq_neg_omega_sq_mul_pos:
+  primary_spec_id: systems.harmonic_oscillator
+  secondary_spec_ids:
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+    - equation_of_motion
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.SHM.acceleration_eq_neg_omega_sq_mul_pos]
+
+MechLib.Systems.Verified.SHM.initialVelocity_eq:
+  primary_spec_id: systems.harmonic_oscillator
+  secondary_spec_ids:
+    - kinematics.point_motion
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+    - initial_condition
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.SHM.initialVelocity_eq]
+
+MechLib.Systems.Verified.DampedSHM.equationResidual_eq:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+    - equation_of_motion
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.equationResidual_eq]
+
+MechLib.Systems.Verified.DampedSHM.discriminant_eq:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - analytical.small_oscillations
+  law_schema_ids:
+    - law.analytical.small_oscillation_equation
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+    - regime_classification
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.discriminant_eq]
+
+MechLib.Systems.Verified.DampedSHM.damping_sub_mass_eq_frequency:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - systems.damped_oscillator
+    - foundation.si_units
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.damping_sub_mass_eq_frequency]
+
+MechLib.Systems.Verified.DampedSHM.mass_sub_damping_eq_time:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - systems.damped_oscillator
+    - foundation.si_units
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.mass_sub_damping_eq_time]
+
+MechLib.Systems.Verified.DampedSHM.zero_add_zero_eq_zero:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - systems.damped_oscillator
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.DampedSHM.zero_add_zero_eq_zero]
+
+MechLib.Systems.Verified.DampedSHM.qualityFactor_mul_dampingRatio:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - analytical.small_oscillations
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+    - dimensionless_relation
+    - side_condition
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Systems.Verified.DampedSHM.qualityFactor_mul_dampingRatio
+
+MechLib.Systems.Verified.DampedSHM.relaxationTime_mul_dampingRate:
+  primary_spec_id: systems.damped_oscillator
+  secondary_spec_ids:
+    - analytical.small_oscillations
+  problem_schema_ids:
+    - problem.systems.coupled_oscillator_normal_modes
+  premise_role:
+    - rewrite
+    - dimensionless_relation
+    - side_condition
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - exact MechLib.Systems.Verified.DampedSHM.relaxationTime_mul_dampingRate
+
+MechLib.Systems.Verified.CentralForce.cross_self_zero:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - systems.central_force
+    - dynamics.angular_momentum
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - rewrite
+    - vector_identity
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.CentralForce.cross_self_zero]
+
+MechLib.Systems.Verified.CentralForce.energy_plus_length_sub_length_eq_energy:
+  primary_spec_id: foundation.dimensions
+  secondary_spec_ids:
+    - systems.central_force
+    - foundation.si_units
+  premise_role:
+    - dimension_bridge
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.CentralForce.energy_plus_length_sub_length_eq_energy]
+
+MechLib.Systems.Verified.CentralForce.hookeCentralForce_eq:
+  primary_spec_id: systems.central_force
+  secondary_spec_ids:
+    - systems.harmonic_oscillator
+  law_schema_ids:
+    - law.dynamics.angular_momentum_conservation
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - rewrite
+    - central_force_model
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.CentralForce.hookeCentralForce_eq]
+
+MechLib.Systems.Verified.CentralForce.inverseSquarePotential_eq:
+  primary_spec_id: systems.central_force
+  secondary_spec_ids:
+    - dynamics.work_energy
+  problem_schema_ids:
+    - problem.systems.central_force_angular_momentum
+  premise_role:
+    - rewrite
+    - potential_energy
+    - typed_arithmetic
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - rw [MechLib.Systems.Verified.CentralForce.inverseSquarePotential_eq]
+
+MechLib.Units.VecQuantity.val_zero:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.val_zero]
+
+MechLib.Units.VecQuantity.val_add:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.val_add]
+
+MechLib.Units.VecQuantity.val_sub:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.val_sub]
+
+MechLib.Units.VecQuantity.val_neg:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.val_neg]
+
+MechLib.Units.VecQuantity.val_smul:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.val_smul]
+
+MechLib.Units.VecQuantity.cast_val:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.cast_val]
+
+MechLib.Units.VecQuantity.val_qmul_vec:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.val_qmul_vec]
+
+MechLib.Units.VecQuantity.val_vecmul_q:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.val_vecmul_q]
+
+MechLib.Units.VecQuantity.dot_val:
+  primary_spec_id: foundation.vector_quantity
+  secondary_spec_ids:
+    - foundation.quantity
+    - foundation.dimensions
+  premise_role:
+    - rewrite
+    - dimension_bridge
+    - vector_value_projection
+  trust_level: derived
+  callable_by_llm: true
+  proof_hints:
+    - simp [MechLib.Units.VecQuantity.dot_val]

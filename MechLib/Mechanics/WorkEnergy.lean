@@ -24,11 +24,11 @@ def hookeForce (k : SpringConstant) (x : Length) : Force :=
   Quantity.cast (-(k * x)) SI.spring_plus_length_eq_force
 
 /-- 胡克定律力的定义展开：`F = -k x`（含量纲转换）。 -/
-theorem hooke_force_eq (k : SpringConstant) (x : Length) :
+abbrev hooke_force_eq (k : SpringConstant) (x : Length) :
     hookeForce k x = Quantity.cast (-(k * x)) SI.spring_plus_length_eq_force := rfl
 
 /-- 一维动能变化公式：`K2 - K1 = 1/2 m (v2^2 - v1^2)`。 -/
-theorem kineticEnergy_change_formula (m : Mass) (v2 v1 : Speed) :
+abbrev kineticEnergy_change_formula (m : Mass) (v2 v1 : Speed) :
     kineticEnergy1D m v2 - kineticEnergy1D m v1 =
       (1 / 2 : ℝ) • Quantity.cast (m * ((v2 ** 2) - (v1 ** 2))) SI.mass_two_speed_eq_energy := by
   ext
@@ -36,20 +36,20 @@ theorem kineticEnergy_change_formula (m : Mass) (v2 v1 : Speed) :
   ring
 
 /-- 功的定义展开：`W = F · s`。 -/
-theorem work_def {n : ℕ} (F : VecForce n) (s : VecLength n) : work F s = F ⬝ᵥ s := rfl
+abbrev work_def {n : ℕ} (F : VecForce n) (s : VecLength n) : work F s = F ⬝ᵥ s := rfl
 
-theorem force_length_eq_energy : SI.forceDim + SI.lengthDim = SI.energyDim := by native_decide
+abbrev force_length_eq_energy : SI.forceDim + SI.lengthDim = SI.energyDim := by native_decide
 
 /-- 一维功表达 `W = F Δx`。 -/
 def work1D (F : Force) (dx : Length) : Energy :=
   Quantity.cast (F * dx) force_length_eq_energy
 
 /-- 一维功表达展开。 -/
-theorem work1D_def (F : Force) (dx : Length) :
+abbrev work1D_def (F : Force) (dx : Length) :
     work1D F dx = Quantity.cast (F * dx) force_length_eq_energy := rfl
 
 /-- 功-能定理（主干形式）：若 `W_net = K2 - K1`，则 `K2 = K1 + W_net`。 -/
-theorem work_energy_theorem_core (Wnet K2 K1 : Energy) (h : Wnet = K2 - K1) :
+abbrev work_energy_theorem_core (Wnet K2 K1 : Energy) (h : Wnet = K2 - K1) :
     K2 = K1 + Wnet := by
   have hval : Wnet.val = K2.val - K1.val := by
     simpa using congrArg Quantity.val h
@@ -60,7 +60,7 @@ theorem work_energy_theorem_core (Wnet K2 K1 : Energy) (h : Wnet = K2 - K1) :
 
 /-- 保守/非保守分解：`W_net = W_cons + W_noncons` 与 `W_cons = -ΔU` 蕴含
 `Δ(K+U) = W_noncons`。 -/
-theorem conservative_nonconservative_split
+abbrev conservative_nonconservative_split
     (K2 K1 U2 U1 Wnet Wcons Wnoncons : Energy)
     (hNet : Wnet = K2 - K1)
     (hCons : Wcons = -(U2 - U1))

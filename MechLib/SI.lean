@@ -26,6 +26,8 @@ abbrev frequencyDim : Dim := -timeDim
 abbrev springConstantDim : Dim := forceDim - lengthDim
 abbrev dampingDim : Dim := massDim - timeDim
 abbrev angularVelocityDim : Dim := frequencyDim
+abbrev angularAccelerationDim : Dim := angularVelocityDim - timeDim
+abbrev angularVelocitySquaredDim : Dim := (2 : ℕ) • angularVelocityDim
 abbrev momentOfInertiaDim : Dim := massDim + (2 : ℕ) • lengthDim
 abbrev torqueDim : Dim := forceDim + lengthDim
 abbrev angularMomentumDim : Dim := momentumDim + lengthDim
@@ -53,6 +55,8 @@ abbrev Frequency := Quantity frequencyDim
 abbrev SpringConstant := Quantity springConstantDim
 abbrev DampingCoefficient := Quantity dampingDim
 abbrev AngularVelocity := Quantity angularVelocityDim
+abbrev AngularAcceleration := Quantity angularAccelerationDim
+abbrev AngularVelocitySquared := Quantity angularVelocitySquaredDim
 abbrev MomentOfInertia := Quantity momentOfInertiaDim
 abbrev Torque := Quantity torqueDim
 abbrev AngularMomentum := Quantity angularMomentumDim
@@ -113,6 +117,8 @@ theorem speed_time_eq_length : speedDim + timeDim = lengthDim := by native_decid
 
 theorem acceleration_time_eq_speed : accelerationDim + timeDim = speedDim := by native_decide
 
+theorem mass_acceleration_eq_force : massDim + accelerationDim = forceDim := by native_decide
+
 theorem damping_speed_eq_force : dampingDim + speedDim = forceDim := by native_decide
 
 theorem damping_two_speed_eq_power : dampingDim + (2 : ℕ) • speedDim = powerDim := by
@@ -129,13 +135,26 @@ theorem time_plus_angular_velocity_eq_dimensionless : timeDim + angularVelocityD
 theorem omega_sq_plus_length_eq_acceleration :
     (2 : ℕ) • angularVelocityDim + lengthDim = accelerationDim := by native_decide
 
+theorem angularVelocitySquared_plus_length_eq_acceleration :
+    angularVelocitySquaredDim + lengthDim = accelerationDim := by native_decide
+
+theorem length_plus_angularAcceleration_eq_acceleration :
+    lengthDim + angularAccelerationDim = accelerationDim := by native_decide
+
 theorem momentum_sub_mass_eq_speed : momentumDim - massDim = speedDim := by native_decide
 
 theorem force_time_eq_momentum : forceDim + timeDim = momentumDim := by native_decide
 
+theorem force_plus_length_eq_energy : forceDim + lengthDim = energyDim := by native_decide
+
+theorem power_time_eq_energy : powerDim + timeDim = energyDim := by native_decide
+
 theorem length_plus_force_eq_torque : lengthDim + forceDim = torqueDim := by native_decide
 
 theorem length_plus_momentum_eq_angularMomentum : lengthDim + momentumDim = angularMomentumDim := by native_decide
+
+theorem angularVelocity_plus_angularMomentum_eq_torque :
+    angularVelocityDim + angularMomentumDim = torqueDim := by native_decide
 
 theorem spring_plus_length_eq_force : springConstantDim + lengthDim = forceDim := by native_decide
 
@@ -143,6 +162,10 @@ theorem spring_plus_two_length_eq_energy : springConstantDim + (2 : ℕ) • len
 
 theorem mass_plus_two_omega_eq_spring :
     massDim + (2 : ℕ) • angularVelocityDim = springConstantDim := by
+  native_decide
+
+theorem mass_plus_angularVelocitySquared_eq_spring :
+    massDim + angularVelocitySquaredDim = springConstantDim := by
   native_decide
 
 theorem mass_plus_spring_eq_damping_discriminant :
@@ -155,6 +178,9 @@ theorem mass_two_speed_eq_energy : massDim + (2 : ℕ) • speedDim = energyDim 
 
 theorem moi_plus_omega_sq_eq_energy :
     momentOfInertiaDim + (2 : ℕ) • angularVelocityDim = energyDim := by native_decide
+
+theorem moi_plus_angularAcceleration_eq_torque :
+    momentOfInertiaDim + angularAccelerationDim = torqueDim := by native_decide
 
 /-- 可配置单位选择层：为每个维度给出一个缩放因子。 -/
 structure UnitChoices where

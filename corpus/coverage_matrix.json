@@ -1,0 +1,2390 @@
+{
+  "chapters": [
+    {
+      "en_name": "Foundation",
+      "id": "foundation",
+      "topics": [
+        {
+          "aliases_en": [
+            "dimension",
+            "base dimension",
+            "derived dimension"
+          ],
+          "aliases_zh": [
+            "量纲",
+            "基本量纲",
+            "导出量纲"
+          ],
+          "en_name": "dimensions",
+          "examples": [
+            "verify speed*time has length dimension"
+          ],
+          "id": "foundation.dimensions",
+          "key_concepts": [
+            "BaseDim",
+            "Dim",
+            "basis dimension",
+            "dimension equality"
+          ],
+          "laws": [
+            "dimension exponent algebra"
+          ],
+          "module_path": "MechLib.Foundation.Dim",
+          "prerequisites": [],
+          "problem_templates": [
+            "check dimensional consistency",
+            "derive target quantity dimension"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Units.Dim.ext",
+            "MechLib.Units.Dim.basis_apply_same",
+            "MechLib.Units.Dim.basis_apply_ne"
+          ],
+          "zh_name": "量纲"
+        },
+        {
+          "aliases_en": [
+            "quantity",
+            "dimensioned scalar",
+            "physical scalar"
+          ],
+          "aliases_zh": [
+            "物理量",
+            "带量纲量",
+            "标量物理量"
+          ],
+          "en_name": "quantity",
+          "examples": [
+            "read a force in newtons",
+            "convert between two units of the same dimension"
+          ],
+          "id": "foundation.quantity",
+          "key_concepts": [
+            "Quantity",
+            "typed scalar",
+            "unit value",
+            "dimension cast"
+          ],
+          "laws": [
+            "same-dimension addition",
+            "dimensioned multiplication",
+            "unit conversion"
+          ],
+          "module_path": "MechLib.Foundation.Quantity",
+          "prerequisites": [
+            "foundation.dimensions"
+          ],
+          "problem_templates": [
+            "compute scalar value in units",
+            "cast equivalent dimensions"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Units.Quantity.cast_val",
+            "MechLib.Units.Quantity.inUnits_self",
+            "MechLib.Units.Quantity.inUnits_trans",
+            "MechLib.Units.Quantity.inUnits_injective"
+          ],
+          "zh_name": "带量纲标量"
+        },
+        {
+          "aliases_en": [
+            "vector quantity",
+            "dimensioned vector"
+          ],
+          "aliases_zh": [
+            "带量纲向量",
+            "矢量物理量"
+          ],
+          "en_name": "vector quantity",
+          "examples": [
+            "show r cross r is zero",
+            "compute one-dimensional vector work"
+          ],
+          "id": "foundation.vector_quantity",
+          "key_concepts": [
+            "VecQuantity",
+            "dot product",
+            "cross product",
+            "component value"
+          ],
+          "laws": [
+            "vector addition",
+            "dot-product dimension",
+            "cross-product dimension"
+          ],
+          "module_path": "MechLib.Foundation.VecQuantity",
+          "prerequisites": [
+            "foundation.dimensions",
+            "foundation.quantity"
+          ],
+          "problem_templates": [
+            "work as force dot displacement",
+            "torque as radius cross force"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Units.VecQuantity.cast_val",
+            "MechLib.Units.VecQuantity.dot_val",
+            "MechLib.Systems.Verified.CentralForce.cross_self_zero"
+          ],
+          "zh_name": "带量纲向量"
+        },
+        {
+          "aliases_en": [
+            "SI units",
+            "International System of Units",
+            "base unit",
+            "derived unit"
+          ],
+          "aliases_zh": [
+            "SI单位",
+            "国际单位制",
+            "基本单位",
+            "导出单位"
+          ],
+          "en_name": "SI units",
+          "examples": [
+            "read acceleration in meters per second squared",
+            "check that force times time is momentum"
+          ],
+          "id": "foundation.si_units",
+          "key_concepts": [
+            "SI base unit",
+            "derived SI unit",
+            "unit conversion",
+            "dimension bridge theorem"
+          ],
+          "laws": [
+            "SI derived-dimension equalities",
+            "conversion-factor composition",
+            "conversion-factor inverse law"
+          ],
+          "module_path": "MechLib.Foundation.SI",
+          "prerequisites": [
+            "foundation.dimensions",
+            "foundation.quantity"
+          ],
+          "problem_templates": [
+            "convert a quantity into chosen units",
+            "derive a formula dimension from SI base dimensions"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.SI.speed_time_eq_length",
+            "MechLib.SI.force_time_eq_momentum",
+            "MechLib.SI.mass_two_speed_eq_energy",
+            "MechLib.SI.conversionFactor_comp",
+            "MechLib.SI.conversionFactor_mul_swap"
+          ],
+          "zh_name": "SI 单位"
+        },
+        {
+          "aliases_en": [
+            "geometry",
+            "point",
+            "segment",
+            "distance",
+            "angle"
+          ],
+          "aliases_zh": [
+            "几何",
+            "点",
+            "线段",
+            "距离",
+            "角度"
+          ],
+          "en_name": "geometry",
+          "examples": [
+            "represent a lever arm as a directed segment"
+          ],
+          "id": "foundation.geometry",
+          "key_concepts": [
+            "point",
+            "directed segment",
+            "distance",
+            "angle"
+          ],
+          "laws": [
+            "distance residual",
+            "diagram geometry constraints"
+          ],
+          "module_path": "MechLib.Foundation.Geometry",
+          "prerequisites": [
+            "foundation.vector_quantity"
+          ],
+          "problem_templates": [
+            "encode a mechanics diagram",
+            "state a geometric distance relation"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "几何对象"
+        },
+        {
+          "aliases_en": [
+            "reference frame",
+            "inertial frame",
+            "non-inertial frame"
+          ],
+          "aliases_zh": [
+            "参考系",
+            "惯性系",
+            "非惯性系"
+          ],
+          "en_name": "reference frame",
+          "examples": [
+            "rotating-frame derivative planning problem"
+          ],
+          "id": "foundation.reference_frame",
+          "key_concepts": [
+            "inertial frame",
+            "non-inertial frame",
+            "frame transform"
+          ],
+          "laws": [
+            "transport theorem",
+            "relative derivative relation"
+          ],
+          "module_path": "MechLib.Foundation.ReferenceFrame",
+          "prerequisites": [
+            "foundation.vector_quantity"
+          ],
+          "problem_templates": [
+            "model a rotating frame",
+            "state inertial vs relative acceleration"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.Kinematics.TransportTheoremRelation"
+          ],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "参考系"
+        },
+        {
+          "aliases_en": [
+            "coordinate system",
+            "Cartesian coordinates",
+            "polar coordinates",
+            "generalized coordinates"
+          ],
+          "aliases_zh": [
+            "坐标系",
+            "直角坐标",
+            "极坐标",
+            "广义坐标"
+          ],
+          "en_name": "coordinate system",
+          "examples": [
+            "plan polar-coordinate modeling for central-force motion"
+          ],
+          "id": "foundation.coordinate_system",
+          "key_concepts": [
+            "Cartesian coordinates",
+            "polar coordinates",
+            "generalized coordinates"
+          ],
+          "laws": [
+            "coordinate representation",
+            "basis component mapping"
+          ],
+          "module_path": "MechLib.Foundation.CoordinateSystem",
+          "prerequisites": [
+            "foundation.reference_frame"
+          ],
+          "problem_templates": [
+            "choose coordinates for constrained motion",
+            "translate diagram variables into coordinates"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "坐标系"
+        }
+      ],
+      "zh_name": "基础"
+    },
+    {
+      "en_name": "Statics",
+      "id": "statics",
+      "topics": [
+        {
+          "aliases_en": [
+            "force system",
+            "resultant force",
+            "free-body diagram"
+          ],
+          "aliases_zh": [
+            "力系",
+            "主矢",
+            "合力"
+          ],
+          "en_name": "force system",
+          "examples": [
+            "beam with multiple applied loads"
+          ],
+          "id": "statics.force_system",
+          "key_concepts": [
+            "force",
+            "resultant",
+            "line of action",
+            "free body diagram"
+          ],
+          "laws": [
+            "resultant force",
+            "force transmissibility"
+          ],
+          "module_path": "MechLib.Statics.ForceSystem",
+          "prerequisites": [
+            "foundation.vector_quantity"
+          ],
+          "problem_templates": [
+            "reduce a coplanar force system",
+            "draw a free-body diagram"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "力系"
+        },
+        {
+          "aliases_en": [
+            "moment",
+            "torque",
+            "moment arm"
+          ],
+          "aliases_zh": [
+            "力矩",
+            "转矩",
+            "力臂"
+          ],
+          "en_name": "moment",
+          "examples": [
+            "compute torque from r and F"
+          ],
+          "id": "statics.moment",
+          "key_concepts": [
+            "moment",
+            "torque",
+            "moment arm"
+          ],
+          "laws": [
+            "moment equals radius cross force"
+          ],
+          "module_path": "MechLib.Statics.Moment",
+          "prerequisites": [
+            "foundation.vector_quantity",
+            "statics.force_system"
+          ],
+          "problem_templates": [
+            "compute moment about a point",
+            "check zero moment for central force"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.RigidBody.Verified.Rotation.torque_def",
+            "MechLib.Systems.Verified.CentralForce.hookeCentralForce_torque_zero"
+          ],
+          "zh_name": "力矩"
+        },
+        {
+          "aliases_en": [
+            "couple",
+            "couple moment"
+          ],
+          "aliases_zh": [
+            "力偶",
+            "力偶矩"
+          ],
+          "en_name": "couple",
+          "examples": [
+            "two equal and opposite forces on a rigid body"
+          ],
+          "id": "statics.couple",
+          "key_concepts": [
+            "couple",
+            "free vector moment",
+            "couple equivalence"
+          ],
+          "laws": [
+            "couple moment independence of origin"
+          ],
+          "module_path": "MechLib.Statics.Couple",
+          "prerequisites": [
+            "statics.moment"
+          ],
+          "problem_templates": [
+            "replace a force pair by a couple"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "力偶"
+        },
+        {
+          "aliases_en": [
+            "equilibrium",
+            "static equilibrium",
+            "force balance"
+          ],
+          "aliases_zh": [
+            "平衡",
+            "静力平衡",
+            "受力平衡"
+          ],
+          "en_name": "equilibrium",
+          "examples": [
+            "simply supported beam reaction forces"
+          ],
+          "id": "statics.equilibrium",
+          "key_concepts": [
+            "static equilibrium",
+            "force balance",
+            "moment balance"
+          ],
+          "laws": [
+            "sum of forces is zero",
+            "sum of moments is zero"
+          ],
+          "module_path": "MechLib.Statics.Equilibrium",
+          "prerequisites": [
+            "statics.force_system",
+            "statics.moment"
+          ],
+          "problem_templates": [
+            "solve support reactions",
+            "test a rigid body for equilibrium"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "平衡"
+        },
+        {
+          "aliases_en": [
+            "constraint force",
+            "normal force",
+            "tension",
+            "reaction force"
+          ],
+          "aliases_zh": [
+            "约束力",
+            "支持力",
+            "张力",
+            "反力"
+          ],
+          "en_name": "constraint force",
+          "examples": [
+            "block supported by a cable and wall"
+          ],
+          "id": "statics.constraint_force",
+          "key_concepts": [
+            "normal force",
+            "tension",
+            "support reaction",
+            "ideal constraint"
+          ],
+          "laws": [
+            "ideal constraint work condition",
+            "reaction-force balance"
+          ],
+          "module_path": "MechLib.Statics.ConstraintForce",
+          "prerequisites": [
+            "statics.equilibrium"
+          ],
+          "problem_templates": [
+            "solve string tension",
+            "solve pin support reactions"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "约束力"
+        },
+        {
+          "aliases_en": [
+            "friction",
+            "static friction",
+            "kinetic friction",
+            "friction angle"
+          ],
+          "aliases_zh": [
+            "摩擦",
+            "静摩擦",
+            "动摩擦",
+            "摩擦角"
+          ],
+          "en_name": "friction",
+          "examples": [
+            "rough incline impending motion"
+          ],
+          "id": "statics.friction",
+          "key_concepts": [
+            "static friction",
+            "kinetic friction",
+            "friction cone",
+            "coefficient of friction"
+          ],
+          "laws": [
+            "Coulomb friction inequality",
+            "limiting friction law"
+          ],
+          "module_path": "MechLib.Statics.Friction",
+          "prerequisites": [
+            "statics.constraint_force"
+          ],
+          "problem_templates": [
+            "block on rough incline",
+            "ladder with friction"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "摩擦"
+        },
+        {
+          "aliases_en": [
+            "truss",
+            "two-force member",
+            "method of joints",
+            "method of sections"
+          ],
+          "aliases_zh": [
+            "桁架",
+            "二力杆",
+            "节点法",
+            "截面法"
+          ],
+          "en_name": "truss",
+          "examples": [
+            "three-bar triangular truss"
+          ],
+          "id": "statics.truss",
+          "key_concepts": [
+            "two-force member",
+            "joint equilibrium",
+            "method of joints",
+            "method of sections"
+          ],
+          "laws": [
+            "joint force balance",
+            "zero-force member criterion"
+          ],
+          "module_path": "MechLib.Statics.Truss",
+          "prerequisites": [
+            "statics.equilibrium"
+          ],
+          "problem_templates": [
+            "solve a planar truss by joints",
+            "cut a truss section"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "example",
+          "verified_decls": [],
+          "zh_name": "桁架"
+        }
+      ],
+      "zh_name": "静力学"
+    },
+    {
+      "en_name": "Kinematics",
+      "id": "kinematics",
+      "topics": [
+        {
+          "aliases_en": [
+            "point motion",
+            "velocity",
+            "acceleration"
+          ],
+          "aliases_zh": [
+            "点运动",
+            "速度",
+            "加速度"
+          ],
+          "en_name": "point motion",
+          "examples": [
+            "particle moving with constant acceleration"
+          ],
+          "id": "kinematics.point_motion",
+          "key_concepts": [
+            "trajectory",
+            "velocity",
+            "acceleration",
+            "constant acceleration"
+          ],
+          "laws": [
+            "velocity is derivative of position",
+            "constant-acceleration update"
+          ],
+          "module_path": "MechLib.Kinematics.PointMotion",
+          "prerequisites": [
+            "foundation.quantity"
+          ],
+          "problem_templates": [
+            "constant-speed displacement",
+            "constant-acceleration displacement"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Kinematics.Verified.Kinematics.displacement_eq_sub",
+            "MechLib.Kinematics.Verified.Kinematics.constant_speed_relation",
+            "MechLib.Kinematics.Verified.Kinematics.velocity_increment",
+            "MechLib.Kinematics.Verified.Kinematics.displacement_forms_equiv"
+          ],
+          "zh_name": "点的运动"
+        },
+        {
+          "aliases_en": [
+            "coordinate motion",
+            "component motion"
+          ],
+          "aliases_zh": [
+            "坐标运动",
+            "分量运动"
+          ],
+          "en_name": "coordinate motion",
+          "examples": [
+            "projectile described in Cartesian coordinates"
+          ],
+          "id": "kinematics.coordinate_motion",
+          "key_concepts": [
+            "component motion",
+            "Cartesian components",
+            "polar components"
+          ],
+          "laws": [
+            "component-wise kinematics",
+            "coordinate-dependent velocity decomposition"
+          ],
+          "module_path": "MechLib.Kinematics.CoordinateMotion",
+          "prerequisites": [
+            "foundation.coordinate_system",
+            "kinematics.point_motion"
+          ],
+          "problem_templates": [
+            "derive polar acceleration",
+            "decompose planar velocity"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "坐标运动"
+        },
+        {
+          "aliases_en": [
+            "relative motion",
+            "relative velocity",
+            "relative acceleration"
+          ],
+          "aliases_zh": [
+            "相对运动",
+            "相对速度",
+            "相对加速度"
+          ],
+          "en_name": "relative motion",
+          "examples": [
+            "relative velocity between two vehicles"
+          ],
+          "id": "kinematics.relative_motion",
+          "key_concepts": [
+            "relative trajectory",
+            "relative velocity",
+            "relative acceleration"
+          ],
+          "laws": [
+            "relative position transitivity",
+            "relative velocity transitivity"
+          ],
+          "module_path": "MechLib.Kinematics.RelativeMotion",
+          "prerequisites": [
+            "kinematics.point_motion"
+          ],
+          "problem_templates": [
+            "three-body relative velocity",
+            "rigid distance velocity equality"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Kinematics.Verified.Kinematics.relative_trajectory_trans",
+            "MechLib.Kinematics.Verified.Kinematics.relative_velocity_trans",
+            "MechLib.Kinematics.Verified.Kinematics.relative_acceleration_trans",
+            "MechLib.Kinematics.Verified.Kinematics.hasVelocity_relative"
+          ],
+          "zh_name": "相对运动"
+        },
+        {
+          "aliases_en": [
+            "rigid body motion",
+            "rigid constraint"
+          ],
+          "aliases_zh": [
+            "刚体运动",
+            "刚体约束"
+          ],
+          "en_name": "rigid body motion",
+          "examples": [
+            "two points connected by a rigid rod"
+          ],
+          "id": "kinematics.rigid_body_motion",
+          "key_concepts": [
+            "rigid constraint",
+            "rigid pair",
+            "body frame"
+          ],
+          "laws": [
+            "rigid distance implies equal constrained velocity along fixed separation"
+          ],
+          "module_path": "MechLib.Kinematics.RigidBodyMotion",
+          "prerequisites": [
+            "kinematics.relative_motion"
+          ],
+          "problem_templates": [
+            "rigid link velocity relation",
+            "rigid body velocity field planning"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.Kinematics.TransportTheoremRelation"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [
+            "MechLib.Kinematics.Verified.Kinematics.rigid_pair_velocity_equal",
+            "MechLib.Kinematics.Verified.Kinematics.rigid_pair_vec_velocity_equal"
+          ],
+          "zh_name": "刚体运动"
+        },
+        {
+          "aliases_en": [
+            "planar motion",
+            "instantaneous center",
+            "plane rigid body"
+          ],
+          "aliases_zh": [
+            "平面运动",
+            "瞬心",
+            "平面刚体"
+          ],
+          "en_name": "planar motion",
+          "examples": [
+            "sliding rod planar motion"
+          ],
+          "id": "kinematics.planar_motion",
+          "key_concepts": [
+            "instantaneous center",
+            "plane motion",
+            "translation plus rotation"
+          ],
+          "laws": [
+            "planar rigid-body velocity composition"
+          ],
+          "module_path": "MechLib.Kinematics.PlanarMotion",
+          "prerequisites": [
+            "kinematics.rigid_body_motion"
+          ],
+          "problem_templates": [
+            "find instantaneous center",
+            "relate velocities on a rolling body"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "平面运动"
+        },
+        {
+          "aliases_en": [
+            "fixed-axis rotation",
+            "angular velocity",
+            "angular acceleration"
+          ],
+          "aliases_zh": [
+            "定轴转动",
+            "角速度",
+            "角加速度"
+          ],
+          "en_name": "fixed-axis rotation",
+          "examples": [
+            "fixed pulley angular speed"
+          ],
+          "id": "kinematics.fixed_axis_rotation",
+          "key_concepts": [
+            "angular velocity",
+            "angular acceleration",
+            "rotation angle"
+          ],
+          "laws": [
+            "fixed-axis angular kinematics",
+            "rotational kinetic relation"
+          ],
+          "module_path": "MechLib.Kinematics.FixedAxisRotation",
+          "prerequisites": [
+            "kinematics.rigid_body_motion"
+          ],
+          "problem_templates": [
+            "wheel spinning with angular acceleration",
+            "pulley fixed-axis motion"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.Rotation.EulerEquationsPrincipal"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [
+            "MechLib.RigidBody.Verified.Rotation.rotationalKineticEnergy_eq"
+          ],
+          "zh_name": "定轴转动"
+        }
+      ],
+      "zh_name": "运动学"
+    },
+    {
+      "en_name": "Dynamics",
+      "id": "dynamics",
+      "topics": [
+        {
+          "aliases_en": [
+            "Newton law",
+            "Newton's second law"
+          ],
+          "aliases_zh": [
+            "牛顿定律",
+            "牛顿第二定律"
+          ],
+          "en_name": "Newton law",
+          "examples": [
+            "block accelerated by a constant force"
+          ],
+          "id": "dynamics.newton_law",
+          "key_concepts": [
+            "force",
+            "mass",
+            "acceleration",
+            "Newton second law"
+          ],
+          "laws": [
+            "F = m a",
+            "vector Newton second law"
+          ],
+          "module_path": "MechLib.Dynamics.NewtonLaw",
+          "prerequisites": [
+            "foundation.quantity",
+            "kinematics.point_motion"
+          ],
+          "problem_templates": [
+            "force from known acceleration",
+            "mass under several forces"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Dynamics.Verified.Dynamics.newton_second_law",
+            "MechLib.Dynamics.Verified.Dynamics.secondLawVec_eq",
+            "MechLib.Dynamics.Verified.Dynamics.force_from_velocity_rate_const_mass"
+          ],
+          "zh_name": "牛顿定律"
+        },
+        {
+          "aliases_en": [
+            "particle dynamics",
+            "free-body equation"
+          ],
+          "aliases_zh": [
+            "质点动力学",
+            "受力分析"
+          ],
+          "en_name": "particle dynamics",
+          "examples": [
+            "single particle under gravity and tension"
+          ],
+          "id": "dynamics.particle_dynamics",
+          "key_concepts": [
+            "particle",
+            "free-body equation",
+            "constraint force"
+          ],
+          "laws": [
+            "particle force balance",
+            "normal/tension/friction modeling"
+          ],
+          "module_path": "MechLib.Dynamics.ParticleDynamics",
+          "prerequisites": [
+            "dynamics.newton_law"
+          ],
+          "problem_templates": [
+            "block on incline",
+            "particle on circular track"
+          ],
+          "schema_decls": [],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [
+            "MechLib.Dynamics.Verified.Dynamics.newton_second_law"
+          ],
+          "zh_name": "质点动力学"
+        },
+        {
+          "aliases_en": [
+            "system dynamics",
+            "center of mass",
+            "particle system"
+          ],
+          "aliases_zh": [
+            "质点系",
+            "质心",
+            "系统动力学"
+          ],
+          "en_name": "system dynamics",
+          "examples": [
+            "two masses connected by an internal force"
+          ],
+          "id": "dynamics.system_dynamics",
+          "key_concepts": [
+            "system of particles",
+            "center of mass",
+            "total momentum"
+          ],
+          "laws": [
+            "center-of-mass theorem",
+            "two-body kinetic decomposition"
+          ],
+          "module_path": "MechLib.Dynamics.SystemDynamics",
+          "prerequisites": [
+            "dynamics.particle_dynamics"
+          ],
+          "problem_templates": [
+            "two-body center of mass",
+            "system momentum balance"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.SystemDynamics.CenterOfMassTheorem"
+          ],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Dynamics.Verified.SystemDynamics.totalMass_cons",
+            "MechLib.Dynamics.Verified.SystemDynamics.centerOfMassVelocity_singleton",
+            "MechLib.Dynamics.Verified.SystemDynamics.totalMomentum_two_eq_totalMass_mul_centerVelocity",
+            "MechLib.Dynamics.Verified.SystemDynamics.twoBody_kineticEnergy_decomposition"
+          ],
+          "zh_name": "质点系动力学"
+        },
+        {
+          "aliases_en": [
+            "momentum",
+            "linear momentum"
+          ],
+          "aliases_zh": [
+            "动量",
+            "线动量"
+          ],
+          "en_name": "momentum",
+          "examples": [
+            "speed change of a constant-mass particle"
+          ],
+          "id": "dynamics.momentum",
+          "key_concepts": [
+            "linear momentum",
+            "constant mass momentum",
+            "momentum change"
+          ],
+          "laws": [
+            "p = m v",
+            "Delta p = m Delta v"
+          ],
+          "module_path": "MechLib.Dynamics.Momentum",
+          "prerequisites": [
+            "dynamics.newton_law"
+          ],
+          "problem_templates": [
+            "compute momentum change",
+            "relate force to velocity rate"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Dynamics.Verified.Dynamics.momentum_change_const_mass"
+          ],
+          "zh_name": "动量"
+        },
+        {
+          "aliases_en": [
+            "angular momentum",
+            "moment of momentum"
+          ],
+          "aliases_zh": [
+            "角动量",
+            "动量矩"
+          ],
+          "en_name": "angular momentum",
+          "examples": [
+            "particle moving under central force"
+          ],
+          "id": "dynamics.angular_momentum",
+          "key_concepts": [
+            "angular momentum",
+            "moment of momentum",
+            "torque"
+          ],
+          "laws": [
+            "L = r cross p",
+            "angular momentum theorem"
+          ],
+          "module_path": "MechLib.Dynamics.AngularMomentum",
+          "prerequisites": [
+            "foundation.vector_quantity",
+            "dynamics.momentum"
+          ],
+          "problem_templates": [
+            "central force torque test",
+            "moment of momentum balance"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.Rotation.AngularMomentumTheoremParticle",
+            "MechLib.Mechanics.Rotation.MomentOfMomentumTheoremSystem"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [
+            "MechLib.RigidBody.Verified.Rotation.torque_def",
+            "MechLib.Systems.Verified.CentralForce.hookeCentralForce_isCentral"
+          ],
+          "zh_name": "角动量"
+        },
+        {
+          "aliases_en": [
+            "work",
+            "kinetic energy",
+            "potential energy",
+            "mechanical energy"
+          ],
+          "aliases_zh": [
+            "功",
+            "动能",
+            "势能",
+            "机械能"
+          ],
+          "en_name": "work-energy",
+          "examples": [
+            "block pushed by a constant force",
+            "spring compression energy"
+          ],
+          "id": "dynamics.work_energy",
+          "key_concepts": [
+            "work",
+            "kinetic energy",
+            "potential energy",
+            "mechanical energy"
+          ],
+          "laws": [
+            "work-energy theorem",
+            "conservative/nonconservative split"
+          ],
+          "module_path": "MechLib.Dynamics.WorkEnergy",
+          "prerequisites": [
+            "foundation.vector_quantity",
+            "dynamics.newton_law"
+          ],
+          "problem_templates": [
+            "net work and kinetic energy change",
+            "spring potential energy"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Dynamics.Verified.WorkEnergy.work_def",
+            "MechLib.Dynamics.Verified.WorkEnergy.kineticEnergy_change_formula",
+            "MechLib.Dynamics.Verified.WorkEnergy.work_energy_theorem_core",
+            "MechLib.Dynamics.Verified.WorkEnergy.conservative_nonconservative_split"
+          ],
+          "zh_name": "功和能"
+        },
+        {
+          "aliases_en": [
+            "impulse",
+            "impulse-momentum theorem"
+          ],
+          "aliases_zh": [
+            "冲量",
+            "冲量定理"
+          ],
+          "en_name": "impulse",
+          "examples": [
+            "hammer impact with known average force"
+          ],
+          "id": "dynamics.impulse",
+          "key_concepts": [
+            "impulse",
+            "time interval",
+            "momentum increment"
+          ],
+          "laws": [
+            "impulse equals force times time",
+            "impulse-momentum theorem"
+          ],
+          "module_path": "MechLib.Dynamics.Impulse",
+          "prerequisites": [
+            "dynamics.momentum"
+          ],
+          "problem_templates": [
+            "constant force impulse",
+            "impact momentum update"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Dynamics.Verified.MomentumImpulse.impulse_def",
+            "MechLib.Dynamics.Verified.MomentumImpulse.impulse_momentum_theorem"
+          ],
+          "zh_name": "冲量"
+        },
+        {
+          "aliases_en": [
+            "collision",
+            "inelastic collision"
+          ],
+          "aliases_zh": [
+            "碰撞",
+            "完全非弹性碰撞"
+          ],
+          "en_name": "collision",
+          "examples": [
+            "perfectly inelastic collision of two masses"
+          ],
+          "id": "dynamics.collision",
+          "key_concepts": [
+            "inelastic collision",
+            "common final speed",
+            "momentum conservation"
+          ],
+          "laws": [
+            "perfectly inelastic momentum conservation"
+          ],
+          "module_path": "MechLib.Dynamics.Collision",
+          "prerequisites": [
+            "dynamics.momentum",
+            "dynamics.impulse"
+          ],
+          "problem_templates": [
+            "two carts stick together",
+            "one-dimensional impact"
+          ],
+          "schema_decls": [],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Dynamics.Verified.MomentumImpulse.momentum_conservation_inelastic"
+          ],
+          "zh_name": "碰撞"
+        },
+        {
+          "aliases_en": [
+            "non-inertial frame",
+            "fictitious force",
+            "Coriolis force",
+            "centrifugal force"
+          ],
+          "aliases_zh": [
+            "非惯性系",
+            "惯性力",
+            "科氏力",
+            "离心力"
+          ],
+          "en_name": "non-inertial frame",
+          "examples": [
+            "particle observed in a rotating frame"
+          ],
+          "id": "dynamics.non_inertial_frame",
+          "key_concepts": [
+            "fictitious force",
+            "Coriolis term",
+            "centrifugal term",
+            "Euler term"
+          ],
+          "laws": [
+            "transport theorem",
+            "non-inertial force balance"
+          ],
+          "module_path": "MechLib.Dynamics.NonInertialFrame",
+          "prerequisites": [
+            "foundation.reference_frame",
+            "dynamics.newton_law"
+          ],
+          "problem_templates": [
+            "bead in rotating frame",
+            "block on rotating disk"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.Kinematics.TransportTheoremRelation"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "非惯性系"
+        },
+        {
+          "aliases_en": [
+            "variable mass",
+            "rocket equation"
+          ],
+          "aliases_zh": [
+            "变质量",
+            "火箭方程"
+          ],
+          "en_name": "variable mass",
+          "examples": [
+            "rocket with exhaust velocity"
+          ],
+          "id": "dynamics.variable_mass",
+          "key_concepts": [
+            "variable mass",
+            "mass flux",
+            "rocket equation"
+          ],
+          "laws": [
+            "momentum balance with flux"
+          ],
+          "module_path": "MechLib.Dynamics.VariableMass",
+          "prerequisites": [
+            "dynamics.momentum",
+            "dynamics.system_dynamics"
+          ],
+          "problem_templates": [
+            "rocket acceleration",
+            "sand leaking cart"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.SystemDynamics.VariableMassMomentumBalance"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [
+            "MechLib.Dynamics.Verified.SystemDynamics.variableMassMomentumBalance_eq"
+          ],
+          "zh_name": "变质量"
+        }
+      ],
+      "zh_name": "动力学"
+    },
+    {
+      "en_name": "RigidBody",
+      "id": "rigidbody",
+      "topics": [
+        {
+          "aliases_en": [
+            "moment of inertia",
+            "inertia tensor",
+            "parallel axis theorem"
+          ],
+          "aliases_zh": [
+            "转动惯量",
+            "惯量张量",
+            "平行轴定理"
+          ],
+          "en_name": "inertia",
+          "examples": [
+            "rigid body rotating about a displaced axis"
+          ],
+          "id": "rigidbody.inertia",
+          "key_concepts": [
+            "moment of inertia",
+            "inertia tensor",
+            "parallel axis theorem"
+          ],
+          "laws": [
+            "parallel-axis relation",
+            "rotational kinetic energy"
+          ],
+          "module_path": "MechLib.RigidBody.Inertia",
+          "prerequisites": [
+            "foundation.quantity"
+          ],
+          "problem_templates": [
+            "compute inertia about shifted axis",
+            "use inertia tensor interface"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.Rotation.InertiaTensor"
+          ],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.RigidBody.Verified.Rotation.parallel_axis_theorem",
+            "MechLib.RigidBody.Verified.Rotation.rotationalKineticEnergy_eq"
+          ],
+          "zh_name": "转动惯量"
+        },
+        {
+          "aliases_en": [
+            "fixed-axis dynamics",
+            "rotational equation"
+          ],
+          "aliases_zh": [
+            "定轴动力学",
+            "转动方程"
+          ],
+          "en_name": "fixed-axis dynamics",
+          "examples": [
+            "fixed-axis pulley dynamics"
+          ],
+          "id": "rigidbody.fixed_axis_dynamics",
+          "key_concepts": [
+            "torque equation",
+            "angular acceleration",
+            "rotational work"
+          ],
+          "laws": [
+            "sum torque equals I alpha",
+            "fixed-axis energy relation"
+          ],
+          "module_path": "MechLib.RigidBody.FixedAxisDynamics",
+          "prerequisites": [
+            "rigidbody.inertia",
+            "kinematics.fixed_axis_rotation"
+          ],
+          "problem_templates": [
+            "pulley with hanging mass",
+            "flywheel under torque"
+          ],
+          "schema_decls": [],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [
+            "MechLib.RigidBody.Verified.Rotation.torque_def"
+          ],
+          "zh_name": "定轴转动动力学"
+        },
+        {
+          "aliases_en": [
+            "plane motion dynamics",
+            "center-of-mass motion"
+          ],
+          "aliases_zh": [
+            "平面运动动力学",
+            "质心运动"
+          ],
+          "en_name": "plane motion dynamics",
+          "examples": [
+            "rolling disk with friction"
+          ],
+          "id": "rigidbody.plane_motion_dynamics",
+          "key_concepts": [
+            "mass center motion",
+            "rotation about center",
+            "rolling constraint"
+          ],
+          "laws": [
+            "plane rigid-body Newton-Euler equations"
+          ],
+          "module_path": "MechLib.RigidBody.PlaneMotionDynamics",
+          "prerequisites": [
+            "rigidbody.inertia",
+            "kinematics.planar_motion"
+          ],
+          "problem_templates": [
+            "rolling cylinder down incline",
+            "sliding and rotating disk"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "平面运动动力学"
+        },
+        {
+          "aliases_en": [
+            "Euler equations",
+            "principal axes"
+          ],
+          "aliases_zh": [
+            "欧拉方程",
+            "主轴"
+          ],
+          "en_name": "Euler equations",
+          "examples": [
+            "torque-free asymmetric top"
+          ],
+          "id": "rigidbody.euler_equations",
+          "key_concepts": [
+            "principal axes",
+            "Euler equations",
+            "body angular velocity"
+          ],
+          "laws": [
+            "principal-axis Euler equations"
+          ],
+          "module_path": "MechLib.RigidBody.EulerEquations",
+          "prerequisites": [
+            "rigidbody.inertia"
+          ],
+          "problem_templates": [
+            "torque-free rigid body",
+            "rigid body with principal moments"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.Rotation.EulerEquationsPrincipal"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [
+            "MechLib.RigidBody.Verified.Rotation.rigidBodyKineticDecomposition_eq"
+          ],
+          "zh_name": "欧拉方程"
+        },
+        {
+          "aliases_en": [
+            "gyroscope",
+            "precession",
+            "nutation"
+          ],
+          "aliases_zh": [
+            "陀螺",
+            "进动",
+            "章动"
+          ],
+          "en_name": "gyroscope",
+          "examples": [
+            "heavy symmetric top steady precession"
+          ],
+          "id": "rigidbody.gyroscope",
+          "key_concepts": [
+            "precession",
+            "nutation",
+            "spin",
+            "gyroscopic moment"
+          ],
+          "laws": [
+            "steady precession balance",
+            "gyroscopic angular momentum relation"
+          ],
+          "module_path": "MechLib.RigidBody.Gyroscope",
+          "prerequisites": [
+            "rigidbody.euler_equations",
+            "dynamics.angular_momentum"
+          ],
+          "problem_templates": [
+            "symmetric top precession",
+            "gyroscope under gravity"
+          ],
+          "schema_decls": [],
+          "status": "todo",
+          "trust_level": "example",
+          "verified_decls": [],
+          "zh_name": "陀螺"
+        }
+      ],
+      "zh_name": "刚体"
+    },
+    {
+      "en_name": "Analytical",
+      "id": "analytical",
+      "topics": [
+        {
+          "aliases_en": [
+            "generalized coordinate",
+            "degree of freedom",
+            "configuration space"
+          ],
+          "aliases_zh": [
+            "广义坐标",
+            "自由度",
+            "构型空间"
+          ],
+          "en_name": "generalized coordinates",
+          "examples": [
+            "single pendulum with angle coordinate"
+          ],
+          "id": "analytical.generalized_coordinates",
+          "key_concepts": [
+            "CoordSpec",
+            "GCoord",
+            "GVel",
+            "generalized force",
+            "generalized momentum",
+            "degree of freedom",
+            "configuration space"
+          ],
+          "laws": [
+            "coordinate chart for constrained systems"
+          ],
+          "module_path": "MechLib.Analytical.GeneralizedCoordinates",
+          "prerequisites": [
+            "foundation.coordinate_system"
+          ],
+          "problem_templates": [
+            "choose generalized coordinate for pendulum",
+            "model bead on hoop"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.GeneralizedCoordinates.CoordSpec",
+            "MechLib.Analytical.GeneralizedCoordinates.GCoord",
+            "MechLib.Analytical.GeneralizedCoordinates.GVel",
+            "MechLib.Analytical.GeneralizedCoordinates.GeneralizedForce",
+            "MechLib.Analytical.GeneralizedCoordinates.GeneralizedMomentum"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "广义坐标"
+        },
+        {
+          "aliases_en": [
+            "constraint",
+            "holonomic constraint",
+            "nonholonomic constraint"
+          ],
+          "aliases_zh": [
+            "约束",
+            "完整约束",
+            "非完整约束"
+          ],
+          "en_name": "constraints",
+          "examples": [
+            "rope constraint between two masses"
+          ],
+          "id": "analytical.constraints",
+          "key_concepts": [
+            "holonomic constraint",
+            "nonholonomic constraint",
+            "Pfaff form"
+          ],
+          "laws": [
+            "linear constraint derivative",
+            "Pfaff constraint linear closure"
+          ],
+          "module_path": "MechLib.Analytical.Constraints",
+          "prerequisites": [
+            "analytical.generalized_coordinates"
+          ],
+          "problem_templates": [
+            "derive velocity relation from rope length",
+            "combine Pfaff constraints"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.Constraints.HolonomicConstraint",
+            "MechLib.Analytical.Constraints.NonHolonomicConstraint",
+            "MechLib.Analytical.Constraints.HolonomicConstraintSatisfied",
+            "MechLib.Mechanics.Kinematics.PfaffConstraint1D"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [
+            "MechLib.Kinematics.Verified.Kinematics.linear_constraint_velocity",
+            "MechLib.Kinematics.Verified.Kinematics.linear_constraint_acceleration",
+            "MechLib.Kinematics.Verified.Kinematics.pfaffConstraint1D_linear_combination"
+          ],
+          "zh_name": "约束"
+        },
+        {
+          "aliases_en": [
+            "virtual work",
+            "virtual displacement"
+          ],
+          "aliases_zh": [
+            "虚功",
+            "虚位移"
+          ],
+          "en_name": "virtual work",
+          "examples": [
+            "virtual work for pulley system"
+          ],
+          "id": "analytical.virtual_work",
+          "key_concepts": [
+            "VirtualDisplacement",
+            "VirtualWorkValue",
+            "VirtualWorkResidual",
+            "ideal constraint"
+          ],
+          "laws": [
+            "principle of virtual work"
+          ],
+          "module_path": "MechLib.Analytical.VirtualWork",
+          "prerequisites": [
+            "statics.constraint_force",
+            "analytical.constraints"
+          ],
+          "problem_templates": [
+            "static equilibrium by virtual work",
+            "constraint reaction elimination"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.VirtualWork.VirtualDisplacement",
+            "MechLib.Analytical.VirtualWork.VirtualWorkResidual",
+            "MechLib.Analytical.VirtualWork.IdealConstraintVirtualWork"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "虚功"
+        },
+        {
+          "aliases_en": [
+            "d'Alembert principle",
+            "inertial force"
+          ],
+          "aliases_zh": [
+            "达朗贝尔原理",
+            "惯性力"
+          ],
+          "en_name": "d'Alembert principle",
+          "examples": [
+            "mass on moving wedge"
+          ],
+          "id": "analytical.dalembert_principle",
+          "key_concepts": [
+            "InertialGeneralizedForce",
+            "DAlembertResidual",
+            "dynamic equilibrium",
+            "generalized inertia force"
+          ],
+          "laws": [
+            "d'Alembert principle",
+            "dynamic virtual work"
+          ],
+          "module_path": "MechLib.Analytical.DAlembert",
+          "prerequisites": [
+            "dynamics.newton_law",
+            "analytical.virtual_work"
+          ],
+          "problem_templates": [
+            "derive equation by d'Alembert principle",
+            "convert dynamics to virtual work"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.DAlembert.InertialGeneralizedForce",
+            "MechLib.Analytical.DAlembert.DAlembertResidual"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "达朗贝尔原理"
+        },
+        {
+          "aliases_en": [
+            "Lagrange equation",
+            "Euler-Lagrange equation"
+          ],
+          "aliases_zh": [
+            "拉格朗日方程",
+            "欧拉-拉格朗日方程"
+          ],
+          "en_name": "Lagrange equation",
+          "examples": [
+            "mass-spring Lagrange equation"
+          ],
+          "id": "analytical.lagrange_equation",
+          "key_concepts": [
+            "Lagrangian",
+            "LagrangianSystem",
+            "EulerLagrangeResidual",
+            "generalized momentum",
+            "generalized force"
+          ],
+          "laws": [
+            "Euler-Lagrange equation",
+            "Newton form equivalence in 1D"
+          ],
+          "module_path": "MechLib.Analytical.LagrangeEquation",
+          "prerequisites": [
+            "analytical.generalized_coordinates",
+            "analytical.constraints"
+          ],
+          "problem_templates": [
+            "derive oscillator equation from L = T - V",
+            "conservative one-dimensional system"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.LagrangeEquation.LagrangianSystem",
+            "MechLib.Analytical.LagrangeEquation.EulerLagrangeResidual",
+            "MechLib.Analytical.LagrangeEquation.GeneralizedMomentumOf",
+            "MechLib.Analytical.LagrangeEquation.SatisfiesEulerLagrange1D",
+            "MechLib.Analytical.LagrangeEquation.eulerLagrangeResidual1D"
+          ],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Analytical.LagrangeEquation.lagrangian1D_eq",
+            "MechLib.Analytical.LagrangeEquation.eulerLagrange_iff_newton",
+            "MechLib.Analytical.LagrangeEquation.eulerLagrange_iff_newton_course_form"
+          ],
+          "zh_name": "拉格朗日方程"
+        },
+        {
+          "aliases_en": [
+            "Hamiltonian",
+            "canonical momentum",
+            "canonical equations"
+          ],
+          "aliases_zh": [
+            "哈密顿量",
+            "正则动量",
+            "正则方程"
+          ],
+          "en_name": "Hamiltonian",
+          "examples": [
+            "one-dimensional conservative Hamiltonian"
+          ],
+          "id": "analytical.hamiltonian",
+          "key_concepts": [
+            "Hamiltonian",
+            "HamiltonianSystem",
+            "canonical momentum",
+            "canonical equations",
+            "Legendre regularity"
+          ],
+          "laws": [
+            "Hamiltonian energy form",
+            "canonical equations"
+          ],
+          "module_path": "MechLib.Analytical.Hamiltonian",
+          "prerequisites": [
+            "analytical.lagrange_equation"
+          ],
+          "problem_templates": [
+            "convert from velocity to momentum",
+            "write Hamiltonian for 1D potential"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.Hamiltonian.HamiltonianSystem",
+            "MechLib.Analytical.Hamiltonian.CanonicalEquationResidual",
+            "MechLib.Analytical.Hamiltonian.CanonicalEquations1D",
+            "MechLib.Analytical.Hamiltonian.legendreRegular1D"
+          ],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Analytical.Hamiltonian.canonicalMomentum1D_eq",
+            "MechLib.Analytical.Hamiltonian.hamiltonianXV_eq",
+            "MechLib.Analytical.Hamiltonian.hamiltonianXP_eq",
+            "MechLib.Analytical.Hamiltonian.hamiltonianXP_of_canonicalMomentum"
+          ],
+          "zh_name": "哈密顿量"
+        },
+        {
+          "aliases_en": [
+            "Poisson bracket",
+            "phase function"
+          ],
+          "aliases_zh": [
+            "泊松括号",
+            "相空间函数"
+          ],
+          "en_name": "Poisson bracket",
+          "examples": [
+            "canonical phase-function bracket"
+          ],
+          "id": "analytical.poisson_bracket",
+          "key_concepts": [
+            "PhaseFunction",
+            "PhaseGradient",
+            "Poisson bracket",
+            "antisymmetry"
+          ],
+          "laws": [
+            "Poisson bracket antisymmetry"
+          ],
+          "module_path": "MechLib.Analytical.PoissonBracket",
+          "prerequisites": [
+            "analytical.hamiltonian"
+          ],
+          "problem_templates": [
+            "show bracket changes sign under argument swap"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.PoissonBracket.PoissonBracket",
+            "MechLib.Analytical.PoissonBracket.PoissonBracketResidualN",
+            "MechLib.Analytical.PoissonBracket.poissonBracket1D",
+            "MechLib.Analytical.PoissonBracket.PhaseFunction1D"
+          ],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Analytical.PoissonBracket.poissonBracket1D_antisymm",
+            "MechLib.Analytical.PoissonBracket.poissonBracket1D_antisymm_course_form"
+          ],
+          "zh_name": "泊松括号"
+        },
+        {
+          "aliases_en": [
+            "conservation law",
+            "cyclic coordinate",
+            "momentum conservation"
+          ],
+          "aliases_zh": [
+            "守恒律",
+            "循环坐标",
+            "动量守恒"
+          ],
+          "en_name": "conservation law",
+          "examples": [
+            "coordinate-independent Lagrangian gives conserved momentum"
+          ],
+          "id": "analytical.conservation_law",
+          "key_concepts": [
+            "cyclic coordinate",
+            "generalized momentum conservation",
+            "energy conservation"
+          ],
+          "laws": [
+            "cyclic coordinate implies conserved momentum",
+            "cyclic-coordinate conservation law",
+            "work-energy conservation split"
+          ],
+          "module_path": "MechLib.Analytical.ConservationLaw",
+          "prerequisites": [
+            "analytical.lagrange_equation"
+          ],
+          "problem_templates": [
+            "use cyclic coordinate to prove momentum conservation",
+            "identify conserved mechanical energy"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.ConservationLaw.IsCyclicCoordinate",
+            "MechLib.Analytical.ConservationLaw.GeneralizedMomentumConserved",
+            "MechLib.Analytical.ConservationLaw.CyclicCoordinateConservation",
+            "MechLib.Analytical.ConservationLaw.IsCyclicCoordinate1D",
+            "MechLib.Analytical.ConservationLaw.MomentumConserved1D"
+          ],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Analytical.ConservationLaw.cyclic_coordinate_implies_momentum_conserved",
+            "MechLib.Analytical.ConservationLaw.cyclic_coordinate_implies_momentum_conserved_1d",
+            "MechLib.Dynamics.Verified.WorkEnergy.conservative_nonconservative_split"
+          ],
+          "zh_name": "守恒律"
+        },
+        {
+          "aliases_en": [
+            "small oscillations",
+            "linearization",
+            "natural frequency",
+            "normal modes"
+          ],
+          "aliases_zh": [
+            "小振动",
+            "线性化",
+            "固有频率",
+            "正常模态"
+          ],
+          "en_name": "small oscillations",
+          "examples": [
+            "two-mass two-spring normal modes"
+          ],
+          "id": "analytical.small_oscillations",
+          "key_concepts": [
+            "SmallOscillationSystem",
+            "equilibrium",
+            "linearization",
+            "mass matrix",
+            "stiffness matrix",
+            "normal modes"
+          ],
+          "laws": [
+            "linearized equation",
+            "normal-mode eigenproblem"
+          ],
+          "module_path": "MechLib.Analytical.SmallOscillations",
+          "prerequisites": [
+            "analytical.lagrange_equation",
+            "systems.harmonic_oscillator"
+          ],
+          "problem_templates": [
+            "small oscillations near equilibrium",
+            "coupled oscillator normal modes"
+          ],
+          "schema_decls": [
+            "MechLib.Analytical.SmallOscillations.SmallOscillationSystem",
+            "MechLib.Analytical.SmallOscillations.SmallOscillationEquation",
+            "MechLib.Analytical.SmallOscillations.NormalModeCondition"
+          ],
+          "status": "schema",
+          "trust_level": "interface",
+          "verified_decls": [],
+          "zh_name": "小振动"
+        }
+      ],
+      "zh_name": "分析力学"
+    },
+    {
+      "en_name": "Systems",
+      "id": "systems",
+      "topics": [
+        {
+          "aliases_en": [
+            "harmonic oscillator",
+            "simple harmonic motion"
+          ],
+          "aliases_zh": [
+            "简谐振子",
+            "简谐运动"
+          ],
+          "en_name": "harmonic oscillator",
+          "examples": [
+            "undamped spring-mass oscillator"
+          ],
+          "id": "systems.harmonic_oscillator",
+          "key_concepts": [
+            "amplitude",
+            "phase",
+            "period",
+            "SHM equation"
+          ],
+          "laws": [
+            "x'' = -omega^2 x",
+            "period-frequency relation"
+          ],
+          "module_path": "MechLib.Systems.HarmonicOscillator",
+          "prerequisites": [
+            "dynamics.work_energy"
+          ],
+          "problem_templates": [
+            "spring-mass oscillator",
+            "infer amplitude from initial data"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.SHM.SHMEquation",
+            "MechLib.Mechanics.SHM.UniqueByInitialState"
+          ],
+          "status": "verified",
+          "trust_level": "core",
+          "verified_decls": [
+            "MechLib.Systems.Verified.SHM.acceleration_eq_neg_omega_sq_mul_pos",
+            "MechLib.Systems.Verified.SHM.period_frequency_relation",
+            "MechLib.Systems.Verified.SHM.initialPosition_eq",
+            "MechLib.Systems.Verified.SHM.initialVelocity_eq"
+          ],
+          "zh_name": "简谐振子"
+        },
+        {
+          "aliases_en": [
+            "damped oscillator",
+            "underdamped",
+            "critical damping",
+            "overdamped"
+          ],
+          "aliases_zh": [
+            "阻尼振子",
+            "欠阻尼",
+            "临界阻尼",
+            "过阻尼"
+          ],
+          "en_name": "damped oscillator",
+          "examples": [
+            "mass-spring-damper oscillator"
+          ],
+          "id": "systems.damped_oscillator",
+          "key_concepts": [
+            "damping coefficient",
+            "damping ratio",
+            "quality factor",
+            "regime discriminant"
+          ],
+          "laws": [
+            "damped residual",
+            "damping-regime trichotomy",
+            "energy dissipation law"
+          ],
+          "module_path": "MechLib.Systems.DampedOscillator",
+          "prerequisites": [
+            "systems.harmonic_oscillator"
+          ],
+          "problem_templates": [
+            "classify damping regime",
+            "compute damping ratio and quality factor"
+          ],
+          "schema_decls": [
+            "MechLib.Mechanics.DampedSHM.EquationOfMotion",
+            "MechLib.Mechanics.DampedSHM.EnergyDissipationLaw"
+          ],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Systems.Verified.DampedSHM.equationResidual_eq",
+            "MechLib.Systems.Verified.DampedSHM.regimes_trichotomy",
+            "MechLib.Systems.Verified.DampedSHM.qualityFactor_mul_dampingRatio",
+            "MechLib.Systems.Verified.DampedSHM.equationOfMotion_gamma_zero_iff"
+          ],
+          "zh_name": "阻尼振子"
+        },
+        {
+          "aliases_en": [
+            "pendulum",
+            "simple pendulum",
+            "small-angle approximation"
+          ],
+          "aliases_zh": [
+            "单摆",
+            "摆角",
+            "小角近似"
+          ],
+          "en_name": "pendulum",
+          "examples": [
+            "simple pendulum released from rest"
+          ],
+          "id": "systems.pendulum",
+          "key_concepts": [
+            "Pendulum.Params",
+            "angle coordinate",
+            "kinetic energy",
+            "potential energy",
+            "Lagrangian",
+            "small-angle approximation"
+          ],
+          "laws": [
+            "pendulum equation",
+            "small-angle approximation",
+            "small-angle reduction to SHM"
+          ],
+          "module_path": "MechLib.Systems.Pendulum",
+          "prerequisites": [
+            "analytical.lagrange_equation",
+            "systems.harmonic_oscillator"
+          ],
+          "problem_templates": [
+            "derive single pendulum equation",
+            "period under small angle"
+          ],
+          "schema_decls": [
+            "MechLib.Systems.Pendulum.kineticEnergy",
+            "MechLib.Systems.Pendulum.potentialEnergy",
+            "MechLib.Systems.Pendulum.lagrangian",
+            "MechLib.Systems.Pendulum.equationResidual",
+            "MechLib.Systems.Pendulum.PendulumEquationResidual"
+          ],
+          "status": "schema",
+          "trust_level": "example",
+          "verified_decls": [
+            "MechLib.Systems.Pendulum.smallAngle_to_SHM"
+          ],
+          "zh_name": "单摆"
+        },
+        {
+          "aliases_en": [
+            "physical pendulum",
+            "compound pendulum"
+          ],
+          "aliases_zh": [
+            "复摆",
+            "物理摆"
+          ],
+          "en_name": "physical pendulum",
+          "examples": [
+            "rod pivoted at one end"
+          ],
+          "id": "systems.physical_pendulum",
+          "key_concepts": [
+            "PhysicalPendulum.Params",
+            "moment of inertia",
+            "center of mass",
+            "pivot point",
+            "equivalent length"
+          ],
+          "laws": [
+            "physical pendulum equation",
+            "small-angle period schema"
+          ],
+          "module_path": "MechLib.Systems.PhysicalPendulum",
+          "prerequisites": [
+            "rigidbody.inertia",
+            "systems.pendulum"
+          ],
+          "problem_templates": [
+            "rigid body oscillating about pivot",
+            "compound pendulum"
+          ],
+          "schema_decls": [
+            "MechLib.Systems.PhysicalPendulum.kineticEnergy",
+            "MechLib.Systems.PhysicalPendulum.potentialEnergy",
+            "MechLib.Systems.PhysicalPendulum.lagrangian",
+            "MechLib.Systems.PhysicalPendulum.smallAngleEquation",
+            "MechLib.Systems.PhysicalPendulum.physical_pendulum_period"
+          ],
+          "status": "schema",
+          "trust_level": "example",
+          "verified_decls": [],
+          "zh_name": "复摆"
+        },
+        {
+          "aliases_en": [
+            "central force",
+            "effective potential",
+            "orbit"
+          ],
+          "aliases_zh": [
+            "中心力",
+            "有效势",
+            "轨道"
+          ],
+          "en_name": "central force",
+          "examples": [
+            "planet in inverse-square potential"
+          ],
+          "id": "systems.central_force",
+          "key_concepts": [
+            "polar coordinates",
+            "central force",
+            "effective potential",
+            "circular orbit",
+            "orbit class"
+          ],
+          "laws": [
+            "zero torque for central Hooke force",
+            "effective potential",
+            "circular-orbit condition",
+            "Kepler second-law interface"
+          ],
+          "module_path": "MechLib.Systems.CentralForce",
+          "prerequisites": [
+            "dynamics.angular_momentum",
+            "analytical.conservation_law"
+          ],
+          "problem_templates": [
+            "classify inverse-square orbit",
+            "derive radial equation"
+          ],
+          "schema_decls": [
+            "MechLib.Systems.CentralForce.polarCoordSpec",
+            "MechLib.Systems.CentralForce.kineticEnergyPolar",
+            "MechLib.Systems.CentralForce.effectivePotentialScalar",
+            "MechLib.Systems.CentralForce.circularOrbitCondition",
+            "MechLib.Systems.CentralForce.stableCircularOrbitCondition",
+            "MechLib.Mechanics.CentralForce.RadialEquation",
+            "MechLib.Mechanics.CentralForce.BinetEquation",
+            "MechLib.Mechanics.CentralForce.KeplerSecondLaw"
+          ],
+          "status": "verified",
+          "trust_level": "derived",
+          "verified_decls": [
+            "MechLib.Systems.Verified.CentralForce.hookeCentralForce_isCentral",
+            "MechLib.Systems.Verified.CentralForce.effectivePotential_eq",
+            "MechLib.Systems.Verified.CentralForce.inverseSquarePotential_eq",
+            "MechLib.Systems.Verified.CentralForce.classifyInverseSquareOrbit_trichotomy"
+          ],
+          "zh_name": "中心力"
+        },
+        {
+          "aliases_en": [
+            "Atwood machine",
+            "pulley system"
+          ],
+          "aliases_zh": [
+            "阿特伍德机",
+            "滑轮系统"
+          ],
+          "en_name": "Atwood machine",
+          "examples": [
+            "ideal Atwood machine with two masses"
+          ],
+          "id": "systems.atwood_machine",
+          "key_concepts": [
+            "AtwoodMachine.Params",
+            "pulley",
+            "tension",
+            "mass difference",
+            "rope constraint",
+            "reduced coordinate"
+          ],
+          "laws": [
+            "rope acceleration constraint",
+            "Lagrangian residual",
+            "acceleration formula schema"
+          ],
+          "module_path": "MechLib.Systems.AtwoodMachine",
+          "prerequisites": [
+            "dynamics.particle_dynamics",
+            "analytical.constraints"
+          ],
+          "problem_templates": [
+            "solve acceleration and tension",
+            "mass-pulley system"
+          ],
+          "schema_decls": [
+            "MechLib.Systems.AtwoodMachine.AtwoodConstraint",
+            "MechLib.Systems.AtwoodMachine.reducedConstraint",
+            "MechLib.Systems.AtwoodMachine.lagrangian",
+            "MechLib.Systems.AtwoodMachine.equationResidual",
+            "MechLib.Systems.AtwoodMachine.accelerationFormula"
+          ],
+          "status": "schema",
+          "trust_level": "example",
+          "verified_decls": [],
+          "zh_name": "阿特伍德机"
+        },
+        {
+          "aliases_en": [
+            "coupled oscillator",
+            "normal modes"
+          ],
+          "aliases_zh": [
+            "耦合振子",
+            "正常模态"
+          ],
+          "en_name": "coupled oscillator",
+          "examples": [
+            "two equal masses coupled by springs"
+          ],
+          "id": "systems.coupled_oscillator",
+          "key_concepts": [
+            "two coordinates",
+            "mass matrix",
+            "stiffness matrix",
+            "coupling spring",
+            "normal coordinates",
+            "normal modes"
+          ],
+          "laws": [
+            "coupled linear oscillator equations",
+            "normal-mode decomposition",
+            "identity normal-mode worked example"
+          ],
+          "module_path": "MechLib.Systems.CoupledOscillator",
+          "prerequisites": [
+            "analytical.small_oscillations",
+            "systems.harmonic_oscillator"
+          ],
+          "problem_templates": [
+            "two coupled masses",
+            "symmetric and antisymmetric modes"
+          ],
+          "schema_decls": [
+            "MechLib.Systems.CoupledOscillator.CoupledOscillatorModel",
+            "MechLib.Systems.CoupledOscillator.kineticEnergy",
+            "MechLib.Systems.CoupledOscillator.potentialEnergy",
+            "MechLib.Systems.CoupledOscillator.lagrangian",
+            "MechLib.Systems.CoupledOscillator.linearEquationResidual",
+            "MechLib.Systems.CoupledOscillator.NormalModeResidual"
+          ],
+          "status": "schema",
+          "trust_level": "example",
+          "verified_decls": [],
+          "zh_name": "耦合振子"
+        },
+        {
+          "aliases_en": [
+            "rolling disk",
+            "rolling without slipping"
+          ],
+          "aliases_zh": [
+            "滚动圆盘",
+            "无滑动滚动"
+          ],
+          "en_name": "rolling disk",
+          "examples": [
+            "solid disk rolling down rough incline"
+          ],
+          "id": "systems.rolling_disk",
+          "key_concepts": [
+            "RollingDisk.Params",
+            "rolling without slipping",
+            "contact constraint",
+            "disk inertia",
+            "nonholonomic constraint"
+          ],
+          "laws": [
+            "rolling constraint v = R omega",
+            "nonholonomic rolling constraint",
+            "energy of rolling body"
+          ],
+          "module_path": "MechLib.Systems.RollingDisk",
+          "prerequisites": [
+            "kinematics.planar_motion",
+            "rigidbody.plane_motion_dynamics"
+          ],
+          "problem_templates": [
+            "disk rolling down an incline",
+            "wheel rolling without slip"
+          ],
+          "schema_decls": [
+            "MechLib.Systems.RollingDisk.RollingNoSlipResidual",
+            "MechLib.Systems.RollingDisk.noSlipConstraint",
+            "MechLib.Systems.RollingDisk.nonholonomicConstraintSchema",
+            "MechLib.Systems.RollingDisk.rollingKineticEnergy"
+          ],
+          "status": "schema",
+          "trust_level": "example",
+          "verified_decls": [],
+          "zh_name": "滚动圆盘"
+        },
+        {
+          "aliases_en": [
+            "bead on hoop",
+            "bead on a ring"
+          ],
+          "aliases_zh": [
+            "圆环上珠子",
+            "环上滑珠"
+          ],
+          "en_name": "bead on hoop",
+          "examples": [
+            "bead on a rotating hoop"
+          ],
+          "id": "systems.bead_on_hoop",
+          "key_concepts": [
+            "BeadOnHoop.Params",
+            "bead constraint",
+            "hoop coordinate",
+            "effective potential",
+            "normal reaction"
+          ],
+          "laws": [
+            "constraint reaction on a circle",
+            "effective-potential equilibrium",
+            "stability condition schema"
+          ],
+          "module_path": "MechLib.Systems.BeadOnHoop",
+          "prerequisites": [
+            "analytical.constraints",
+            "systems.pendulum"
+          ],
+          "problem_templates": [
+            "bead sliding on vertical hoop",
+            "rotating hoop bead equilibrium"
+          ],
+          "schema_decls": [
+            "MechLib.Systems.BeadOnHoop.HoopConstraintResidual",
+            "MechLib.Systems.BeadOnHoop.effectivePotential",
+            "MechLib.Systems.BeadOnHoop.equilibriumCondition",
+            "MechLib.Systems.BeadOnHoop.stabilityCondition"
+          ],
+          "status": "schema",
+          "trust_level": "example",
+          "verified_decls": [],
+          "zh_name": "圆环上珠子"
+        }
+      ],
+      "zh_name": "代表系统"
+    }
+  ],
+  "schema_version": "coverage-matrix-v1",
+  "source_module": "MechLib.Spec.Coverage"
+}

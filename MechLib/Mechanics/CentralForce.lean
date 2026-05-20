@@ -1,5 +1,4 @@
 import Mathlib
-import MechLib.Mechanics.AnalyticalMechanics
 import MechLib.Mechanics.Rotation
 
 namespace MechLib
@@ -18,28 +17,30 @@ def IsCentralForcePair (r : VecLength 3) (F : VecForce 3) : Prop :=
 def hookeCentralForce (k : SpringConstant) (r : VecLength 3) : VecForce 3 :=
   VecQuantity.cast ((-k) * r) SI.spring_plus_length_eq_force
 
-@[simp] theorem fin_induction_three_one {A : Type} (a : A) (f : (i : Fin 2) → A → A) :
+abbrev fin_induction_three_one {A : Type} (a : A) (f : (i : Fin 2) → A → A) :
     Fin.induction (motive := fun _ : Fin 3 => A) a f (1 : Fin 3) = f 0 a := rfl
 
-@[simp] theorem fin_induction_three_two {A : Type} (a : A) (f : (i : Fin 2) → A → A) :
+abbrev fin_induction_three_two {A : Type} (a : A) (f : (i : Fin 2) → A → A) :
     Fin.induction (motive := fun _ : Fin 3 => A) a f (2 : Fin 3) = f 1 (f 0 a) := rfl
 
-@[simp] theorem fin_induction_two_one {A : Type} (a : A) (f : (i : Fin 1) → A → A) :
+abbrev fin_induction_two_one {A : Type} (a : A) (f : (i : Fin 1) → A → A) :
     Fin.induction (motive := fun _ : Fin 2 => A) a f (1 : Fin 2) = f 0 a := rfl
 
 /-- 同一向量叉乘自身为零（`VecQuantity` 3D 版）。 -/
-theorem cross_self_zero {d : Dim} (u : VecQuantity d 3) : u ×ᵥ u = 0 := by
+abbrev cross_self_zero {d : Dim} (u : VecQuantity d 3) : u ×ᵥ u = 0 := by
   ext i
-  fin_cases i <;> simp [VecQuantity.cross, Fin.cases]
+  fin_cases i <;>
+    simp [VecQuantity.cross, Fin.cases, fin_induction_three_one, fin_induction_three_two,
+      fin_induction_two_one]
   all_goals ring
 
-theorem angularMomentum_two_sub_mass_two_length_eq_energy :
+abbrev angularMomentum_two_sub_mass_two_length_eq_energy :
     (2 : ℕ) • SI.angularMomentumDim - (SI.massDim + (2 : ℕ) • SI.lengthDim) = SI.energyDim := by
   native_decide
 
 abbrev GravParameter := Quantity (SI.energyDim + SI.lengthDim)
 
-theorem energy_plus_length_sub_length_eq_energy :
+abbrev energy_plus_length_sub_length_eq_energy :
     (SI.energyDim + SI.lengthDim) - SI.lengthDim = SI.energyDim := by
   native_decide
 
@@ -64,33 +65,35 @@ def RadialEquation
     (dUeffdr : Length → Force) : Prop :=
   ∀ t, m * aR t = -dUeffdr (r t)
 
-theorem hookeCentralForce_eq (k : SpringConstant) (r : VecLength 3) :
+abbrev hookeCentralForce_eq (k : SpringConstant) (r : VecLength 3) :
     hookeCentralForce k r = VecQuantity.cast ((-k) * r) SI.spring_plus_length_eq_force := rfl
 
 /-- 胡克型中心力 `F = -k r` 的力矩恒为零。 -/
-theorem hookeCentralForce_torque_zero (k : SpringConstant) (r : VecLength 3) :
+abbrev hookeCentralForce_torque_zero (k : SpringConstant) (r : VecLength 3) :
     Rotation.torque r (hookeCentralForce k r) = 0 := by
   unfold Rotation.torque hookeCentralForce
   ext i
-  fin_cases i <;> simp [VecQuantity.cross, VecQuantity.cast_val, VecQuantity.val_qmul_vec, Fin.cases]
+  fin_cases i <;>
+    simp [VecQuantity.cross, VecQuantity.cast_val, VecQuantity.val_qmul_vec, Fin.cases,
+      fin_induction_three_one, fin_induction_three_two, fin_induction_two_one]
   all_goals ring
 
-theorem hookeCentralForce_isCentral (k : SpringConstant) (r : VecLength 3) :
+abbrev hookeCentralForce_isCentral (k : SpringConstant) (r : VecLength 3) :
     IsCentralForcePair r (hookeCentralForce k r) := by
   simpa [IsCentralForcePair] using hookeCentralForce_torque_zero k r
 
-theorem centrifugalPotentialTerm_eq (L : AngularMomentum) (m : Mass) (r : Length) :
+abbrev centrifugalPotentialTerm_eq (L : AngularMomentum) (m : Mass) (r : Length) :
     centrifugalPotentialTerm L m r =
       Quantity.cast ((L ** 2) / (((2 : ℝ) • m) * (r ** 2)))
         angularMomentum_two_sub_mass_two_length_eq_energy := rfl
 
-theorem effectivePotential_eq (U : Length → Energy) (L : AngularMomentum) (m : Mass) (r : Length) :
+abbrev effectivePotential_eq (U : Length → Energy) (L : AngularMomentum) (m : Mass) (r : Length) :
     effectivePotential U L m r = U r + centrifugalPotentialTerm L m r := rfl
 
-theorem inverseSquarePotential_eq (μ : GravParameter) (r : Length) :
+abbrev inverseSquarePotential_eq (μ : GravParameter) (r : Length) :
     inverseSquarePotential μ r = Quantity.cast (-(μ / r)) energy_plus_length_sub_length_eq_energy := rfl
 
-theorem radialEquation_eq
+abbrev radialEquation_eq
     (m : Mass)
     (r : Kinematics.ScalarTrajectory)
     (aR : Kinematics.ScalarAccelerationField)
@@ -124,10 +127,10 @@ def classifyInverseSquareOrbit (E : Energy) : OrbitClass :=
   else if E.val = 0 then OrbitClass.parabola
   else OrbitClass.hyperbola
 
-theorem keplerSecondLaw_eq (arealVelocity : ℝ → ℝ) :
+abbrev keplerSecondLaw_eq (arealVelocity : ℝ → ℝ) :
     KeplerSecondLaw arealVelocity = (∃ c : ℝ, ∀ t, arealVelocity t = c) := rfl
 
-theorem classifyInverseSquareOrbit_trichotomy (E : Energy) :
+abbrev classifyInverseSquareOrbit_trichotomy (E : Energy) :
     classifyInverseSquareOrbit E = OrbitClass.ellipse
       ∨ classifyInverseSquareOrbit E = OrbitClass.parabola
       ∨ classifyInverseSquareOrbit E = OrbitClass.hyperbola := by

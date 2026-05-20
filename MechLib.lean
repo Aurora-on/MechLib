@@ -2,6 +2,7 @@ import MechLib.Units.Dim
 import MechLib.Units.Quantity
 import MechLib.Units.VecQuantity
 import MechLib.SI
+import MechLib.Units.BridgeLemmas
 import MechLib.Mechanics.Kinematics
 import MechLib.Mechanics.Dynamics
 import MechLib.Mechanics.SystemDynamics
@@ -13,3 +14,18 @@ import MechLib.Mechanics.AnalyticalMechanics
 import MechLib.Mechanics.SHM
 import MechLib.Mechanics.DampedSHM
 import MechLib.Compat.PHYSlib
+import MechLib.Spec.Status
+import MechLib.Spec.ModuleMetadata
+import MechLib.Spec.Concept
+import MechLib.Spec.LawSchema
+import MechLib.Spec.ProblemSchema
+import MechLib.Spec.Coverage
+import MechLib.Foundation
+import MechLib.Statics
+import MechLib.Kinematics
+import MechLib.Dynamics
+import MechLib.RigidBody
+import MechLib.Analytical
+import MechLib.Systems
+import MechLib.Examples
+import MechLib.Spec.ModuleCatalog

@@ -39,34 +39,34 @@ def initialVelocity (A : Length) (omega : AngularVelocity) (phi : PhysAngle) : S
 def amplitudeFromInitial (omega : AngularVelocity) (x0 : Length) (v0 : Speed) : Length :=
   (Real.sqrt (x0.val ^ 2 + (v0.val / omega.val) ^ 2)) • meter
 
-theorem acceleration_eq_neg_omega_sq_mul_pos
+abbrev acceleration_eq_neg_omega_sq_mul_pos
     (A : Length) (omega : AngularVelocity) (phi : PhysAngle) (t : Time) :
     acceleration A omega phi t =
       (-1 : ℝ) • Quantity.cast ((omega ** 2) * position A omega phi t) SI.omega_sq_plus_length_eq_acceleration :=
   rfl
 
-theorem period_frequency_relation (omega : AngularVelocity) (h : omega.val ≠ 0) :
+abbrev period_frequency_relation (omega : AngularVelocity) (h : omega.val ≠ 0) :
     Quantity.cast (period omega * omega) SI.time_plus_angular_velocity_eq_dimensionless =
       (((2 : ℝ) * Real.pi : ℝ) : Dimensionless) := by
   ext
   simp [period, Quantity.cast_val, Quantity.val_ofReal]
   field_simp [h]
 
-theorem totalEnergy_eq (m : Mass) (k : SpringConstant) (x : Length) (v : Speed) :
+abbrev totalEnergy_eq (m : Mass) (k : SpringConstant) (x : Length) (v : Speed) :
     totalEnergy m k x v = WorkEnergy.kineticEnergy1D m v + WorkEnergy.springPotential k x := rfl
 
-theorem initialPosition_eq (A : Length) (omega : AngularVelocity) (phi : PhysAngle) :
+abbrev initialPosition_eq (A : Length) (omega : AngularVelocity) (phi : PhysAngle) :
     initialPosition A omega phi = (Real.cos phi.val) • A := by
   ext
   simp [initialPosition, position, phase, Quantity.cast_val]
 
-theorem initialVelocity_eq (A : Length) (omega : AngularVelocity) (phi : PhysAngle) :
+abbrev initialVelocity_eq (A : Length) (omega : AngularVelocity) (phi : PhysAngle) :
     initialVelocity A omega phi
       = (-Real.sin phi.val) • Quantity.cast (A * omega) SI.length_plus_angular_velocity_eq_speed := by
   ext
   simp [initialVelocity, velocity, phase, Quantity.cast_val]
 
-theorem amplitudeFromInitial_nonneg (omega : AngularVelocity) (x0 : Length) (v0 : Speed) :
+abbrev amplitudeFromInitial_nonneg (omega : AngularVelocity) (x0 : Length) (v0 : Speed) :
     0 ≤ (amplitudeFromInitial omega x0 v0).val := by
   simp [amplitudeFromInitial, meter, Quantity.standardUnit]
 
@@ -110,7 +110,7 @@ def TurningPoint (A : Length) (omega : AngularVelocity) (phi : PhysAngle) (t : T
 def turningTimeCandidate (omega : AngularVelocity) (phi : PhysAngle) (n : ℤ) : Time :=
   (((n : ℝ) * Real.pi - phi.val) / omega.val) • second
 
-theorem turningPoint_def (A : Length) (omega : AngularVelocity) (phi : PhysAngle) (t : Time) :
+abbrev turningPoint_def (A : Length) (omega : AngularVelocity) (phi : PhysAngle) (t : Time) :
     TurningPoint A omega phi t = (velocity A omega phi t = 0) := rfl
 
 -- DONE[MECH_SHM_01]: added uniqueness-by-initial-state formal interface (`UniqueByInitialState`).

@@ -22,22 +22,22 @@ def parallelAxis (Icm : MomentOfInertia) (m : Mass) (d : Length) : MomentOfInert
   Icm + m * (d ** 2)
 
 /-- 转动动能公式展开：`E_rot = 1/2 I ω^2`。 -/
-theorem rotationalKineticEnergy_eq (I : MomentOfInertia) (omega : AngularVelocity) :
+abbrev rotationalKineticEnergy_eq (I : MomentOfInertia) (omega : AngularVelocity) :
     rotationalKineticEnergy I omega
       = (1 / 2 : ℝ) • Quantity.cast (I * (omega ** 2)) SI.moi_plus_omega_sq_eq_energy := rfl
 
 /-- 平行轴定理公式展开：`I = I_cm + m d^2`。 -/
-theorem parallel_axis_theorem (Icm : MomentOfInertia) (m : Mass) (d : Length) :
+abbrev parallel_axis_theorem (Icm : MomentOfInertia) (m : Mass) (d : Length) :
     parallelAxis Icm m d = Icm + m * (d ** 2) := rfl
 
 /-- 力矩定义展开：`τ = r × F`（含量纲转换）。 -/
-theorem torque_def (r : VecLength 3) (F : VecForce 3) :
+abbrev torque_def (r : VecLength 3) (F : VecForce 3) :
     torque r F = VecQuantity.cast (r ×ᵥ F) SI.length_plus_force_eq_torque := rfl
 
 /-- 惯量张量（接口：采用 `3x3` 实矩阵表示）。 -/
 abbrev InertiaTensor := Matrix (Fin 3) (Fin 3) ℝ
 
-theorem zero_add_zero_dim_eq_zero : ((0 : Dim) + (0 : Dim)) = (0 : Dim) := by
+abbrev zero_add_zero_dim_eq_zero : ((0 : Dim) + (0 : Dim)) = (0 : Dim) := by
   native_decide
 
 /-- 刚体主轴系下欧拉方程接口。 -/
@@ -70,13 +70,13 @@ def MomentOfMomentumTheoremSystem
     (LdotO MextO : ℝ → VecTorque 3) : Prop :=
   ∀ t, LdotO t = MextO t
 
-theorem rigidBodyKineticDecomposition_eq (T Ttrans Trot : Energy) :
+abbrev rigidBodyKineticDecomposition_eq (T Ttrans Trot : Energy) :
     RigidBodyKineticDecomposition T Ttrans Trot = (T = Ttrans + Trot) := rfl
 
-theorem angularMomentumTheoremParticle_eq (Ldot τ : ℝ → VecTorque 3) :
+abbrev angularMomentumTheoremParticle_eq (Ldot τ : ℝ → VecTorque 3) :
     AngularMomentumTheoremParticle Ldot τ = (∀ t, Ldot t = τ t) := rfl
 
-theorem momentOfMomentumTheoremSystem_eq (LdotO MextO : ℝ → VecTorque 3) :
+abbrev momentOfMomentumTheoremSystem_eq (LdotO MextO : ℝ → VecTorque 3) :
     MomentOfMomentumTheoremSystem LdotO MextO = (∀ t, LdotO t = MextO t) := rfl
 
 example : (rotationalKineticEnergy ((2 : ℝ) • momentOfInertiaUnit) ((3 : ℝ) • hertz)).val = 9 := by

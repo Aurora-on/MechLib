@@ -1,0 +1,39 @@
+{
+  "coverage": {
+    "chapter_count": 7,
+    "topic_count": 53,
+    "status_distribution": {
+      "schema": 19,
+      "todo": 13,
+      "verified": 21
+    },
+    "trust_distribution": {
+      "core": 12,
+      "derived": 9,
+      "example": 8,
+      "interface": 24
+    },
+    "alias_both_count": 53,
+    "alias_coverage_ratio": 1.0
+  },
+  "spec": {
+    "concept_count": 9,
+    "law_count": 10,
+    "problem_schema_count": 12,
+    "module_metadata_count": 53,
+    "law_status_distribution": {
+      "schema": 8,
+      "verified": 2
+    },
+    "module_status_distribution": {
+      "interface": 17,
+      "schema": 14,
+      "todo": 1,
+      "verified": 21
+    }
+  },
+  "proof_safety": {
+    "schema_corpus_for_planning_only": true,
+    "proving_requires_verified_decl_corpus": true
+  }
+}

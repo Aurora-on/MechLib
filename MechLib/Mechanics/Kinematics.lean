@@ -78,10 +78,10 @@ def vecRelativeAcceleration {n : ℕ} (aB aA : VecAccelerationField n) : VecAcce
   fun t => aB t - aA t
 
 /-- 位移函数与“终点减起点”定义等价。 -/
-theorem displacement_eq_sub (x2 x1 : Length) : displacement x2 x1 = x2 - x1 := rfl
+abbrev displacement_eq_sub (x2 x1 : Length) : displacement x2 x1 = x2 - x1 := rfl
 
 /-- 若 `dx` 是从 `x1` 到 `x2` 的位移，则有位置更新关系 `x2 = x1 + dx`。 -/
-theorem position_from_displacement (x2 x1 dx : Length) (h : dx = displacement x2 x1) :
+abbrev position_from_displacement (x2 x1 dx : Length) (h : dx = displacement x2 x1) :
     x2 = x1 + dx := by
   have hval : dx.val = x2.val - x1.val := by
     simpa [displacement] using congrArg Quantity.val h
@@ -89,7 +89,7 @@ theorem position_from_displacement (x2 x1 dx : Length) (h : dx = displacement x2
   simp [hval]
 
 /-- 匀速条件下，若位移满足 `dx = v t`，则终点位置满足 `x2 = x1 + v t`。 -/
-theorem constant_speed_relation (x2 x1 : Length) (v : Speed) (t : Time)
+abbrev constant_speed_relation (x2 x1 : Length) (v : Speed) (t : Time)
     (h : displacement x2 x1 = Quantity.cast (v * t) SI.speed_time_eq_length) :
     x2 = x1 + Quantity.cast (v * t) SI.speed_time_eq_length := by
   have hval : x2.val - x1.val = (v * t).val := by
@@ -100,7 +100,7 @@ theorem constant_speed_relation (x2 x1 : Length) (v : Speed) (t : Time)
   simpa [Quantity.cast_val] using hsum
 
 /-- 匀加速运动的速度增量公式：`v - v0 = a t`。 -/
-theorem velocity_increment (v v0 : Speed) (a : Acceleration) (t : Time)
+abbrev velocity_increment (v v0 : Speed) (a : Acceleration) (t : Time)
     (h : v = velocityConstAccel v0 a t) :
     v - v0 = Quantity.cast (a * t) SI.acceleration_time_eq_speed := by
   have hval : v.val = v0.val + (a * t).val := by
@@ -111,7 +111,7 @@ theorem velocity_increment (v v0 : Speed) (a : Acceleration) (t : Time)
   simpa [Quantity.cast_val] using hdiff
 
 /-- 匀加速位移两种常见表达式的等价性。 -/
-theorem displacement_forms_equiv (v v0 : Speed) (a : Acceleration) (t : Time)
+abbrev displacement_forms_equiv (v v0 : Speed) (a : Acceleration) (t : Time)
     (hv : v = velocityConstAccel v0 a t) :
     Quantity.cast (v0 * t) SI.speed_time_eq_length
       + (1 / 2 : ℝ) • Quantity.cast (a * (t ** 2)) SI.acceleration_two_time_eq_length
@@ -123,28 +123,28 @@ theorem displacement_forms_equiv (v v0 : Speed) (a : Acceleration) (t : Time)
   ring
 
 /-- 绝对位置可分解为“参考系位置 + 相对位置”。 -/
-theorem trajectory_reconstruction (xB xA : ScalarTrajectory) :
+abbrev trajectory_reconstruction (xB xA : ScalarTrajectory) :
     xB = fun t => xA t + relativeTrajectory xB xA t := by
   funext t
   ext
   simp [relativeTrajectory]
 
 /-- 三个物体间的相对位移满足链式分解。 -/
-theorem relative_trajectory_trans (xA xB xC : ScalarTrajectory) :
+abbrev relative_trajectory_trans (xA xB xC : ScalarTrajectory) :
     relativeTrajectory xC xA = fun t => relativeTrajectory xC xB t + relativeTrajectory xB xA t := by
   funext t
   ext
   simp [relativeTrajectory]
 
 /-- 三个物体间的相对速度满足链式分解。 -/
-theorem relative_velocity_trans (vA vB vC : ScalarVelocityField) :
+abbrev relative_velocity_trans (vA vB vC : ScalarVelocityField) :
     relativeVelocity vC vA = fun t => relativeVelocity vC vB t + relativeVelocity vB vA t := by
   funext t
   ext
   simp [relativeVelocity]
 
 /-- 三个物体间的相对加速度满足链式分解。 -/
-theorem relative_acceleration_trans (aA aB aC : ScalarAccelerationField) :
+abbrev relative_acceleration_trans (aA aB aC : ScalarAccelerationField) :
     relativeAcceleration aC aA =
       fun t => relativeAcceleration aC aB t + relativeAcceleration aB aA t := by
   funext t
@@ -152,7 +152,7 @@ theorem relative_acceleration_trans (aA aB aC : ScalarAccelerationField) :
   simp [relativeAcceleration]
 
 /-- 若 `xA, xB` 可导，则相对位置 `xB - xA` 的导数为 `vB - vA`。 -/
-theorem hasVelocity_relative
+abbrev hasVelocity_relative
     (xA xB : ScalarTrajectory) (vA vB : ScalarVelocityField)
     (hA : HasVelocity xA vA) (hB : HasVelocity xB vB) :
     HasVelocity (relativeTrajectory xB xA) (relativeVelocity vB vA) := by
@@ -160,7 +160,7 @@ theorem hasVelocity_relative
   simpa [relativeTrajectory, relativeVelocity] using (hB t).sub (hA t)
 
 /-- 若 `vA, vB` 可导，则相对速度 `vB - vA` 的导数为 `aB - aA`。 -/
-theorem hasAcceleration_relative
+abbrev hasAcceleration_relative
     (vA vB : ScalarVelocityField) (aA aB : ScalarAccelerationField)
     (hA : HasAcceleration vA aA) (hB : HasAcceleration vB aB) :
     HasAcceleration (relativeVelocity vB vA) (relativeAcceleration aB aA) := by
@@ -168,7 +168,7 @@ theorem hasAcceleration_relative
   simpa [relativeVelocity, relativeAcceleration] using (hB t).sub (hA t)
 
 /-- 线性组合轨迹的导数等于对应速度场线性组合。 -/
-theorem hasVelocity_linear_combination
+abbrev hasVelocity_linear_combination
     (x1 x2 : ScalarTrajectory) (v1 v2 : ScalarVelocityField) (c1 c2 : ℝ)
     (h1 : HasVelocity x1 v1) (h2 : HasVelocity x2 v2) :
     HasVelocity (fun t => c1 • x1 t + c2 • x2 t) (fun t => c1 • v1 t + c2 • v2 t) := by
@@ -180,7 +180,7 @@ theorem hasVelocity_linear_combination
   simpa using h1'.add h2'
 
 /-- 线性组合速度场的导数等于对应加速度场线性组合。 -/
-theorem hasAcceleration_linear_combination
+abbrev hasAcceleration_linear_combination
     (v1 v2 : ScalarVelocityField) (a1 a2 : ScalarAccelerationField) (c1 c2 : ℝ)
     (h1 : HasAcceleration v1 a1) (h2 : HasAcceleration v2 a2) :
     HasAcceleration (fun t => c1 • v1 t + c2 • v2 t) (fun t => c1 • a1 t + c2 • a2 t) := by
@@ -192,7 +192,7 @@ theorem hasAcceleration_linear_combination
   simpa using h1'.add h2'
 
 /-- 两体满足线性位移约束 `c1 x1 + c2 x2 = 常数` 时，对应速度满足同系数线性约束。 -/
-theorem linear_constraint_velocity
+abbrev linear_constraint_velocity
     (x1 x2 : ScalarTrajectory) (v1 v2 : ScalarVelocityField)
     (c1 c2 : ℝ) (L : Length)
     (hConstraint : ∀ t, c1 • x1 t + c2 • x2 t = L)
@@ -214,7 +214,7 @@ theorem linear_constraint_velocity
   simpa using hZeroVal
 
 /-- 两体满足线性速度约束 `c1 v1 + c2 v2 = 常数` 时，对应加速度满足同系数线性约束。 -/
-theorem linear_constraint_acceleration
+abbrev linear_constraint_acceleration
     (v1 v2 : ScalarVelocityField) (a1 a2 : ScalarAccelerationField)
     (c1 c2 : ℝ) (V : Speed)
     (hConstraint : ∀ t, c1 • v1 t + c2 • v2 t = V)
@@ -236,7 +236,7 @@ theorem linear_constraint_acceleration
   simpa using hZeroVal
 
 /-- 理想绳约束（`x1 + x2 = 常数`）推出速度关系 `v1 + v2 = 0`。 -/
-theorem rope_constraint_velocity
+abbrev rope_constraint_velocity
     (x1 x2 : ScalarTrajectory) (v1 v2 : ScalarVelocityField) (L : Length)
     (hConstraint : ∀ t, x1 t + x2 t = L)
     (h1 : HasVelocity x1 v1) (h2 : HasVelocity x2 v2) :
@@ -261,7 +261,7 @@ theorem rope_constraint_velocity
     _ = (0 : Speed).val := hValEq
 
 /-- 刚性间距约束 `xB - xA = 常数` 推出两体速度恒等。 -/
-theorem rigid_pair_velocity_equal
+abbrev rigid_pair_velocity_equal
     (xA xB : ScalarTrajectory) (vA vB : ScalarVelocityField) (Δ : Length)
     (hConstraint : ∀ t, relativeTrajectory xB xA t = Δ)
     (hA : HasVelocity xA vA) (hB : HasVelocity xB vB) :
@@ -298,11 +298,11 @@ def vecVelocityConstAccel {n : ℕ} (v0 : VecSpeed n) (a : VecAcceleration n) (t
   v0 + VecQuantity.cast (a * t) SI.acceleration_time_eq_speed
 
 /-- 向量版匀加速速度更新定义的展开式。 -/
-theorem vec_velocity_const_accel_eq {n : ℕ} (v0 : VecSpeed n) (a : VecAcceleration n) (t : Time) :
+abbrev vec_velocity_const_accel_eq {n : ℕ} (v0 : VecSpeed n) (a : VecAcceleration n) (t : Time) :
     vecVelocityConstAccel v0 a t = v0 + VecQuantity.cast (a * t) SI.acceleration_time_eq_speed := rfl
 
 /-- 向量版三体相对位移链式分解。 -/
-theorem vec_relative_trajectory_trans {n : ℕ} (xA xB xC : VecTrajectory n) :
+abbrev vec_relative_trajectory_trans {n : ℕ} (xA xB xC : VecTrajectory n) :
     vecRelativeTrajectory xC xA =
       fun t => vecRelativeTrajectory xC xB t + vecRelativeTrajectory xB xA t := by
   funext t
@@ -310,7 +310,7 @@ theorem vec_relative_trajectory_trans {n : ℕ} (xA xB xC : VecTrajectory n) :
   simp [vecRelativeTrajectory]
 
 /-- 向量版三体相对速度链式分解。 -/
-theorem vec_relative_velocity_trans {n : ℕ} (vA vB vC : VecVelocityField n) :
+abbrev vec_relative_velocity_trans {n : ℕ} (vA vB vC : VecVelocityField n) :
     vecRelativeVelocity vC vA =
       fun t => vecRelativeVelocity vC vB t + vecRelativeVelocity vB vA t := by
   funext t
@@ -318,7 +318,7 @@ theorem vec_relative_velocity_trans {n : ℕ} (vA vB vC : VecVelocityField n) :
   simp [vecRelativeVelocity]
 
 /-- 若向量轨迹可导，则其相对轨迹的导数为相对速度（按分量）。 -/
-theorem hasVecVelocity_relative {n : ℕ}
+abbrev hasVecVelocity_relative {n : ℕ}
     (xA xB : VecTrajectory n) (vA vB : VecVelocityField n)
     (hA : HasVecVelocity xA vA) (hB : HasVecVelocity xB vB) :
     HasVecVelocity (vecRelativeTrajectory xB xA) (vecRelativeVelocity vB vA) := by
@@ -326,7 +326,7 @@ theorem hasVecVelocity_relative {n : ℕ}
   simpa [vecRelativeTrajectory, vecRelativeVelocity] using (hB t i).sub (hA t i)
 
 /-- 若向量速度场可导，则其相对速度导数为相对加速度（按分量）。 -/
-theorem hasVecAcceleration_relative {n : ℕ}
+abbrev hasVecAcceleration_relative {n : ℕ}
     (vA vB : VecVelocityField n) (aA aB : VecAccelerationField n)
     (hA : HasVecAcceleration vA aA) (hB : HasVecAcceleration vB aB) :
     HasVecAcceleration (vecRelativeVelocity vB vA) (vecRelativeAcceleration aB aA) := by
@@ -334,7 +334,7 @@ theorem hasVecAcceleration_relative {n : ℕ}
   simpa [vecRelativeVelocity, vecRelativeAcceleration] using (hB t i).sub (hA t i)
 
 /-- 向量版刚性间距约束 `xB - xA = 常向量` 推出速度恒等。 -/
-theorem rigid_pair_vec_velocity_equal {n : ℕ}
+abbrev rigid_pair_vec_velocity_equal {n : ℕ}
     (xA xB : VecTrajectory n) (vA vB : VecVelocityField n) (r : VecLength n)
     (hConstraint : ∀ t, vecRelativeTrajectory xB xA t = r)
     (hA : HasVecVelocity xA vA) (hB : HasVecVelocity xB vB) :
@@ -400,7 +400,7 @@ def PfaffConstraint1D (a b : ℝ → ℝ) (v : ScalarVelocityField) : Prop :=
   ∀ t, a t * (v t).val + b t = 0
 
 /-- 两条 Pfaff 约束可按线性组合闭包。 -/
-theorem pfaffConstraint1D_linear_combination
+abbrev pfaffConstraint1D_linear_combination
     (a1 b1 a2 b2 : ℝ → ℝ) (v : ScalarVelocityField)
     (h1 : PfaffConstraint1D a1 b1 v) (h2 : PfaffConstraint1D a2 b2 v)
     (c1 c2 : ℝ) :

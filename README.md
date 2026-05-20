@@ -1,361 +1,327 @@
 # MechLib
 
-`MechLib` 是一个基于 Lean 4 的经典力学形式化语义库。它以 SI 量纲系统为底层，
-用带量纲的标量/向量类型表达物理量，并在此之上组织常见力学公式、课程级定理以及后续扩展接口。
+MechLib 是一个基于 Lean 4 的经典力学语义库，面向工科本科理论力学、分析力学和典型力学系统建模。它的目标不是只收集公式，而是把课程概念、带量纲物理量、verified theorem、schema metadata 和可检索 corpus 组织成一个可供自动形式化系统使用的知识库。
 
-这个仓库明确参考了两类上游代码：
+MechLib 的核心特色之一是 typed physical quantities。库中的公开物理 API 优先使用 `MechLib.SI` 类型别名、`MechLib.Units.Quantity` 和 `MechLib.Units.VecQuantity`，使 `Length`、`Mass`、`Force`、`Energy` 等物理量在 Lean 类型层面保留量纲信息。裸 `ℝ` 主要用于无量纲系数、索引、坐标图数值、`.val` 投影、metadata 或明确标记的 temporary fallback。
 
-- `F:\AI4Mechanics\coding\Lean4PHYS\PHYSlib`
-- `F:\AI4Mechanics\PhysLean-master\PhysLean`
+MechLib 目前是研究型语义库。它已经包含一批经过 Lean 检查的 theorem/lemma、课程层 API、Spec 层、coverage matrix、corpus exporter 和 Spec-declaration alignment；但它没有声称已经 fully proved 全部本科理论力学。复杂内容会以 schema、residual、interface 或 problem template 的形式保留，用于建模、检索和规划，而不是伪装成 verified theorem。
 
-但 `MechLib` 不是对其中任一项目的直接镜像，也不直接依赖这些力学模块编译。
-当前代码直接依赖的是 `mathlib`；对参考项目的吸收主要体现在：
+## 当前实现概览
 
-- `Lean4PHYS/PHYSlib` 的轻量 SI 单位系统、`Scalar d` 风格 API、入门力学公式命名方式
-- `PhysLean` 的 classical mechanics 主题划分与问题意识，尤其是简谐振动、阻尼振动、分析力学、刚体与中心力
+当前仓库已经具备以下内容：
 
-从当前实现看，`MechLib` 走的是一条比 `PhysLean` 更轻、更“课程定理库”的路线：
+- `Units / SI / Quantity / VecQuantity`：量纲、标量物理量、向量物理量、SI 类型别名与 bridge lemmas。
+- 课程层模块：`Foundation`、`Statics`、`Kinematics`、`Dynamics`、`RigidBody`、`Analytical`、`Systems`。
+- `Spec` 层：`DeclStatus`、`TrustLevel`、`ConceptSpec`、`LawSchema`、`ProblemSchema`、`CoverageTopic`、`ModuleMetadata`。
+- coverage matrix：本科理论力学主题覆盖矩阵。
+- theorem corpus：Lean theorem/lemma 的可检索 JSONL。
+- Spec-declaration alignment：theorem 与 topic/concept/law/problem schema 的映射。
+- proof hints：导出器为 theorem rows 保留 `proof_hints` 字段。
+- proof-friendly examples：展示 typed proof pattern 的 Lean 示例。
 
-- 底层采用 `Dim = BaseDim -> Q` 的简单量纲表示
-- 物理量直接实现为 `Quantity d` / `VecQuantity d n`
-- 需要跨量纲重写时，用 `Quantity.cast` / `VecQuantity.cast` 配合维度恒等式完成
-- 高阶主题中，部分模块提供的是“形式化接口（Prop / residual / equation schema）”，而不是完整解析解理论
+当前已生成 corpus/report 文件中的统计如下：
 
----
+| 项目 | 当前数量 |
+| --- | ---: |
+| `corpus/theorem_corpus.jsonl` | 310 theorem/lemma rows |
+| `corpus/decl_corpus_enriched.jsonl` | 310 enriched declaration rows |
+| `corpus/alias_map.jsonl` | 4 aliases |
+| `corpus/concept_corpus.jsonl` | 9 concepts |
+| `corpus/law_schema_corpus.jsonl` | 10 law schemas |
+| `corpus/problem_schema_corpus.jsonl` | 12 problem schemas |
+| `corpus/module_metadata_corpus.jsonl` | 53 module metadata rows |
 
-## 与参考项目的关系
+Coverage matrix 当前状态：
 
-### 1. 与 `Lean4PHYS/PHYSlib` 的关系
+- 7 个章节；
+- 53 个 topic；
+- status 分布：`verified = 21`, `schema = 19`, `todo = 13`；
+- trust 分布：`core = 12`, `derived = 9`, `interface = 24`, `example = 8`；
+- 中英文 alias 覆盖率：100%。
 
-`PHYSlib` 的核心思路是：
+Spec-declaration alignment 当前状态：
 
-- 先定义通用 `UnitsSystem`
-- 在 `Foundations.SI` 中实例化 SI 量纲
-- 在 `Mechanics` 中给出较轻量的公式库
+- matched declarations: 310 / 310；
+- unmatched declarations: 0；
+- needs review: 3；
+- callable by LLM: 301；
+- average alignment score: 0.968129。
 
-`MechLib` 保留了这种“先单位制、后力学模块”的组织方式，但做了两点简化：
+安全审计当前状态：
 
-- 不再保留 `UnitsSystem` 抽象层，而是直接固定到 7 个 SI 基本量纲
-- 不再用 `Formal` graded ring 作为主要用户接口，而是直接用 `Quantity` / `VecQuantity` 做 typed arithmetic
+- `axiom` / `constant` / `opaque` / `sorry` / `admit` 当前出现次数：0；
+- `check_no_new_axioms.py` 报告 `pass_no_new_uncontrolled_unsafe_decl = true`。
 
-`MechLib.Compat.PHYSlib` 则提供了一层有限兼容桥接，方便把旧风格名称逐步迁移到新库。
-需要注意：这层兼容目前是“迁移辅助层”，不是完整的 drop-in 替代。
+这些数字来自当前仓库中的 `corpus/*.json(l)` 与 `reports/*.md`。如果新增 theorem 或 example 后需要更新 corpus，请重新运行导出命令。
 
-### 2. 与 `PhysLean` 的关系
-
-`PhysLean` 的 classical mechanics 部分更偏理论化、几何化、变分法驱动，例如：
-
-- `ClassicalMechanics.EulerLagrange`
-- `ClassicalMechanics.HamiltonsEquations`
-- `ClassicalMechanics.HarmonicOscillator.Basic`
-- `ClassicalMechanics.RigidBody.Basic`
-
-`MechLib` 在主题覆盖上明显受其启发，但当前实现策略不同：
-
-- 不引入 `PhysLean` 那套流形/变分 calculus 基础设施
-- 主要面向 typed formula、结构定理和可直接调用的 API
-- 把 1D/3D 课程力学常见对象优先落成简单、稳定的接口
-
-另外，参考代码的现状也值得说明：
-
-- `PhysLean.ClassicalMechanics.Basic` 目前仍是 stub
-- `PhysLean.ClassicalMechanics.DampedHarmonicOscillator.Basic` 主要还是 placeholder
-
-因此，`MechLib.Mechanics.DampedSHM` 事实上已经补上了一块参考项目里尚未完整落地的 typed 内容。
-
----
-
-## 当前代码结构
+## 目录结构
 
 ```text
 MechLib/
+├─ lakefile.toml
+├─ lean-toolchain
 ├─ MechLib.lean
 ├─ MechLib/
-│  ├─ Units/
-│  │  ├─ Dim.lean
-│  │  ├─ Quantity.lean
-│  │  └─ VecQuantity.lean
-│  ├─ SI.lean
-│  ├─ Mechanics/
-│  │  ├─ Kinematics.lean
-│  │  ├─ Dynamics.lean
-│  │  ├─ SystemDynamics.lean
-│  │  ├─ WorkEnergy.lean
-│  │  ├─ MomentumImpulse.lean
-│  │  ├─ Rotation.lean
-│  │  ├─ CentralForce.lean
-│  │  ├─ AnalyticalMechanics.lean
-│  │  ├─ SHM.lean
-│  │  └─ DampedSHM.lean
-│  └─ Compat/
-│     └─ PHYSlib.lean
-├─ tools/
-│  └─ export_llm_corpus.py
-├─ theorem_corpus.jsonl
-├─ alias_map.jsonl
-├─ export_report.json
-├─ lakefile.toml
-└─ lean-toolchain
+│  ├─ Units/                 量纲、标量物理量、向量物理量、bridge lemmas
+│  ├─ SI.lean                SI 类型别名、单位、维度等式
+│  ├─ Mechanics/             兼容实现层，保留旧 API 和部分基础定义
+│  ├─ Foundation/            量纲、物理量、参考系、坐标系、几何基础
+│  ├─ Statics/               力系、力矩、力偶、平衡、约束、摩擦、桁架
+│  ├─ Kinematics/            点运动、坐标运动、相对运动、刚体运动、定轴转动
+│  ├─ Dynamics/              牛顿定律、质点动力学、动量、冲量、功-能、碰撞等
+│  ├─ RigidBody/             惯量、定轴动力学、平面运动、Euler 方程、陀螺 schema
+│  ├─ Analytical/            广义坐标、约束、虚功、Lagrange、Hamilton、Poisson、小振动
+│  ├─ Systems/               单摆、物理摆、中心力、Atwood 机、耦合振子等系统案例
+│  ├─ Spec/                  coverage、concept、law schema、problem schema、module catalog
+│  ├─ Examples/              proof-friendly checked examples
+│  └─ Compat/PHYSlib.lean    PHYSlib 风格兼容名称
+├─ tools/                    exporter、alignment、审计脚本
+├─ corpus/                   已生成的 JSON/JSONL/Markdown 语料
+├─ docs/                     使用说明和项目边界文档
+└─ reports/                  人类可读审计与迁移报告
 ```
 
-`MechLib.lean` 是顶层聚合入口，直接导入全部主要模块。
+顶层导入：
 
----
+```lean
+import MechLib
+```
 
-## 核心设计
+## Verified / Schema / Example / Alignment
 
-### 1. 量纲层
+MechLib 严格区分以下层次：
+
+| 层次 | 含义 | 是否可作为 proof fact |
+| --- | --- | --- |
+| verified theorem/lemma | 已通过 Lean kernel 检查的 theorem 或 lemma。 | 可以，前提是 `status = verified` 且 trust/whitelist 允许。 |
+| schema/residual/interface | 概念接口、规律 schema、残量方程或题型接口。 | 不可以，只用于建模、检索和规划。 |
+| example | checked example、smoke test 或展示样例。 | 可作为局部示范，不等价于通用 theorem。 |
+| alignment metadata | theorem 与 Spec topic/concept/law/problem schema 的映射。 | 不可以，它只是检索和约束生成元数据。 |
+
+`concept_corpus.jsonl`、`law_schema_corpus.jsonl` 和 `problem_schema_corpus.jsonl` 不是 proof corpus。后续 pipeline 的 proving 阶段应只使用 verified/core 或 verified/derived declaration，具体以 `decl_corpus_enriched.jsonl` 中的 `status`、`trust_level`、`callable_by_llm` 和 required imports 为准。
+
+## 量纲系统
+
+核心量纲模块包括：
 
 - `MechLib.Units.Dim`
-  - `BaseDim` 定义 7 个 SI 基本量纲：`length`, `mass`, `time`, `current`, `temperature`, `amount`, `intensity`
-  - `Dim := BaseDim -> Q`
-
-这里采用“量纲是有理指数映射”的设计，因此支持诸如平方根、倒数、平方等常见维度运算。
-
-### 2. 标量与向量物理量
-
 - `MechLib.Units.Quantity`
-  - `Quantity d`：携带量纲 `d` 的标量
-  - 提供 `+`, `-`, `•`, `*`, `/`, `**`, `inv`
-  - 提供 `Quantity.cast`、`Quantity.standardUnit`、`Quantity.inUnits`
-
 - `MechLib.Units.VecQuantity`
-  - `VecQuantity d n`：携带量纲 `d` 的 `n` 维向量
-  - 提供 `+`, `-`, `•`
-  - 提供数量乘向量、`dot`、`cross`
-  - 提供 `VecQuantity.cast`
+- `MechLib.SI`
+- `MechLib.Units.BridgeLemmas`
 
-### 3. SI 层
+常见 typed 物理对象包括：
 
-`MechLib.SI` 在 typed quantity 之上定义：
+- `Length`, `Mass`, `Time`, `Speed`, `Acceleration`
+- `Force`, `Momentum`, `Energy`, `Power`
+- `Torque`, `AngularMomentum`, `MomentOfInertia`
+- `VecLength n`, `VecForce n`, `VecTorque n`
 
-- 常用维度别名
-  - `speedDim`, `forceDim`, `energyDim`, `angularMomentumDim` 等
-- 常用量类型
-  - `Length`, `Mass`, `Time`, `Speed`, `Force`, `Energy`, `SpringConstant` 等
-- 向量量类型
-  - `VecLength n`, `VecSpeed n`, `VecForce n`, `VecTorque n` 等
-- SI 单位与前缀
-  - `meter`, `kilogram`, `second`, `newton`, `joule`, `hertz`
-  - `kilo`, `milli`, `micro`, `mega` 等
-- 常数
-  - `c`, `g`
-- 维度桥接定理
-  - `speed_time_eq_length`
-  - `force_time_eq_momentum`
-  - `spring_plus_two_length_eq_energy`
-  - `moi_plus_omega_sq_eq_energy`
-  - 等等
-- 单位选择与换算接口
-  - `UnitChoices`
-  - `conversionFactor`
+示例：
 
-这部分是整个库的关键“typed rewrite glue”。
+```lean
+import MechLib
 
----
-
-## 模块概览
-
-| 模块 | 当前内容 | 代表性 API |
-| --- | --- | --- |
-| `Units.Dim` | 7 基本量纲与基础维度操作 | `Dim.length`, `Dim.mass`, `Dim.time` |
-| `Units.Quantity` | 标量物理量与单位数值读取 | `Quantity.cast`, `Quantity.inUnits` |
-| `Units.VecQuantity` | 向量物理量、点乘、叉乘 | `VecQuantity.dot`, `VecQuantity.cross` |
-| `SI` | SI 类型别名、单位、常数、维度桥接 | `meter`, `newton`, `speed_time_eq_length` |
-| `Mechanics.Kinematics` | 标量/向量运动学、相对运动、约束关系、Frenet 与 Pfaff 接口 | `velocityConstAccel`, `positionConstAccel`, `displacement_forms_equiv` |
-| `Mechanics.Dynamics` | 牛顿第二定律、动量、向量形式 | `secondLaw`, `momentum`, `momentum_change_const_mass` |
-| `Mechanics.WorkEnergy` | 功、动能、弹簧势能、功能定理 | `work`, `kineticEnergy1D`, `work_energy_theorem_core` |
-| `Mechanics.MomentumImpulse` | 冲量、非弹性碰撞、动量守恒 | `impulse`, `postCollisionSpeedInelastic`, `momentum_conservation_inelastic` |
-| `Mechanics.SystemDynamics` | 质点系、质心、约化质量、双体动能分解、系统级平衡接口 | `centerOfMassPosition`, `reducedMass`, `twoBody_kineticEnergy_decomposition` |
-| `Mechanics.Rotation` | 力矩、角动量、转动动能、平行轴定理、刚体/旋转参考系接口 | `torque`, `angularMomentum`, `EulerEquationsPrincipal` |
-| `Mechanics.SHM` | 简谐振动位置/速度/加速度、周期、初值转换、唯一性/转折点接口 | `position`, `velocity`, `period_frequency_relation`, `amplitudeFromInitial` |
-| `Mechanics.DampedSHM` | 阻尼振子参数、判别式分类、`Q`、阻尼比、驰豫时间、零阻尼退化、能量耗散接口 | `Params`, `discriminant`, `qualityFactor`, `equationOfMotion_gamma_zero_iff` |
-| `Mechanics.AnalyticalMechanics` | 1D 拉格朗日/哈密顿形式、EL/Newton 等价、作用量、Poisson 括号、约束乘子接口 | `lagrangian1D`, `hamiltonianXP`, `eulerLagrange_iff_newton`, `poissonBracket1D` |
-| `Mechanics.CentralForce` | 中心力判定、Hooke 中心力、有效势、反平方势、Binet/Kepler/轨道分类接口 | `IsCentralForcePair`, `effectivePotential`, `BinetEquation`, `classifyInverseSquareOrbit` |
-| `Compat.PHYSlib` | 向旧命名风格提供有限桥接 | `Dimensions`, `Scalar`, `F_of`, `newton_second_law` |
-
----
-
-## 当前实现的几个特点
-
-### 1. `SHM` 与 `DampedSHM` 是本库相对完整的主题块
-
-这两块不仅有公式定义，也有一定数量的结构定理。
-
-例如 `DampedSHM` 已包含：
-
-- `Params`
-- `omega0`
-- `equationResidual` / `EquationOfMotion`
-- `discriminant`
-- `IsUnderdamped` / `IsCriticallyDamped` / `IsOverdamped`
-- `dampingRatio`
-- `qualityFactor`
-- `dampingRate`
-- `relaxationTime`
-- `equationOfMotion_gamma_zero_iff`
-
-其中：
-
-- `qualityFactor_mul_dampingRatio`
-- `relaxationTime_mul_dampingRate`
-
-已经被证明为可直接复用的 typed theorem。
-
-### 2. 高阶模块中有不少“接口定理/接口命题”
-
-例如：
-
-- `Rotation.EulerEquationsPrincipal`
-- `Kinematics.TransportTheoremRelation`
-- `AnalyticalMechanics.CanonicalEquations1D`
-- `CentralForce.BinetEquation`
-- `CentralForce.BoundOrbitCriterion`
-
-这些对象的定位不是“已经完整求解的一套理论”，而是为后续正式化提供稳定语义接口。
-
-### 3. `PhysLean` 风格主题被做了轻量重述
-
-例如 `AnalyticalMechanics` 中给出了：
-
-- `lagrangian1D`
-- `canonicalMomentum1D`
-- `hamiltonianXV`
-- `hamiltonianXP`
-- `eulerLagrange_iff_newton`
-- `actionFunctional1D`
-- `stationaryAction1D`
-
-但这仍然不同于 `PhysLean` 中真正依赖变分 calculus 基础设施的那套发展。
-
----
-
-## 构建
-
-当前环境信息：
-
-- Lean：`leanprover/lean4:v4.26.0`
-- 直接依赖：`mathlib`
-
-`lakefile.toml` 当前写的是本地路径依赖：
-
-```toml
-[[require]]
-name = "mathlib"
-path = "../../PhysLean-master/.lake/packages/mathlib"
+#check MechLib.SI.Length
+#check MechLib.SI.Force
+#check MechLib.Units.Quantity.cast
+#check MechLib.Units.VecQuantity.cast
+#check MechLib.SI.speed_time_eq_length
 ```
 
-如果你的目录布局不同，需要先修改这个路径。
+量纲审计报告位于：
 
-构建命令：
+- `reports/dimension_audit_report.md`
+- `corpus/dimension_audit_report.json`
+
+当前审计显示核心量纲模块仍存在并被顶层导入；课程层仍有若干 `ℝ` fallback 和 review candidates，详见限制文档。
+
+## 课程层与旧 Mechanics 层
+
+`MechLib.Mechanics.*` 是较早的实现层和兼容层。当前 retrieval-facing 的 theorem/lemma 主位置逐步迁移到课程层，例如：
+
+- `MechLib.Kinematics.Verified`
+- `MechLib.Dynamics.Verified`
+- `MechLib.RigidBody.Verified`
+- `MechLib.Systems.Verified`
+- `MechLib.Analytical.*`
+
+旧 `Mechanics` 名称在必要时保留为兼容 API。相关迁移报告：
+
+- `reports/mechanics_migration_report.md`
+
+新增 theorem 时，应优先放到对应课程 Lean 模块，而不是继续扩展旧 `Mechanics` theorem API。Spec 文件只放 metadata、schema 或 corpus source of truth，不放 fake theorem。
+
+## 展示样例
+
+最终展示样例位于：
+
+- `MechLib/Examples/FinalTheoremDemos.lean`
+- `docs/final_theorem_demos.md`
+
+当前包含 3 组 fully checked Lean theorem。它们用于展示证明风格，alignment 中标记为 `trust_level = example` 且 `callable_by_llm = false`；proof whitelist 的首选入口是课程层 verified/core 或 verified/derived extractor theorem。
+
+1. `uniformAccelerationDisplacement_byCalculation`
+   展示匀加速运动位移公式如何通过 typed quantity、`Quantity.cast`、`.val` 投影和 `ring` 证明。
+
+2. `workEnergyBalance_byValueAlgebra` 与 `impulseMomentum_byValueAlgebra`
+   展示动能定理核心代数形式与冲量-动量形式如何通过 `.val`、`linarith`、`ext` 证明。
+
+3. `eulerLagrangeNewtonBridge_byResidualAlgebra`
+   展示 1D Euler-Lagrange residual 与 Newton form 如何通过展开定义和残量代数建立等价。
+
+这些样例是 verified theorem，不依赖 schema 作为 proof fact。一般 n 自由度 Euler-Lagrange 到 Newton/Hamiltonian 的完整桥接仍是 future work。
+
+近期新增的 proof-whitelist 友好 extractor theorem 包括：
+
+- `MechLib.Dynamics.NewtonLaw.NewtonSecondLaw.to_value_equation`
+- `MechLib.Dynamics.NewtonLaw.forceBalance1D_to_value_equation`
+- `MechLib.Kinematics.PointMotion.constantAccelerationVelocityRelation_to_value_equation`
+- `MechLib.Statics.Friction.kineticFrictionLaw_to_value_equation`
+- `MechLib.RigidBody.FixedAxisDynamics.fixedAxisDynamicsResidual_to_value_equation`
+- `MechLib.Dynamics.WorkEnergy.rotationalKineticEnergy_to_value_equation`
+- `MechLib.Statics.ConstraintForce.idealRopeUniformTension_to_value_equation`
+- `MechLib.Statics.ConstraintForce.noSlipPulleyVelocityRelation_to_value_equation`
+- `MechLib.Statics.Friction.capstanTensionRatio_to_value_equation`
+- `MechLib.RigidBody.Inertia.pointMassMomentOfInertia_to_value_equation`
+- `MechLib.RigidBody.PlaneMotionDynamics.planeMotionKineticEnergy_to_value_equation`
+- `MechLib.Dynamics.SystemDynamics.centerOfMassDisplacement2_to_value_equation`
+- `MechLib.Kinematics.RelativeMotion.relativeDisplacementValueRelation_to_value_equation`
+- `MechLib.Kinematics.CoordinateMotion.forceComponentsFromAngle_to_value_equations`
+- `MechLib.Kinematics.PointMotion.velocity_value_eq_deriv_of_position_value`
+- `MechLib.Kinematics.PointMotion.acceleration_value_eq_deriv_of_velocity_value`
+- `MechLib.Kinematics.PointMotion.component_velocity_value_eq_deriv_of_position_component_value`
+- `MechLib.Kinematics.PointMotion.component_acceleration_value_eq_deriv_of_velocity_component_value`
+- `MechLib.Kinematics.PointMotion.acceleration_value_eq_second_deriv_of_position_value`
+- `MechLib.Kinematics.FixedAxisRotation.angular_velocity_value_eq_deriv_of_angle_value`
+- `MechLib.Kinematics.FixedAxisRotation.angular_acceleration_value_eq_deriv_of_omega_value`
+- `MechLib.Kinematics.CoordinateMotion.forceMagnitude2D_to_value_equation`
+- `MechLib.Kinematics.CoordinateMotion.parametric_curve_speed_squared`
+- `MechLib.Kinematics.CoordinateMotion.arc_length_speed_relation`
+
+## 构建与检查
+
+构建主库：
 
 ```bash
 lake build
 ```
 
-或者只构建主库：
+检查指定文件：
 
 ```bash
-lake build MechLib
+lake env lean MechLib/Examples/FinalTheoremDemos.lean
+lake env lean MechLib/Spec/Coverage.lean
+lake env lean MechLib/Analytical/LagrangeEquation.lean
 ```
 
----
+安全扫描：
 
-## 使用
-
-```lean
-import MechLib
-
-open MechLib
-open MechLib.Units
-open MechLib.SI
-open MechLib.Mechanics
+```bash
+rg -n "^\\s*(axiom|constant|opaque)\\b|\\b(sorry|admit)\\b" MechLib tools || true
+python3 tools/check_no_new_axioms.py
 ```
 
-### 示例 1：匀加速位移公式等价
+Python 脚本语法检查：
 
-```lean
-import MechLib
-
-open MechLib
-open MechLib.Units
-open MechLib.SI
-open MechLib.Mechanics
-
-example (v v0 : Speed) (a : Acceleration) (t : Time)
-    (hv : v = Kinematics.velocityConstAccel v0 a t) :
-    Quantity.cast (v0 * t) SI.speed_time_eq_length
-      + (1 / 2 : ℝ) • Quantity.cast (a * (t ** 2)) SI.acceleration_two_time_eq_length
-        = Kinematics.displacementConstAccelForm2 v0 v t := by
-  simpa using Kinematics.displacement_forms_equiv v v0 a t hv
+```bash
+python3 -m py_compile \
+  tools/export_coverage_matrix.py \
+  tools/export_spec_corpus.py \
+  tools/export_llm_corpus.py \
+  tools/link_theorems_to_spec.py \
+  tools/audit_dimension_usage.py \
+  tools/check_no_new_axioms.py
 ```
 
-### 示例 2：双体动能分解
+## 导出命令
 
-```lean
-import MechLib
+Coverage matrix：
 
-open MechLib
-open MechLib.SI
-open MechLib.Mechanics
-
-example (m1 m2 : Mass) (v1 v2 : Speed) (h : (m1 + m2).val ≠ 0) :
-    SystemDynamics.totalKineticEnergy2 m1 m2 v1 v2
-      = SystemDynamics.decomposedKineticEnergy2 m1 m2 v1 v2 := by
-  simpa using SystemDynamics.twoBody_kineticEnergy_decomposition m1 m2 v1 v2 h
+```bash
+python3 tools/export_coverage_matrix.py
+python3 tools/export_coverage_matrix.py --check
 ```
 
-### 示例 3：阻尼比与品质因子
+Spec corpus：
 
-```lean
-import MechLib
-
-open MechLib
-open MechLib.SI
-open MechLib.Mechanics
-
-example (P : DampedSHM.Params) (hgamma : P.gamma.val ≠ 0) :
-    Quantity.cast (DampedSHM.qualityFactor P * DampedSHM.dampingRatio P)
-      DampedSHM.zero_add_zero_eq_zero = (((1 / 2 : ℝ) : Dimensionless)) := by
-  simpa using DampedSHM.qualityFactor_mul_dampingRatio P hgamma
+```bash
+python3 tools/export_spec_corpus.py
 ```
 
----
+Theorem corpus 与 proof hints：
+
+```bash
+python3 tools/export_llm_corpus.py \
+  --out corpus/theorem_corpus.jsonl \
+  --alias-out corpus/alias_map.jsonl \
+  --report-out corpus/export_report.json
+```
+
+Spec-declaration alignment：
+
+```bash
+python3 tools/link_theorems_to_spec.py
+```
+
+量纲使用审计：
+
+```bash
+python3 tools/audit_dimension_usage.py
+```
+
+axiom / sorry 审计：
+
+```bash
+python3 tools/check_no_new_axioms.py
+```
 
 ## 当前边界
 
-这份 README 描述的是“当前已实现代码”，不是未来规划。按现状看，边界主要有：
+MechLib 当前不声称完成以下内容：
 
-- 仅覆盖 SI 体系
-- `Quantity` / `VecQuantity` 的数值载体是 `ℝ`
-- 运动学里时间参数统一取 `ℝ`
-- 一部分高阶主题目前停留在接口层，而非完整解析解或深层几何化证明
-- `Compat.PHYSlib` 目前是有限桥接层，不应理解为完整兼容层
+- 不声称本科理论力学所有 theorem 都已 fully proved。
+- 不声称所有 schema/residual 都已经提升为 verified theorem。
+- 不声称下游 pipeline 的 generation/proving workflow 已在本仓库完整实现。
+- 不声称所有系统层模型都已经完全 typed 且完全验证。
+- 不把 schema corpus 当作 proof corpus。
 
-如果你要把它当作“课程定理库 + 后续扩展骨架”，当前结构是闭合的；
-如果目标是对齐 `PhysLean` 那种更强的变分/几何化 classical mechanics 体系，则还需要继续补充更深层的基础设施。
+更详细的当前限制见：
 
----
+- `docs/current_limitations.md`
 
-## LLM / RAG 导出工具
+## 开发规范
 
-仓库包含一个把定理与兼容别名导出为检索语料的脚本：
+核心规则：
 
-- `tools/export_llm_corpus.py`
+1. 公开物理 API 优先使用 `Quantity`、`VecQuantity` 和 `MechLib.SI` 类型别名。
+2. 不要在课程层重新定义 `Length`、`Mass`、`Force`、`Energy` 等核心物理量类型。
+3. theorem 放课程 Lean 模块；Spec 只放 metadata/schema。
+4. verified theorem、schema、alias、experimental、todo 必须严格分层。
+5. 不引入 `axiom`。
+6. 不新增不受控 `sorry` 或 `admit`。
+7. 不把复杂未证明内容写成 fake theorem。
+8. 新增 theorem 后同步考虑 exporter、proof hints 和 alignment。
+9. 新增 schema 后确保它只进入 schema/problem/concept corpus，不进入 proof whitelist。
+10. 除非有明确迁移任务，不破坏旧 API 兼容性。
 
-示例：
+详细开发规范见：
 
-```bash
-python tools/export_llm_corpus.py ^
-  --root MechLib ^
-  --out theorem_corpus.jsonl ^
-  --alias-out alias_map.jsonl ^
-  --report-out export_report.json
-```
+- `docs/development_guidelines.md`
 
-产物说明：
+## 与未来 pipeline 的关系
 
-- `theorem_corpus.jsonl`：定理/引理语料
-- `alias_map.jsonl`：兼容层别名到 canonical theorem 的映射
-- `export_report.json`：导出统计与解析报告
+MechLib 已经导出后续 pipeline 可使用的数据形态，包括 coverage matrix、theorem corpus、Spec corpus、module metadata、Spec-declaration alignment 和 enriched declaration corpus。这些产物支持未来从题目文本匹配到课程 topic、concept/law/problem schema，再反查 verified theorem 的检索流程。
 
+需要明确的是：本仓库当前主要提供 Lean 语义库和导出产物，不声称 pipeline 的所有 generation、retrieval orchestration、benchmark 和 proof-agent workflow 已在这里完成。
+
+## 重要报告
+
+- `reports/mechanics_migration_report.md`
+- `reports/alignment_review_report.md`
+- `reports/dimension_audit_report.md`
+- `reports/axiom_sorry_report.md`
+- `corpus/spec_export_report.json`
+- `corpus/spec_alignment_report.json`
+- `corpus/export_report.json`
+- `corpus/dimension_audit_report.json`

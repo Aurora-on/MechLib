@@ -48,10 +48,10 @@ OPEN_MECHANICS_PREFIXES = {
 }
 
 ALIAS_HEURISTIC_TARGETS = {
-    "secondLaw": "MechLib.Mechanics.Dynamics.newton_second_law",
-    "F_of": "MechLib.Mechanics.Dynamics.newton_second_law",
-    "displacement_end_x_init_x": "MechLib.Mechanics.Kinematics.displacement_eq_sub",
-    "displacement_delta_t_const_v": "MechLib.Mechanics.Kinematics.constant_speed_relation",
+    "secondLaw": "MechLib.Dynamics.Verified.Dynamics.newton_second_law",
+    "F_of": "MechLib.Dynamics.Verified.Dynamics.newton_second_law",
+    "displacement_end_x_init_x": "MechLib.Kinematics.Verified.Kinematics.displacement_eq_sub",
+    "displacement_delta_t_const_v": "MechLib.Kinematics.Verified.Kinematics.constant_speed_relation",
 }
 
 
@@ -69,6 +69,7 @@ class TheoremItem:
     source_line: int
     tags: List[str]
     summary_en: str
+    proof_hints: List[str]
     retrieval_text: str
 
     def to_json(self) -> Dict[str, Any]:
@@ -85,6 +86,7 @@ class TheoremItem:
             "source_line": self.source_line,
             "tags": self.tags,
             "summary_en": self.summary_en,
+            "proof_hints": self.proof_hints,
             "retrieval_text": self.retrieval_text,
         }
 
@@ -244,6 +246,22 @@ def make_summary_en(
     return f"{kind} {fq_name}: provides a reusable formal statement."
 
 
+def infer_proof_hints(fq_name: str, short_name: str, attrs: Sequence[str]) -> List[str]:
+    short = short_name.lower()
+    attr_set = set(attrs)
+    if "simp" in attr_set:
+        return [f"simp [{fq_name}]"]
+    if "iff" in short:
+        return [f"rw [{fq_name}]", "constructor"]
+    if short.endswith("_eq") or "_eq_" in short:
+        return [f"rw [{fq_name}]", f"simp [{fq_name}]"]
+    if short.endswith("_def") or "_def" in short:
+        return [f"simp [{fq_name}]"]
+    if short.endswith("_nonneg") or short.endswith("_pos") or short.endswith("_ne_zero"):
+        return [f"have h := {fq_name}", "positivity"]
+    return [f"exact {fq_name}"]
+
+
 def to_rel_path(path: Path, base: Path) -> str:
     try:
         return path.relative_to(base).as_posix()
@@ -321,6 +339,8 @@ def parse_theorems(root_path: Path, repo_root: Path) -> List[Dict[str, Any]]:
                 tag = tag_from_module(module)
                 docstring = pending_doc[0] if pending_doc else ""
                 summary_en = make_summary_en(kind, fq_name, short_name, statement, docstring)
+                attrs = sorted(set(pending_attrs + inline_attrs))
+                proof_hints = infer_proof_hints(fq_name, short_name, attrs)
                 retrieval_text = build_retrieval_text(fq_name, statement, [tag], summary_en)
 
                 items.append(
@@ -332,11 +352,12 @@ def parse_theorems(root_path: Path, repo_root: Path) -> List[Dict[str, Any]]:
                         "namespace": namespace,
                         "module": module,
                         "statement": statement,
-                        "attrs": sorted(set(pending_attrs + inline_attrs)),
+                        "attrs": attrs,
                         "source_path": to_rel_path(file_path, repo_root),
                         "source_line": i + 1,
                         "tags": [tag],
                         "summary_en": summary_en,
+                        "proof_hints": proof_hints,
                         "retrieval_text": retrieval_text,
                     }
                 )
@@ -687,61 +708,61 @@ def run_retrieval_smoke_test(
         {
             "id": "q1_kinematics_constant_speed",
             "query": "constant speed displacement relation dx = v * t constant_speed_relation",
-            "expect_any": ["MechLib.Mechanics.Kinematics.constant_speed_relation"],
+            "expect_any": ["MechLib.Kinematics.Verified.Kinematics.constant_speed_relation"],
             "category": "Kinematics",
         },
         {
             "id": "q2_kinematics_relative_velocity",
             "query": "relative velocity transitivity among three bodies relative_velocity_trans",
-            "expect_any": ["MechLib.Mechanics.Kinematics.relative_velocity_trans"],
+            "expect_any": ["MechLib.Kinematics.Verified.Kinematics.relative_velocity_trans"],
             "category": "Kinematics",
         },
         {
             "id": "q3_dynamics_alias_secondlaw",
             "query": "PHYSlib secondLaw relation force mass acceleration",
-            "expect_any": ["MechLib.Mechanics.Dynamics.newton_second_law"],
+            "expect_any": ["MechLib.Dynamics.Verified.Dynamics.newton_second_law"],
             "category": "Dynamics",
         },
         {
             "id": "q4_dynamics_momentum_change",
             "query": "momentum change for constant mass momentum_change_const_mass",
-            "expect_any": ["MechLib.Mechanics.Dynamics.momentum_change_const_mass"],
+            "expect_any": ["MechLib.Dynamics.Verified.Dynamics.momentum_change_const_mass"],
             "category": "Dynamics",
         },
         {
             "id": "q5_workenergy_core",
             "query": "work energy theorem net work equals kinetic energy change work_energy_theorem_core",
-            "expect_any": ["MechLib.Mechanics.WorkEnergy.work_energy_theorem_core"],
+            "expect_any": ["MechLib.Dynamics.Verified.WorkEnergy.work_energy_theorem_core"],
             "category": "WorkEnergy",
         },
         {
             "id": "q6_workenergy_split",
             "query": "split conservative and nonconservative work conservative_nonconservative_split",
-            "expect_any": ["MechLib.Mechanics.WorkEnergy.conservative_nonconservative_split"],
+            "expect_any": ["MechLib.Dynamics.Verified.WorkEnergy.conservative_nonconservative_split"],
             "category": "WorkEnergy",
         },
         {
             "id": "q7_rotation_parallel_axis",
             "query": "parallel axis theorem for moment of inertia parallel_axis_theorem",
-            "expect_any": ["MechLib.Mechanics.Rotation.parallel_axis_theorem"],
+            "expect_any": ["MechLib.RigidBody.Verified.Rotation.parallel_axis_theorem"],
             "category": "Rotation",
         },
         {
             "id": "q8_rotation_kinetic",
             "query": "rotational kinetic energy equality formula rotationalKineticEnergy_eq",
-            "expect_any": ["MechLib.Mechanics.Rotation.rotationalKineticEnergy_eq"],
+            "expect_any": ["MechLib.RigidBody.Verified.Rotation.rotationalKineticEnergy_eq"],
             "category": "Rotation",
         },
         {
             "id": "q9_shm_period_frequency",
             "query": "period frequency relation in simple harmonic motion period_frequency_relation",
-            "expect_any": ["MechLib.Mechanics.SHM.period_frequency_relation"],
+            "expect_any": ["MechLib.Systems.Verified.SHM.period_frequency_relation"],
             "category": "SHM",
         },
         {
             "id": "q10_kinematics_alias_displacement",
             "query": "PHYSlib displacement_end_x_init_x",
-            "expect_any": ["MechLib.Mechanics.Kinematics.displacement_eq_sub"],
+            "expect_any": ["MechLib.Kinematics.Verified.Kinematics.displacement_eq_sub"],
             "category": "Kinematics",
         },
     ]
@@ -822,6 +843,7 @@ def build_report(
             "theorem_corpus": len(corpus),
             "alias_map": len(aliases),
             "unresolved_aliases": len(unresolved_aliases),
+            "theorem_rows_with_proof_hints": sum(1 for it in corpus if it.get("proof_hints")),
         },
         "rg_baseline": {
             "available": rg_info.get("available", False),

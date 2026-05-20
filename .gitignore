@@ -1,6 +1,7 @@
 .lake/
 .pipeline1_tmp/
 .tmp_solver.lean
+.DS_Store
 tools/__pycache__/
 *.pyc
 

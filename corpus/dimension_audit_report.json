@@ -1,0 +1,768 @@
+{
+  "generated_at_utc": "2026-05-15T09:57:16.463575+00:00",
+  "repo_root": "/Users/weizhixin/AI4Mechanics/MechLib",
+  "policy": {
+    "core_feature": "dimensioned physical quantities",
+    "preferred_public_api": [
+      "MechLib.SI aliases",
+      "MechLib.Units.Quantity",
+      "MechLib.Units.VecQuantity"
+    ],
+    "allowed_raw_real_uses": [
+      "dimensionless coefficient",
+      "scalar multiplier",
+      "matrix index or matrix entry",
+      "vector component after explicit .val extraction",
+      "metadata",
+      "mathematical helper lemma",
+      "explicit dimensionless variable",
+      "coordinate chart value with documented semantics",
+      "temporary untyped fallback marked for review"
+    ]
+  },
+  "core_dimension_modules": {
+    "required_files": [
+      {
+        "path": "MechLib/Units/Dim.lean",
+        "exists": true
+      },
+      {
+        "path": "MechLib/Units/Quantity.lean",
+        "exists": true
+      },
+      {
+        "path": "MechLib/Units/VecQuantity.lean",
+        "exists": true
+      },
+      {
+        "path": "MechLib/SI.lean",
+        "exists": true
+      }
+    ],
+    "required_imports": [
+      {
+        "import": "MechLib.Units.Dim",
+        "present_in_MechLib_lean": true
+      },
+      {
+        "import": "MechLib.Units.Quantity",
+        "present_in_MechLib_lean": true
+      },
+      {
+        "import": "MechLib.Units.VecQuantity",
+        "present_in_MechLib_lean": true
+      },
+      {
+        "import": "MechLib.SI",
+        "present_in_MechLib_lean": true
+      }
+    ],
+    "all_core_files_present": true,
+    "all_core_imports_present": true
+  },
+  "physical_aliases": {
+    "aliases": [
+      {
+        "name": "Length",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 31,
+        "rhs": "MechLib.SI.Length",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Mass",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 32,
+        "rhs": "MechLib.SI.Mass",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Time",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 33,
+        "rhs": "MechLib.SI.Time",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Speed",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 34,
+        "rhs": "MechLib.SI.Speed",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Acceleration",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 35,
+        "rhs": "MechLib.SI.Acceleration",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Force",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 36,
+        "rhs": "MechLib.SI.Force",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Momentum",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 37,
+        "rhs": "MechLib.SI.Momentum",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Energy",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 38,
+        "rhs": "MechLib.SI.Energy",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "PhysAngle",
+        "path": "MechLib/Compat/PHYSlib.lean",
+        "line": 39,
+        "rhs": "MechLib.SI.PhysAngle",
+        "classification": "compat_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Length",
+        "path": "MechLib/Foundation/SI.lean",
+        "line": 33,
+        "rhs": "MechLib.SI.Length",
+        "classification": "course_layer_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Force",
+        "path": "MechLib/Foundation/SI.lean",
+        "line": 36,
+        "rhs": "MechLib.SI.Force",
+        "classification": "course_layer_forwarding_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Acceleration",
+        "path": "MechLib/Kinematics/PointMotion.lean",
+        "line": 48,
+        "rhs": "MechLib.SI.Acceleration",
+        "classification": "possible_duplicate_physical_alias",
+        "severity": "review"
+      },
+      {
+        "name": "Dimensionless",
+        "path": "MechLib/SI.lean",
+        "line": 36,
+        "rhs": "Quantity (0 : Dim)",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "PhysAngle",
+        "path": "MechLib/SI.lean",
+        "line": 37,
+        "rhs": "Dimensionless",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Length",
+        "path": "MechLib/SI.lean",
+        "line": 39,
+        "rhs": "Quantity lengthDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Mass",
+        "path": "MechLib/SI.lean",
+        "line": 40,
+        "rhs": "Quantity massDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Time",
+        "path": "MechLib/SI.lean",
+        "line": 41,
+        "rhs": "Quantity timeDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Speed",
+        "path": "MechLib/SI.lean",
+        "line": 47,
+        "rhs": "Quantity speedDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Acceleration",
+        "path": "MechLib/SI.lean",
+        "line": 48,
+        "rhs": "Quantity accelerationDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Momentum",
+        "path": "MechLib/SI.lean",
+        "line": 49,
+        "rhs": "Quantity momentumDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Force",
+        "path": "MechLib/SI.lean",
+        "line": 50,
+        "rhs": "Quantity forceDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Energy",
+        "path": "MechLib/SI.lean",
+        "line": 51,
+        "rhs": "Quantity energyDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Power",
+        "path": "MechLib/SI.lean",
+        "line": 52,
+        "rhs": "Quantity powerDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Frequency",
+        "path": "MechLib/SI.lean",
+        "line": 54,
+        "rhs": "Quantity frequencyDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "SpringConstant",
+        "path": "MechLib/SI.lean",
+        "line": 55,
+        "rhs": "Quantity springConstantDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "DampingCoefficient",
+        "path": "MechLib/SI.lean",
+        "line": 56,
+        "rhs": "Quantity dampingDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "AngularVelocity",
+        "path": "MechLib/SI.lean",
+        "line": 57,
+        "rhs": "Quantity angularVelocityDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "AngularAcceleration",
+        "path": "MechLib/SI.lean",
+        "line": 58,
+        "rhs": "Quantity angularAccelerationDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "MomentOfInertia",
+        "path": "MechLib/SI.lean",
+        "line": 60,
+        "rhs": "Quantity momentOfInertiaDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      },
+      {
+        "name": "Torque",
+        "path": "MechLib/SI.lean",
+        "line": 61,
+        "rhs": "Quantity torqueDim",
+        "classification": "canonical_si_alias",
+        "severity": "allowed"
+      }
+    ],
+    "canonical_count": 18,
+    "forwarding_wrapper_count": 2,
+    "compat_forwarding_count": 9,
+    "review_count": 1
+  },
+  "course_layer_real_usage": {
+    "files_scanned": 57,
+    "real_occurrence_count": 187,
+    "allowed_count": 154,
+    "fallback_count": 8,
+    "review_count": 25,
+    "untyped_course_api_count": 25,
+    "task55_baseline_untyped_course_api_count": 30,
+    "fixed_since_task55_count": 5,
+    "classification_distribution": {
+      "angle_chart_value": 10,
+      "coordinate_chart_or_temporary_untyped": 9,
+      "dimensionless": 6,
+      "math_helper_or_local_value": 41,
+      "matrix_or_index_value": 16,
+      "public_real_api_review": 16,
+      "temporary_untyped_fallback": 8,
+      "time_parameter_with_typed_output": 63,
+      "value_projection": 18
+    },
+    "review_by_file": {
+      "MechLib/Analytical/ConservationLaw.lean": 2,
+      "MechLib/Analytical/LagrangeEquation.lean": 2,
+      "MechLib/Analytical/PoissonBracket.lean": 1,
+      "MechLib/Dynamics/Verified.lean": 1,
+      "MechLib/Foundation/Geometry.lean": 1,
+      "MechLib/Kinematics/FixedAxisRotation.lean": 1,
+      "MechLib/Kinematics/Verified.lean": 1,
+      "MechLib/RigidBody/Verified.lean": 2,
+      "MechLib/Systems/AtwoodMachine.lean": 6,
+      "MechLib/Systems/BeadOnHoop.lean": 2,
+      "MechLib/Systems/PhysicalPendulum.lean": 2,
+      "MechLib/Systems/RollingDisk.lean": 3,
+      "MechLib/Systems/Verified.lean": 1
+    },
+    "fallback_by_file": {
+      "MechLib/Systems/CentralForce.lean": 2,
+      "MechLib/Systems/CoupledOscillator.lean": 1,
+      "MechLib/Systems/Pendulum.lean": 5
+    },
+    "review_items": [
+      {
+        "path": "MechLib/Analytical/ConservationLaw.lean",
+        "line": 63,
+        "text": "def ConservedScalar (quantity : ℝ → ℝ) : Prop :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Analytical/ConservationLaw.lean",
+        "line": 81,
+        "text": "example (quantity : ℝ → ℝ) :",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Analytical/LagrangeEquation.lean",
+        "line": 70,
+        "text": "(q : GCoord system.coordSpec) (qdot : GVel system.coordSpec) (t : ℝ)",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Analytical/LagrangeEquation.lean",
+        "line": 147,
+        "text": "HasDerivAt (fun (ε : ℝ) => S (fun t => q t + ε • η t)) 0 0",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Analytical/PoissonBracket.lean",
+        "line": 52,
+        "text": "abbrev PhaseFunction1D := MechLib.SI.Length → MechLib.SI.Momentum → ℝ",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Dynamics/Verified.lean",
+        "line": 192,
+        "text": "theorem centerOfMassTheorem_eq (M : Mass) (Rddot : ℝ → Acceleration) (Fext : ℝ → Force) :",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Foundation/Geometry.lean",
+        "line": 41,
+        "text": "def DistanceResidual (distance : MechLib.SI.Length) (value : ℝ) : Prop :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Kinematics/FixedAxisRotation.lean",
+        "line": 60,
+        "text": "def FixedAxisRotationResidual (state : ℝ → FixedAxisRotationState) : Prop :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Kinematics/Verified.lean",
+        "line": 100,
+        "text": "(x1 x2 : ScalarTrajectory) (v1 v2 : ScalarVelocityField) (c1 c2 : ℝ)",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/RigidBody/Verified.lean",
+        "line": 54,
+        "text": "theorem angularMomentumTheoremParticle_eq (Ldot τ : ℝ → VecTorque 3) :",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/RigidBody/Verified.lean",
+        "line": 60,
+        "text": "theorem momentOfMomentumTheoremSystem_eq (LdotO MextO : ℝ → VecTorque 3) :",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/AtwoodMachine.lean",
+        "line": 61,
+        "text": "def kineticEnergy (params : Params) (qDot : ℝ) : ℝ :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/AtwoodMachine.lean",
+        "line": 65,
+        "text": "def potentialEnergy (params : Params) (q : ℝ) : ℝ :=",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/AtwoodMachine.lean",
+        "line": 69,
+        "text": "def lagrangian (params : Params) (q qDot : ℝ) : ℝ :=",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/AtwoodMachine.lean",
+        "line": 73,
+        "text": "def equationResidual (params : Params) (qDDot : ℝ → ℝ) : Prop :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/AtwoodMachine.lean",
+        "line": 79,
+        "text": "def accelerationFormula (params : Params) (a : ℝ) : Prop :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/AtwoodMachine.lean",
+        "line": 84,
+        "text": "example (params : Params) (q qDot : ℝ) :",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/BeadOnHoop.lean",
+        "line": 65,
+        "text": "def equilibriumCondition (dVdtheta : ℝ → ℝ) (theta0 : ℝ) : Prop :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/BeadOnHoop.lean",
+        "line": 69,
+        "text": "def stabilityCondition (d2Vdtheta2 : ℝ → ℝ) (theta0 : ℝ) : Prop :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/PhysicalPendulum.lean",
+        "line": 57,
+        "text": "def kineticEnergy (params : Params) (thetaDot : ℝ) : ℝ :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/PhysicalPendulum.lean",
+        "line": 78,
+        "text": "def physical_pendulum_period (params : Params) (period : ℝ) : Prop :=",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/RollingDisk.lean",
+        "line": 60,
+        "text": "def noSlipConstraint (radius xDot phiDot : ℝ) : Prop :=",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/RollingDisk.lean",
+        "line": 64,
+        "text": "def nonholonomicConstraintSchema (radius xDot yDot phiDot heading : ℝ) : Prop :=",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/RollingDisk.lean",
+        "line": 69,
+        "text": "def rollingKineticEnergy (params : Params) (centerSpeed angularVelocity : ℝ) : ℝ :=",
+        "classification": "coordinate_chart_or_temporary_untyped",
+        "reason": "coordinate chart value or temporary untyped fallback; should be documented or migrated when exposed as physics API",
+        "severity": "review"
+      },
+      {
+        "path": "MechLib/Systems/Verified.lean",
+        "line": 301,
+        "text": "theorem keplerSecondLaw_eq (arealVelocity : ℝ → ℝ) :",
+        "classification": "public_real_api_review",
+        "reason": "public declaration exposes raw Real; confirm dimensionless/chart semantics or migrate to SI Quantity/VecQuantity",
+        "severity": "review"
+      }
+    ],
+    "fallback_items": [
+      {
+        "path": "MechLib/Systems/CentralForce.lean",
+        "line": 72,
+        "text": "def effectivePotentialScalar (U : ℝ → ℝ) (mass angularMomentum radius : ℝ) : ℝ :=",
+        "classification": "temporary_untyped_fallback",
+        "reason": "explicit compatibility value-level wrapper retained beside a typed public API",
+        "severity": "fallback"
+      },
+      {
+        "path": "MechLib/Systems/CentralForce.lean",
+        "line": 73,
+        "text": "U radius + angularMomentum ^ 2 / ((2 : ℝ) * mass * radius ^ 2)",
+        "classification": "temporary_untyped_fallback",
+        "reason": "explicit compatibility value-level wrapper retained beside a typed public API",
+        "severity": "fallback"
+      },
+      {
+        "path": "MechLib/Systems/CoupledOscillator.lean",
+        "line": 57,
+        "text": "def quadraticFormValue {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (v : Fin n → ℝ) : ℝ :=",
+        "classification": "temporary_untyped_fallback",
+        "reason": "explicit compatibility value-level wrapper retained beside a typed public API",
+        "severity": "fallback"
+      },
+      {
+        "path": "MechLib/Systems/Pendulum.lean",
+        "line": 54,
+        "text": "def kineticEnergyValue (params : Params) (thetaDot : ℝ) : ℝ :=",
+        "classification": "temporary_untyped_fallback",
+        "reason": "explicit compatibility value-level wrapper retained beside a typed public API",
+        "severity": "fallback"
+      },
+      {
+        "path": "MechLib/Systems/Pendulum.lean",
+        "line": 55,
+        "text": "(1 / 2 : ℝ) * params.mass.val * params.length.val ^ 2 * thetaDot ^ 2",
+        "classification": "temporary_untyped_fallback",
+        "reason": "explicit compatibility value-level wrapper retained beside a typed public API",
+        "severity": "fallback"
+      },
+      {
+        "path": "MechLib/Systems/Pendulum.lean",
+        "line": 64,
+        "text": "def potentialEnergyValue (params : Params) (theta : ℝ) : ℝ :=",
+        "classification": "temporary_untyped_fallback",
+        "reason": "explicit compatibility value-level wrapper retained beside a typed public API",
+        "severity": "fallback"
+      },
+      {
+        "path": "MechLib/Systems/Pendulum.lean",
+        "line": 74,
+        "text": "def lagrangianValue (params : Params) (theta thetaDot : ℝ) : ℝ :=",
+        "classification": "temporary_untyped_fallback",
+        "reason": "explicit compatibility value-level wrapper retained beside a typed public API",
+        "severity": "fallback"
+      },
+      {
+        "path": "MechLib/Systems/Pendulum.lean",
+        "line": 115,
+        "text": "(1 / 2 : ℝ) * params.mass.val * params.length.val ^ 2 * thetaDot ^ 2",
+        "classification": "temporary_untyped_fallback",
+        "reason": "explicit compatibility value-level wrapper retained beside a typed public API",
+        "severity": "fallback"
+      }
+    ]
+  },
+  "exporter_dimension_decls": {
+    "theorem_corpus": "corpus/theorem_corpus.jsonl",
+    "theorem_corpus_exists": true,
+    "units_si_decl_count": 84,
+    "module_counts": {
+      "MechLib.SI": 36,
+      "MechLib.Units.BridgeLemmas": 9,
+      "MechLib.Units.Dim": 10,
+      "MechLib.Units.Quantity": 20,
+      "MechLib.Units.VecQuantity": 9
+    },
+    "sample_units_si_decls": [
+      {
+        "fq_name": "MechLib.SI.speed_time_eq_length",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 116
+      },
+      {
+        "fq_name": "MechLib.SI.acceleration_time_eq_speed",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 118
+      },
+      {
+        "fq_name": "MechLib.SI.mass_acceleration_eq_force",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 120
+      },
+      {
+        "fq_name": "MechLib.SI.damping_speed_eq_force",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 122
+      },
+      {
+        "fq_name": "MechLib.SI.damping_two_speed_eq_power",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 124
+      },
+      {
+        "fq_name": "MechLib.SI.length_plus_angular_velocity_eq_speed",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 127
+      },
+      {
+        "fq_name": "MechLib.SI.acceleration_two_time_eq_length",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 129
+      },
+      {
+        "fq_name": "MechLib.SI.angular_velocity_time_eq_dimensionless",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 131
+      },
+      {
+        "fq_name": "MechLib.SI.time_plus_angular_velocity_eq_dimensionless",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 133
+      },
+      {
+        "fq_name": "MechLib.SI.omega_sq_plus_length_eq_acceleration",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 135
+      },
+      {
+        "fq_name": "MechLib.SI.angularVelocitySquared_plus_length_eq_acceleration",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 138
+      },
+      {
+        "fq_name": "MechLib.SI.length_plus_angularAcceleration_eq_acceleration",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 141
+      },
+      {
+        "fq_name": "MechLib.SI.momentum_sub_mass_eq_speed",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 144
+      },
+      {
+        "fq_name": "MechLib.SI.force_time_eq_momentum",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 146
+      },
+      {
+        "fq_name": "MechLib.SI.force_plus_length_eq_energy",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 148
+      },
+      {
+        "fq_name": "MechLib.SI.power_time_eq_energy",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 150
+      },
+      {
+        "fq_name": "MechLib.SI.length_plus_force_eq_torque",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 152
+      },
+      {
+        "fq_name": "MechLib.SI.length_plus_momentum_eq_angularMomentum",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 154
+      },
+      {
+        "fq_name": "MechLib.SI.angularVelocity_plus_angularMomentum_eq_torque",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 156
+      },
+      {
+        "fq_name": "MechLib.SI.spring_plus_length_eq_force",
+        "module": "MechLib.SI",
+        "source_path": "MechLib/SI.lean",
+        "source_line": 159
+      }
+    ],
+    "exports_dimension_theorems": true
+  },
+  "typed_migration_highlights": [
+    "Pendulum: `kineticEnergy`, `potentialEnergy`, `lagrangian`, `equationResidual`, and `smallAngle_to_SHM` now use `Energy`, `PhysAngle`, `AngularVelocity`, `AngularAcceleration`, and `Time`; value-level wrappers are retained as `...Value` fallbacks.",
+    "CentralForce: `PolarState`, `kineticEnergyPolar`, `angularMomentum`, `effectivePotential`, circular-orbit conditions, and angular-momentum conservation now use `Length`, `Speed`, `AngularVelocity`, `Energy`, `AngularMomentum`, `Force`, `SpringConstant`, and `Time`; `effectivePotentialScalar` remains as a fallback.",
+    "CoupledOscillator: mass and stiffness matrices now use `Mass` and `SpringConstant`; coordinates and velocities use `Length` and `Speed`; the Lagrangian returns `Energy`; normal-mode residual uses `AngularVelocitySquared`; `quadraticFormValue` remains as a scalar matrix helper.",
+    "SI: added `AngularAcceleration` and `AngularVelocitySquared` aliases plus bridge lemmas for acceleration and spring-constant dimensions."
+  ],
+  "recommendations": [
+    "Keep `MechLib.Units.Dim`, `Quantity`, `VecQuantity`, and `MechLib.SI` imported by the top-level `MechLib.lean` entry.",
+    "Do not add parallel `Length`, `Mass`, `Force`, `Energy`, or similar type aliases outside `MechLib.SI`; course modules may forward to `MechLib.SI` only when needed for ergonomics.",
+    "Prioritize typed `MechLib.SI.Energy`, `Length`, `Mass`, `Force`, `Speed`, and `VecQuantity` signatures for new public physics APIs.",
+    "When a system schema remains value-level, document whether each raw `ℝ` is a dimensionless coordinate, a chart value, a `.val` projection, or a temporary untyped fallback.",
+    "Keep Units/SI theorem and bridge lemma rows in theorem and enriched declaration corpora for retrieval and statement generation."
+  ]
+}

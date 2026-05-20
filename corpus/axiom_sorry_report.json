@@ -1,0 +1,13 @@
+{
+  "generated_at_utc": "2026-05-16T06:40:32.955220+00:00",
+  "roots": [
+    "MechLib",
+    "tools"
+  ],
+  "scanned_files": 97,
+  "current_occurrence_count": 0,
+  "current_occurrences": [],
+  "new_occurrence_count": 0,
+  "new_occurrences": [],
+  "pass_no_new_uncontrolled_unsafe_decl": true
+}

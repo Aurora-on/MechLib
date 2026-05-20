@@ -1,0 +1,33 @@
+{
+  "alignment_method_distribution": {
+    "keyword": 5,
+    "keyword+module": 75,
+    "keyword+module+override": 18,
+    "keyword+module+override+type_signature": 2,
+    "keyword+module+type_signature": 6,
+    "keyword+override": 161,
+    "keyword+override+type_signature": 16,
+    "keyword+type_signature": 7,
+    "module+override": 1,
+    "override": 19
+  },
+  "average_alignment_score": 0.968129,
+  "callable_by_llm_count": 301,
+  "matched_by_keyword": 290,
+  "matched_by_module": 102,
+  "matched_by_override": 217,
+  "matched_by_type_signature": 31,
+  "matched_decls": 310,
+  "needs_review_count": 3,
+  "schema_only_count": 0,
+  "status_distribution": {
+    "verified": 310
+  },
+  "total_decls": 310,
+  "trust_level_distribution": {
+    "core": 33,
+    "derived": 271,
+    "example": 6
+  },
+  "unmatched_decls": 0
+}

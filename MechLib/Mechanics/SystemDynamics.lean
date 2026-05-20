@@ -35,11 +35,11 @@ def totalMassWeightedPosition : List Particle1D → MassLength
   | [] => 0
   | p :: ps => massWeightedPosition p + totalMassWeightedPosition ps
 
-theorem mass_length_sub_mass_eq_length :
+abbrev mass_length_sub_mass_eq_length :
     (SI.massDim + SI.lengthDim) - SI.massDim = SI.lengthDim := by
   native_decide
 
-theorem mass_two_sub_mass_eq_mass :
+abbrev mass_two_sub_mass_eq_mass :
     (SI.massDim + SI.massDim) - SI.massDim = SI.massDim := by
   native_decide
 
@@ -77,31 +77,31 @@ def decomposedKineticEnergy2 (m1 m2 : Mass) (v1 v2 : Speed) : Energy :=
   WorkEnergy.kineticEnergy1D (m1 + m2) (centerVelocity2 m1 m2 v1 v2)
     + WorkEnergy.kineticEnergy1D (reducedMass m1 m2) (relativeVelocity2 v1 v2)
 
-theorem totalMass_nil : totalMass [] = 0 := rfl
+abbrev totalMass_nil : totalMass [] = 0 := rfl
 
-theorem totalMomentum_nil : totalMomentum [] = 0 := rfl
+abbrev totalMomentum_nil : totalMomentum [] = 0 := rfl
 
-theorem totalMass_cons (p : Particle1D) (ps : List Particle1D) :
+abbrev totalMass_cons (p : Particle1D) (ps : List Particle1D) :
     totalMass (p :: ps) = p.m + totalMass ps := rfl
 
-theorem totalMomentum_cons (p : Particle1D) (ps : List Particle1D) :
+abbrev totalMomentum_cons (p : Particle1D) (ps : List Particle1D) :
     totalMomentum (p :: ps) = p.m * p.v + totalMomentum ps := rfl
 
 /-- 单质点系统中，非零质量时质心位置就是该质点位置。 -/
-theorem centerOfMassPosition_singleton (p : Particle1D) (h : p.m.val ≠ 0) :
+abbrev centerOfMassPosition_singleton (p : Particle1D) (h : p.m.val ≠ 0) :
     centerOfMassPosition [p] = p.x := by
   ext
   simp [centerOfMassPosition, totalMass, totalMassWeightedPosition, massWeightedPosition,
     Quantity.cast_val, h]
 
 /-- 单质点系统中，非零质量时质心速度就是该质点速度。 -/
-theorem centerOfMassVelocity_singleton (p : Particle1D) (h : p.m.val ≠ 0) :
+abbrev centerOfMassVelocity_singleton (p : Particle1D) (h : p.m.val ≠ 0) :
     centerOfMassVelocity [p] = p.v := by
   ext
   simp [centerOfMassVelocity, totalMass, totalMomentum, Quantity.cast_val, h]
 
 /-- 两体质心速度满足 `P = M V_cm`。 -/
-theorem totalMomentum_two_eq_totalMass_mul_centerVelocity
+abbrev totalMomentum_two_eq_totalMass_mul_centerVelocity
     (m1 m2 : Mass) (v1 v2 : Speed) (h : (m1 + m2).val ≠ 0) :
     m1 * v1 + m2 * v2 = (m1 + m2) * centerVelocity2 m1 m2 v1 v2 := by
   have hM : m1.val + m2.val ≠ 0 := by simpa using h
@@ -116,12 +116,12 @@ theorem totalMomentum_two_eq_totalMass_mul_centerVelocity
       simp [centerVelocity2, Quantity.cast_val]
 
 /-- 约化质量具有对称性。 -/
-theorem reducedMass_symm (m1 m2 : Mass) : reducedMass m1 m2 = reducedMass m2 m1 := by
+abbrev reducedMass_symm (m1 m2 : Mass) : reducedMass m1 m2 = reducedMass m2 m1 := by
   ext
   simp [reducedMass, Quantity.cast_val, add_comm, mul_comm]
 
 /-- 两体动能可分解为“质心动能 + 相对运动动能”。 -/
-theorem twoBody_kineticEnergy_decomposition
+abbrev twoBody_kineticEnergy_decomposition
     (m1 m2 : Mass) (v1 v2 : Speed) (h : (m1 + m2).val ≠ 0) :
     totalKineticEnergy2 m1 m2 v1 v2 = decomposedKineticEnergy2 m1 m2 v1 v2 := by
   ext
@@ -156,14 +156,14 @@ def SystemMomentBalanceAboutOrigin
     (LdotO : ℝ → VecTorque 3) (MextO : ℝ → VecTorque 3) : Prop :=
   ∀ t, LdotO t = MextO t
 
-theorem centerOfMassTheorem_eq (M : Mass) (Rddot : ℝ → Acceleration) (Fext : ℝ → Force) :
+abbrev centerOfMassTheorem_eq (M : Mass) (Rddot : ℝ → Acceleration) (Fext : ℝ → Force) :
     CenterOfMassTheorem M Rddot Fext = (∀ t, M * Rddot t = Fext t) := rfl
 
-theorem variableMassMomentumBalance_eq
+abbrev variableMassMomentumBalance_eq
     (pDot : ℝ → Force) (Fext Fflux : ℝ → Force) :
     VariableMassMomentumBalance pDot Fext Fflux = (∀ t, pDot t = Fext t + Fflux t) := rfl
 
-theorem systemMomentBalanceAboutOrigin_eq
+abbrev systemMomentBalanceAboutOrigin_eq
     (LdotO MextO : ℝ → VecTorque 3) :
     SystemMomentBalanceAboutOrigin LdotO MextO = (∀ t, LdotO t = MextO t) := rfl
 
